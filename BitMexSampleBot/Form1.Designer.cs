@@ -83,7 +83,11 @@
             this.lblOverTimeSummary = new System.Windows.Forms.Label();
             this.btnOverTimeStop = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.nudPrice = new System.Windows.Forms.NumericUpDown();
+            this.nudPriceBuy = new System.Windows.Forms.NumericUpDown();
+            this.btnSetPrice = new System.Windows.Forms.Button();
+            this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
+            this.nudElementsToTake = new System.Windows.Forms.NumericUpDown();
+            this.nudConstantDividend = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -97,14 +101,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeContracts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudElementsToTake)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudConstantDividend)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
             // 
             this.btnBuy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnBuy.Location = new System.Drawing.Point(17, 39);
-            this.btnBuy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBuy.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuy.Name = "btnBuy";
             this.btnBuy.Size = new System.Drawing.Size(100, 28);
             this.btnBuy.TabIndex = 0;
@@ -116,7 +123,7 @@
             // 
             this.btnSell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnSell.Location = new System.Drawing.Point(263, 39);
-            this.btnSell.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSell.Margin = new System.Windows.Forms.Padding(4);
             this.btnSell.Name = "btnSell";
             this.btnSell.Size = new System.Drawing.Size(100, 28);
             this.btnSell.TabIndex = 1;
@@ -132,7 +139,7 @@
             0,
             0});
             this.nudQty.Location = new System.Drawing.Point(147, 42);
-            this.nudQty.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudQty.Margin = new System.Windows.Forms.Padding(4);
             this.nudQty.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -158,7 +165,7 @@
             this.chkCancelWhileOrdering.Checked = true;
             this.chkCancelWhileOrdering.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCancelWhileOrdering.Location = new System.Drawing.Point(17, 76);
-            this.chkCancelWhileOrdering.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkCancelWhileOrdering.Margin = new System.Windows.Forms.Padding(4);
             this.chkCancelWhileOrdering.Name = "chkCancelWhileOrdering";
             this.chkCancelWhileOrdering.Size = new System.Drawing.Size(172, 21);
             this.chkCancelWhileOrdering.TabIndex = 3;
@@ -169,7 +176,7 @@
             // 
             this.btnCancelOpenOrders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnCancelOpenOrders.Location = new System.Drawing.Point(263, 71);
-            this.btnCancelOpenOrders.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancelOpenOrders.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelOpenOrders.Name = "btnCancelOpenOrders";
             this.btnCancelOpenOrders.Size = new System.Drawing.Size(100, 28);
             this.btnCancelOpenOrders.TabIndex = 4;
@@ -185,7 +192,7 @@
             "Market",
             "Limit Post Only"});
             this.ddlOrderType.Location = new System.Drawing.Point(17, 6);
-            this.ddlOrderType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ddlOrderType.Margin = new System.Windows.Forms.Padding(4);
             this.ddlOrderType.Name = "ddlOrderType";
             this.ddlOrderType.Size = new System.Drawing.Size(129, 24);
             this.ddlOrderType.TabIndex = 5;
@@ -198,7 +205,7 @@
             "TestNet",
             "RealNet"});
             this.ddlNetwork.Location = new System.Drawing.Point(156, 6);
-            this.ddlNetwork.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ddlNetwork.Margin = new System.Windows.Forms.Padding(4);
             this.ddlNetwork.Name = "ddlNetwork";
             this.ddlNetwork.Size = new System.Drawing.Size(96, 24);
             this.ddlNetwork.TabIndex = 6;
@@ -209,7 +216,7 @@
             this.ddlSymbol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlSymbol.FormattingEnabled = true;
             this.ddlSymbol.Location = new System.Drawing.Point(265, 6);
-            this.ddlSymbol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ddlSymbol.Margin = new System.Windows.Forms.Padding(4);
             this.ddlSymbol.Name = "ddlSymbol";
             this.ddlSymbol.Size = new System.Drawing.Size(96, 24);
             this.ddlSymbol.TabIndex = 7;
@@ -230,7 +237,7 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvCandles.DefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCandles.Location = new System.Drawing.Point(8, 57);
-            this.dgvCandles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgvCandles.Margin = new System.Windows.Forms.Padding(4);
             this.dgvCandles.Name = "dgvCandles";
             this.dgvCandles.ReadOnly = true;
             this.dgvCandles.RowHeadersVisible = false;
@@ -248,7 +255,7 @@
             "1h",
             "1d"});
             this.ddlCandleTimes.Location = new System.Drawing.Point(8, 23);
-            this.ddlCandleTimes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ddlCandleTimes.Margin = new System.Windows.Forms.Padding(4);
             this.ddlCandleTimes.Name = "ddlCandleTimes";
             this.ddlCandleTimes.Size = new System.Drawing.Size(60, 24);
             this.ddlCandleTimes.TabIndex = 9;
@@ -264,9 +271,9 @@
             this.gbCandles.Controls.Add(this.dgvCandles);
             this.gbCandles.Controls.Add(this.ddlCandleTimes);
             this.gbCandles.Location = new System.Drawing.Point(17, 140);
-            this.gbCandles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCandles.Margin = new System.Windows.Forms.Padding(4);
             this.gbCandles.Name = "gbCandles";
-            this.gbCandles.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbCandles.Padding = new System.Windows.Forms.Padding(4);
             this.gbCandles.Size = new System.Drawing.Size(1652, 315);
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
@@ -285,7 +292,7 @@
             // nudMA2
             // 
             this.nudMA2.Location = new System.Drawing.Point(519, 22);
-            this.nudMA2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudMA2.Margin = new System.Windows.Forms.Padding(4);
             this.nudMA2.Minimum = new decimal(new int[] {
             1,
             0,
@@ -313,7 +320,7 @@
             // nudMA1
             // 
             this.nudMA1.Location = new System.Drawing.Point(364, 22);
-            this.nudMA1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudMA1.Margin = new System.Windows.Forms.Padding(4);
             this.nudMA1.Minimum = new decimal(new int[] {
             1,
             0,
@@ -334,7 +341,7 @@
             this.chkUpdateCandles.Checked = true;
             this.chkUpdateCandles.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkUpdateCandles.Location = new System.Drawing.Point(77, 26);
-            this.chkUpdateCandles.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkUpdateCandles.Margin = new System.Windows.Forms.Padding(4);
             this.chkUpdateCandles.Name = "chkUpdateCandles";
             this.chkUpdateCandles.Size = new System.Drawing.Size(143, 21);
             this.chkUpdateCandles.TabIndex = 12;
@@ -352,7 +359,7 @@
             this.rdoBuy.AutoSize = true;
             this.rdoBuy.Checked = true;
             this.rdoBuy.Location = new System.Drawing.Point(189, 16);
-            this.rdoBuy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdoBuy.Margin = new System.Windows.Forms.Padding(4);
             this.rdoBuy.Name = "rdoBuy";
             this.rdoBuy.Size = new System.Drawing.Size(53, 21);
             this.rdoBuy.TabIndex = 11;
@@ -364,7 +371,7 @@
             // 
             this.rdoSell.AutoSize = true;
             this.rdoSell.Location = new System.Drawing.Point(189, 38);
-            this.rdoSell.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdoSell.Margin = new System.Windows.Forms.Padding(4);
             this.rdoSell.Name = "rdoSell";
             this.rdoSell.Size = new System.Drawing.Size(52, 21);
             this.rdoSell.TabIndex = 12;
@@ -375,7 +382,7 @@
             // 
             this.rdoSwitch.AutoSize = true;
             this.rdoSwitch.Location = new System.Drawing.Point(189, 58);
-            this.rdoSwitch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.rdoSwitch.Margin = new System.Windows.Forms.Padding(4);
             this.rdoSwitch.Name = "rdoSwitch";
             this.rdoSwitch.Size = new System.Drawing.Size(69, 21);
             this.rdoSwitch.TabIndex = 13;
@@ -395,9 +402,9 @@
             this.groupBox1.Controls.Add(this.rdoSwitch);
             this.groupBox1.Controls.Add(this.rdoBuy);
             this.groupBox1.Location = new System.Drawing.Point(1217, 15);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(452, 130);
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
@@ -431,7 +438,7 @@
             0,
             131072});
             this.nudAutoMarketTakeProfitPercent.Location = new System.Drawing.Point(176, 87);
-            this.nudAutoMarketTakeProfitPercent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudAutoMarketTakeProfitPercent.Margin = new System.Windows.Forms.Padding(4);
             this.nudAutoMarketTakeProfitPercent.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -452,7 +459,7 @@
             this.chkAutoMarketTakeProfits.Checked = true;
             this.chkAutoMarketTakeProfits.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAutoMarketTakeProfits.Location = new System.Drawing.Point(9, 90);
-            this.chkAutoMarketTakeProfits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkAutoMarketTakeProfits.Margin = new System.Windows.Forms.Padding(4);
             this.chkAutoMarketTakeProfits.Name = "chkAutoMarketTakeProfits";
             this.chkAutoMarketTakeProfits.Size = new System.Drawing.Size(163, 21);
             this.chkAutoMarketTakeProfits.TabIndex = 16;
@@ -467,7 +474,7 @@
             "Market",
             "Limit Post Only"});
             this.ddlAutoOrderType.Location = new System.Drawing.Point(313, 11);
-            this.ddlAutoOrderType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ddlAutoOrderType.Margin = new System.Windows.Forms.Padding(4);
             this.ddlAutoOrderType.Name = "ddlAutoOrderType";
             this.ddlAutoOrderType.Size = new System.Drawing.Size(129, 24);
             this.ddlAutoOrderType.TabIndex = 15;
@@ -480,7 +487,7 @@
             0,
             0});
             this.nudAutoQuantity.Location = new System.Drawing.Point(355, 53);
-            this.nudAutoQuantity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudAutoQuantity.Margin = new System.Windows.Forms.Padding(4);
             this.nudAutoQuantity.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -504,7 +511,7 @@
             // 
             this.btnAutomatedTrading.BackColor = System.Drawing.Color.LightGreen;
             this.btnAutomatedTrading.Location = new System.Drawing.Point(9, 25);
-            this.btnAutomatedTrading.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAutomatedTrading.Margin = new System.Windows.Forms.Padding(4);
             this.btnAutomatedTrading.Name = "btnAutomatedTrading";
             this.btnAutomatedTrading.Size = new System.Drawing.Size(159, 53);
             this.btnAutomatedTrading.TabIndex = 14;
@@ -552,7 +559,7 @@
             // btnAccountBalance
             // 
             this.btnAccountBalance.Location = new System.Drawing.Point(1076, 108);
-            this.btnAccountBalance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAccountBalance.Margin = new System.Windows.Forms.Padding(4);
             this.btnAccountBalance.Name = "btnAccountBalance";
             this.btnAccountBalance.Size = new System.Drawing.Size(133, 28);
             this.btnAccountBalance.TabIndex = 16;
@@ -569,7 +576,7 @@
             0,
             131072});
             this.nudStopPercent.Location = new System.Drawing.Point(173, 103);
-            this.nudStopPercent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudStopPercent.Margin = new System.Windows.Forms.Padding(4);
             this.nudStopPercent.Name = "nudStopPercent";
             this.nudStopPercent.Size = new System.Drawing.Size(80, 22);
             this.nudStopPercent.TabIndex = 17;
@@ -582,7 +589,7 @@
             // btnManualSetStop
             // 
             this.btnManualSetStop.Location = new System.Drawing.Point(263, 102);
-            this.btnManualSetStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnManualSetStop.Margin = new System.Windows.Forms.Padding(4);
             this.btnManualSetStop.Name = "btnManualSetStop";
             this.btnManualSetStop.Size = new System.Drawing.Size(100, 28);
             this.btnManualSetStop.TabIndex = 18;
@@ -593,7 +600,7 @@
             // txtAPIKey
             // 
             this.txtAPIKey.Location = new System.Drawing.Point(991, 44);
-            this.txtAPIKey.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAPIKey.Margin = new System.Windows.Forms.Padding(4);
             this.txtAPIKey.Name = "txtAPIKey";
             this.txtAPIKey.Size = new System.Drawing.Size(217, 22);
             this.txtAPIKey.TabIndex = 19;
@@ -603,7 +610,7 @@
             // txtAPISecret
             // 
             this.txtAPISecret.Location = new System.Drawing.Point(991, 76);
-            this.txtAPISecret.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAPISecret.Margin = new System.Windows.Forms.Padding(4);
             this.txtAPISecret.Name = "txtAPISecret";
             this.txtAPISecret.Size = new System.Drawing.Size(217, 22);
             this.txtAPISecret.TabIndex = 20;
@@ -633,7 +640,7 @@
             // btnBuyOverTimeOrder
             // 
             this.btnBuyOverTimeOrder.Location = new System.Drawing.Point(465, 6);
-            this.btnBuyOverTimeOrder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBuyOverTimeOrder.Margin = new System.Windows.Forms.Padding(4);
             this.btnBuyOverTimeOrder.Name = "btnBuyOverTimeOrder";
             this.btnBuyOverTimeOrder.Size = new System.Drawing.Size(115, 28);
             this.btnBuyOverTimeOrder.TabIndex = 24;
@@ -644,7 +651,7 @@
             // btnSellOverTimeOrder
             // 
             this.btnSellOverTimeOrder.Location = new System.Drawing.Point(588, 6);
-            this.btnSellOverTimeOrder.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSellOverTimeOrder.Margin = new System.Windows.Forms.Padding(4);
             this.btnSellOverTimeOrder.Name = "btnSellOverTimeOrder";
             this.btnSellOverTimeOrder.Size = new System.Drawing.Size(119, 28);
             this.btnSellOverTimeOrder.TabIndex = 25;
@@ -659,7 +666,7 @@
             // nudOverTimeContracts
             // 
             this.nudOverTimeContracts.Location = new System.Drawing.Point(465, 68);
-            this.nudOverTimeContracts.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudOverTimeContracts.Margin = new System.Windows.Forms.Padding(4);
             this.nudOverTimeContracts.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -683,7 +690,7 @@
             // nudOverTimeInterval
             // 
             this.nudOverTimeInterval.Location = new System.Drawing.Point(577, 68);
-            this.nudOverTimeInterval.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudOverTimeInterval.Margin = new System.Windows.Forms.Padding(4);
             this.nudOverTimeInterval.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -707,7 +714,7 @@
             // nudOverTimeIntervalCount
             // 
             this.nudOverTimeIntervalCount.Location = new System.Drawing.Point(661, 68);
-            this.nudOverTimeIntervalCount.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nudOverTimeIntervalCount.Margin = new System.Windows.Forms.Padding(4);
             this.nudOverTimeIntervalCount.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -771,7 +778,7 @@
             // btnOverTimeStop
             // 
             this.btnOverTimeStop.Location = new System.Drawing.Point(715, 6);
-            this.btnOverTimeStop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOverTimeStop.Margin = new System.Windows.Forms.Padding(4);
             this.btnOverTimeStop.Name = "btnOverTimeStop";
             this.btnOverTimeStop.Size = new System.Drawing.Size(55, 28);
             this.btnOverTimeStop.TabIndex = 31;
@@ -782,44 +789,130 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(729, 48);
+            this.label7.Location = new System.Drawing.Point(744, 48);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(40, 17);
             this.label7.TabIndex = 33;
             this.label7.Text = "Price";
             // 
-            // nudPrice
+            // nudPriceBuy
             // 
-            this.nudPrice.DecimalPlaces = 2;
-            this.nudPrice.Increment = new decimal(new int[] {
+            this.nudPriceBuy.DecimalPlaces = 2;
+            this.nudPriceBuy.Increment = new decimal(new int[] {
             1,
             0,
             0,
             131072});
-            this.nudPrice.Location = new System.Drawing.Point(732, 68);
-            this.nudPrice.Margin = new System.Windows.Forms.Padding(4);
-            this.nudPrice.Maximum = new decimal(new int[] {
+            this.nudPriceBuy.Location = new System.Drawing.Point(746, 68);
+            this.nudPriceBuy.Margin = new System.Windows.Forms.Padding(4);
+            this.nudPriceBuy.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
-            this.nudPrice.Name = "nudPrice";
-            this.nudPrice.Size = new System.Drawing.Size(80, 22);
-            this.nudPrice.TabIndex = 34;
-            this.nudPrice.Value = new decimal(new int[] {
+            this.nudPriceBuy.Name = "nudPriceBuy";
+            this.nudPriceBuy.Size = new System.Drawing.Size(105, 22);
+            this.nudPriceBuy.TabIndex = 34;
+            // 
+            // btnSetPrice
+            // 
+            this.btnSetPrice.Location = new System.Drawing.Point(859, 51);
+            this.btnSetPrice.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetPrice.Name = "btnSetPrice";
+            this.btnSetPrice.Size = new System.Drawing.Size(65, 54);
+            this.btnSetPrice.TabIndex = 35;
+            this.btnSetPrice.Text = "Set Price";
+            this.btnSetPrice.UseVisualStyleBackColor = true;
+            this.btnSetPrice.Click += new System.EventHandler(this.btnSetPrice_Click);
+            // 
+            // nudPriceSell
+            // 
+            this.nudPriceSell.DecimalPlaces = 2;
+            this.nudPriceSell.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudPriceSell.Location = new System.Drawing.Point(746, 98);
+            this.nudPriceSell.Margin = new System.Windows.Forms.Padding(4);
+            this.nudPriceSell.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.nudPriceSell.Name = "nudPriceSell";
+            this.nudPriceSell.Size = new System.Drawing.Size(105, 22);
+            this.nudPriceSell.TabIndex = 36;
+            // 
+            // nudElementsToTake
+            // 
+            this.nudElementsToTake.DecimalPlaces = 2;
+            this.nudElementsToTake.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudElementsToTake.Location = new System.Drawing.Point(747, 125);
+            this.nudElementsToTake.Margin = new System.Windows.Forms.Padding(4);
+            this.nudElementsToTake.Maximum = new decimal(new int[] {
             25,
             0,
             0,
             0});
-            this.nudPrice.ValueChanged += new System.EventHandler(this.nudPrice_ValueChanged);
+            this.nudElementsToTake.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudElementsToTake.Name = "nudElementsToTake";
+            this.nudElementsToTake.Size = new System.Drawing.Size(105, 22);
+            this.nudElementsToTake.TabIndex = 37;
+            this.nudElementsToTake.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // nudConstantDividend
+            // 
+            this.nudConstantDividend.DecimalPlaces = 2;
+            this.nudConstantDividend.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudConstantDividend.Location = new System.Drawing.Point(860, 122);
+            this.nudConstantDividend.Margin = new System.Windows.Forms.Padding(4);
+            this.nudConstantDividend.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.nudConstantDividend.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudConstantDividend.Name = "nudConstantDividend";
+            this.nudConstantDividend.Size = new System.Drawing.Size(105, 22);
+            this.nudConstantDividend.TabIndex = 38;
+            this.nudConstantDividend.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1679, 486);
-            this.Controls.Add(this.nudPrice);
+            this.Controls.Add(this.nudConstantDividend);
+            this.Controls.Add(this.nudElementsToTake);
+            this.Controls.Add(this.nudPriceSell);
+            this.Controls.Add(this.btnSetPrice);
+            this.Controls.Add(this.nudPriceBuy);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btnOverTimeStop);
             this.Controls.Add(this.lblOverTimeSummary);
@@ -850,7 +943,7 @@
             this.Controls.Add(this.btnSell);
             this.Controls.Add(this.btnBuy);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "BitMex Bot";
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).EndInit();
@@ -869,7 +962,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeContracts)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudElementsToTake)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudConstantDividend)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -929,7 +1025,11 @@
         private System.Windows.Forms.ToolStripProgressBar stsOTProgress;
         private System.Windows.Forms.Button btnOverTimeStop;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown nudPrice;
+        private System.Windows.Forms.NumericUpDown nudPriceBuy;
+        private System.Windows.Forms.Button btnSetPrice;
+        private System.Windows.Forms.NumericUpDown nudPriceSell;
+        private System.Windows.Forms.NumericUpDown nudElementsToTake;
+        private System.Windows.Forms.NumericUpDown nudConstantDividend;
     }
 }
 

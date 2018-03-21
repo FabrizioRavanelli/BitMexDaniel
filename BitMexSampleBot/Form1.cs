@@ -29,6 +29,8 @@ namespace BitMexSampleBot
 
         BitMEXApi bitmex;
         List<OrderBook> CurrentBook = new List<OrderBook>();
+        List<OrderBook> CurrentBookSell = new List<OrderBook>();
+        List<OrderBook> CurrentBookBuy = new List<OrderBook>();
         List<Instrument> ActiveInstruments = new List<Instrument>();
         Instrument ActiveInstrument = new Instrument();
         List<Candle> Candles = new List<Candle>();
@@ -71,6 +73,17 @@ namespace BitMexSampleBot
         // NEW - For Stochastic (STOCH)
         int STOCHLookbackPeriod = 14;
         int STOCHDPeriod = 3;
+
+        #region properties
+
+        //CHANGE 2: Price set from UI
+        public double InputPrice { get; set; }
+
+        public int ElementsToTake { get; set; }
+
+        public int PriceDividend { get; set; }
+
+        #endregion
 
         public Form1()
         {
@@ -147,8 +160,11 @@ namespace BitMexSampleBot
         {
             CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, 1);
 
-            double SellPrice = CurrentBook.Where(a => a.Side == "Sell").FirstOrDefault().Price;
-            double BuyPrice = CurrentBook.Where(a => a.Side == "Buy").FirstOrDefault().Price;
+            double SellPrice = CalculateSellPrice(CurrentBook);
+            double BuyPrice = CalculateBuyPrice(CurrentBook);
+
+            //double SellPrice = CurrentBook.Where(a => a.Side == "Sell").FirstOrDefault().Price;
+            //double BuyPrice = CurrentBook.Where(a => a.Side == "Buy").FirstOrDefault().Price;
 
             double OrderPrice = 0;
 
@@ -188,6 +204,12 @@ namespace BitMexSampleBot
             {
                 bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
+            //CHANGE 2: Price set from UI: at the moment is always 0. So InputPrice will be always used
+            if(Price == 0)
+            {
+                Price = InputPrice;
+            }
+
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
             if ("Buy".Equals(Side))
             {
@@ -209,6 +231,11 @@ namespace BitMexSampleBot
 
         private void AutoMakeOrder(string Side, int Qty, double Price = 0)
         {
+            //CHANGE 2: Price set from UI: at the moment is always 0. So InputPrice will be always used
+            if (Price == 0)
+            {
+                Price = InputPrice;
+            }
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
             if ("Buy".Equals(Side))
             {
@@ -1203,9 +1230,71 @@ namespace BitMexSampleBot
             tmrTradeOverTime.Stop();
         }
 
-        private void nudPrice_ValueChanged(object sender, EventArgs e)
+        //CHANGE 2: Price set from UI
+        private void btnSetPrice_Click(object sender, EventArgs e)
         {
-            
+            InputPrice = decimal.ToDouble(nudPriceBuy.Value);
+            ElementsToTake = decimal.ToInt32(nudElementsToTake.Value);
+            PriceDividend = decimal.ToInt32(nudConstantDividend.Value);
+        }
+
+        //Berechnung der Preis für Buy
+        private double CalculateBuyPrice(List<OrderBook> orderBooks)
+        {
+            //Aus der OrderBook nehme ich Buy Orders und sortiere ich sie (erstes element => das mit dem höchsten Preis)
+            CurrentBookBuy = orderBooks.Where(item => item.Side == "Buy").OrderByDescending(item => item.Price).ToList();
+            // addieren die erste *ElementsToTake* (5) elementen
+            double sumFirstItems = CurrentBookBuy.Take(ElementsToTake).Sum(item => item.Size);
+            // addiere der Preis von allen "Buy" Elementen
+            double summAllBuyItems = CurrentBookBuy.Sum(item => item.Price);
+            // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
+            double sizeLimit = summAllBuyItems / PriceDividend;
+            //Price durch die Grenze festlegen in Buy Mode
+            return SelectPrice(CurrentBookBuy, sizeLimit, "Buy");
+        }
+
+        //Berechnung der Preis für Sell
+        private double CalculateSellPrice(List<OrderBook> orderBooks)
+        {
+            //Aus der OrderBook nehme ich Sell Orders und sortiere ich sie (erstes element => das mit dem niedrigsten Preis)
+            CurrentBookSell = orderBooks.Where(item => item.Side == "Sell").OrderBy(item => item.Price).ToList();
+            // addieren die erste *ElementsToTake* (5) elementen
+            double sumFirstItems = CurrentBookSell.Take(ElementsToTake).Sum(item => item.Size);
+            // addiere der Preis von allen "Sell" Elementen
+            double summAllSellItems = CurrentBookSell.Sum(item => item.Price);
+            // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
+            double sizeLimit = summAllSellItems / PriceDividend;
+            //Price durch die Grenze festlegen in Sell Mode
+            return SelectPrice(CurrentBookSell, sizeLimit, "Sell");
+        }
+
+        private double SelectPrice(List<OrderBook> orderBooks, double sizeLimit, string side)
+        {
+            //Note: in Sell mode die Parameter Liste orderBooks kommt rein sortiert von klein zu groß
+            //Note: in Buy mode der Parameter Liste orderBooks kommt rein sortiert von groß zu klein
+            double sum = 0;
+            OrderBook lastOrderBook = null;
+            OrderBook currentOrderBook = null;
+
+            foreach (var orderBook in orderBooks)
+            {
+                currentOrderBook = orderBook;
+
+                sum += orderBook.Size;
+                if (sum > sizeLimit)
+                {
+                    break;
+                }
+
+                lastOrderBook = orderBook;
+            }
+            if (("Sell".Equals(side) && lastOrderBook == null)|| ("Buy".Equals(side) && currentOrderBook == null))
+            {
+                return default(double);
+            }
+            //in Sell mode nehme ich den sofort unter der Grenze
+            //in Buy mode nehme ich den sofort über der Grenze
+            return "Sell".Equals(side) ? lastOrderBook.Price : currentOrderBook.Price;
         }
     }
 }
