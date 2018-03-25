@@ -74,10 +74,14 @@ namespace BitMexSampleBot
         int STOCHLookbackPeriod = 14;
         int STOCHDPeriod = 3;
 
+        //saves the last setbotmode executed by bot
+        private string _lastMode = string.Empty;
+
         #region properties
 
         //CHANGE 2: Price set from UI
-        public double InputPrice { get; set; }
+        public double InputPriceBuy { get; set; }
+        public double InputPriceSell { get; set; }
 
         public int ElementsToTake { get; set; }
 
@@ -162,36 +166,25 @@ namespace BitMexSampleBot
 
             double SellPrice = CalculateSellPrice(CurrentBook);
             double BuyPrice = CalculateBuyPrice(CurrentBook);
-
-            //double SellPrice = CurrentBook.Where(a => a.Side == "Sell").FirstOrDefault().Price;
-            //double BuyPrice = CurrentBook.Where(a => a.Side == "Buy").FirstOrDefault().Price;
-
+            
             double OrderPrice = 0;
 
             switch (Side)
             {
                 case "Buy":
                     OrderPrice = BuyPrice;
-
-                    if (BuyPrice + ActiveInstrument.TickSize >= SellPrice)
+                    //wenn BuyPrice größer als Eingabe Feld InputPriceBuy, nehmen wir InputPriceBuy
+                    if (BuyPrice > InputPriceBuy)
                     {
-                        OrderPrice = BuyPrice;
-                    }
-                    else if (BuyPrice + ActiveInstrument.TickSize < SellPrice)
-                    {
-                        OrderPrice = BuyPrice + ActiveInstrument.TickSize;
+                        OrderPrice = InputPriceBuy;
                     }
                     break;
                 case "Sell":
                     OrderPrice = SellPrice;
-
-                    if (SellPrice - ActiveInstrument.TickSize <= BuyPrice)
+                    //wenn SellPrice kleiner als Eingabe Feld InputPriceSell, nehmen wir InputPriceSell
+                    if (SellPrice < InputPriceSell)
                     {
-                        OrderPrice = SellPrice;
-                    }
-                    else if (SellPrice - ActiveInstrument.TickSize > BuyPrice)
-                    {
-                        OrderPrice = SellPrice - ActiveInstrument.TickSize;
+                        OrderPrice = InputPriceSell;
                     }
                     break;
             }
@@ -204,54 +197,45 @@ namespace BitMexSampleBot
             {
                 bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
-            //CHANGE 2: Price set from UI: at the moment is always 0. So InputPrice will be always used
-            if(Price == 0)
-            {
-                Price = InputPrice;
-            }
-
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
-            if ("Buy".Equals(Side))
+            switch (Side)
             {
-                var MakerBuy = DoLimitPostOnly(Side, Qty, Price);
-            }
-            else
-            {
-                switch (ddlOrderType.SelectedItem)
-                {
-                    case "Limit Post Only":
-                        var MakerBuy = DoLimitPostOnly(Side, Qty, Price);
-                        break;
-                    case "Market":
-                        bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
-                        break;
-                }
+                case "Buy":
+                    DoLimitPostOnly(Side, Qty, Price);
+                    break;
+                case "Sell":
+                    switch (ddlOrderType.SelectedItem)
+                    {
+                        case "Limit Post Only":
+                            DoLimitPostOnly(Side, Qty, Price);
+                            break;
+                        case "Market":
+                            bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
+                            break;
+                    }
+                    break;
             }
         }
 
         private void AutoMakeOrder(string Side, int Qty, double Price = 0)
         {
-            //CHANGE 2: Price set from UI: at the moment is always 0. So InputPrice will be always used
-            if (Price == 0)
-            {
-                Price = InputPrice;
-            }
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
-            if ("Buy".Equals(Side))
+            switch (Side)
             {
-                var MakerBuy = DoLimitPostOnly(Side, Qty, Price);
-            }
-            else
-            {
-                switch (ddlAutoOrderType.SelectedItem)
-                {
-                    case "Limit Post Only":
-                        var MakerBuy = DoLimitPostOnly(Side, Qty, Price);
-                        break;
-                    case "Market":
-                        bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
-                        break;
-                }
+                case "Buy":
+                    DoLimitPostOnly(Side, Qty, Price);
+                    break;
+                case "Sell":
+                    switch (ddlAutoOrderType.SelectedItem)
+                    {
+                        case "Limit Post Only":
+                            DoLimitPostOnly(Side, Qty, Price);
+                            break;
+                        case "Market":
+                            bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
+                            break;
+                    }
+                    break;
             }
         }
 
@@ -262,8 +246,7 @@ namespace BitMexSampleBot
             {
                 Price = CalculateMakerOrderPrice(Side);
             }
-            var MakerBuy = bitmex.PostOrderPostOnly(ActiveInstrument.Symbol, Side, Price, Qty);
-            return MakerBuy;
+            return bitmex.PostOrderPostOnly(ActiveInstrument.Symbol, Side, Price, Qty);
         }
 
         private void btnBuy_Click(object sender, EventArgs e)
@@ -515,100 +498,85 @@ namespace BitMexSampleBot
 
         private void SetBotMode()
         {
-            // This is where we are going to determine what mode the bot is in
-            if(rdoBuy.Checked)
-            {
-                //if ((Candles[1].MA1 > Candles[1].MA2) && (Candles[2].MA1 <= Candles[2].MA2)) // Most recently closed candle crossed over up
-                //{
-                //    // Did the last full candle have MA1 cross above MA2?  We'll need to buy now.
-                //    Mode = "Buy";
-                //}
-                //else if ((Candles[1].MA1 < Candles[1].MA2) && (Candles[2].MA1 >= Candles[2].MA2))
-                //{
-                //    // Did the last full candle have MA1 cross below MA2?  We'll need to close any open position.
-                //    Mode = "CloseAndWait";
-                //}
-                //else if ((Candles[1].MA1 > Candles[1].MA2) && (Candles[2].MA1 > Candles[2].MA2))
-                //{
-                //    // If no crossover, is MA1 still above MA2? We'll need to leave our position open.
-                //    Mode = "Wait";
-                //}
-                //else if ((Candles[1].MA1 < Candles[1].MA2) && (Candles[2].MA1 < Candles[2].MA2))
-                //{
-                //    // If no crossover, is MA1 still below MA2? We'll need to make sure we don't have a position open.
-                //    Mode = "CloseAndWait";
-                //}
+            Candle currentCandle = Candles.Count() > 0 ? Candles[0] : null;
 
-                // MACD Example
-                if ((Candles[1].MACDLine > Candles[1].MACDSignalLine) && (Candles[2].MACDLine <= Candles[2].MACDSignalLine)) // Most recently closed candle crossed over up
+            if(currentCandle == null)
+            {
+                Mode = "Wait";
+            }
+            else
+            {
+                int roe = 0;
+                if(!Int32.TryParse(lblAutoUnrealizedROEPercent.Text, out roe))
                 {
-                    // Did the last full candle have MACDLine cross above MACDSignalLine?  We'll need to buy now.
-                    Mode = "Buy";
+                    roe = 0;
                 }
-                else if ((Candles[1].MACDLine < Candles[1].MACDSignalLine) && (Candles[2].MACDLine >= Candles[2].MACDSignalLine))
+                // This is where we are going to determine what mode the bot is in
+                if (rdoBuy.Checked)
                 {
-                    // Did the last full candle have MACDLine cross below MACDSignalLine?  We'll need to close any open position.
-                    Mode = "CloseAndWait";
+                    //wenn es keine OpenPosition und keine OpenOrder gibt, dann darf auch buy machen
+                    int totalOpenPositions = OpenPositions.Count();
+                    int totalOpenOrders = OpenOrders.Count();
+                    // Nach Buy kommt  Close and wait
+                    if (_lastMode.Equals("Buy"))
+                    {
+                        Mode = "CloseAndWait";
+                    }
+                    // c.STOCHK unter 10%
+                    else if ((currentCandle.STOCHK <= 10) || (currentCandle.STOCHK >= 75) || (roe >= 10) || (totalOpenPositions == 0 && totalOpenOrders == 0))
+                    {
+                        Mode = "Buy";
+                    }
+                    // c.STOCHK über 10%
+                    else if (currentCandle.STOCHK > 10)
+                    {
+                        Mode = "Wait";
+                    }
                 }
-                else if ((Candles[1].MACDLine > Candles[1].MACDSignalLine) && (Candles[2].MACDLine > Candles[2].MACDSignalLine))
+                else if (rdoSell.Checked)
                 {
-                    // If no crossover, is MACDLine still above MACDSignalLine? We'll need to leave our position open.
-                    Mode = "Wait";
+                    // Nach Sell kommt  Close and wait
+                    if (_lastMode.Equals("Sell"))
+                    {
+                        Mode = "CloseAndWait";
+                    }
+                    else if ((roe >= 10) || (roe <= -10) || (roe == 0))
+                    {
+                        Mode = "Sell";
+                    }
+                    else
+                    {
+                        Mode = "Wait";
+                    }
                 }
-                else if ((Candles[1].MACDLine < Candles[1].MACDSignalLine) && (Candles[2].MACDLine < Candles[2].MACDSignalLine))
+                else if (rdoSwitch.Checked)
                 {
-                    // If no crossover, is MACDLine still below MACDSignalLine? We'll need to make sure we don't have a position open.
-                    Mode = "CloseAndWait";
-                }
+                    //wenn es keine OpenPosition und keine OpenOrder gibt, dann darf auch buy machen
+                    int totalOpenPositions = OpenPositions.Count();
+                    int totalOpenOrders = OpenOrders.Count();
 
-            }
-            else if(rdoSell.Checked)
-            {
-                if ((Candles[1].MA1 > Candles[1].MA2) && (Candles[2].MA1 <= Candles[2].MA2)) // Most recently closed candle crossed over up
-                {
-                    // Did the last full candle have MA1 cross above MA2?  We'll need to close any open position.
-                    Mode = "CloseAndWait";
-                }
-                else if ((Candles[1].MA1 < Candles[1].MA2) && (Candles[2].MA1 >= Candles[2].MA2))
-                {
-                    // Did the last full candle have MA1 cross below MA2?  We'll need to sell now.
-                    Mode = "Sell";
-                }
-                else if ((Candles[1].MA1 > Candles[1].MA2) && (Candles[2].MA1 > Candles[2].MA2))
-                {
-                    // If no crossover, is MA1 still above MA2? We'll need to make sure we don't have a position open.
-                    Mode = "CloseAndWait";
-                }
-                else if ((Candles[1].MA1 < Candles[1].MA2) && (Candles[2].MA1 < Candles[2].MA2))
-                {
-                    // If no crossover, is MA1 still below MA2? We'll need to leave our position open.
-                    Mode = "Wait";
+                    // Nach Buy and Sell kommt  Close and wait
+                    if (_lastMode.Equals("Sell") || _lastMode.Equals("Buy"))
+                    {
+                        Mode = "CloseAndWait";
+                    }
+                    //prio verkaufen
+                    else if ((roe >= 10) || (roe <= -10) || (roe == 0))
+                    {
+                        Mode = "Sell";
+                    }
+                    // c.STOCHK unter 10%
+                    else if ((currentCandle.STOCHK <= 10) || (currentCandle.STOCHK >= 75) || (totalOpenPositions == 0 && totalOpenOrders == 0))
+                    {
+                        Mode = "Buy";
+                    }
+                    else
+                    {
+                        Mode = "Wait";
+                    }
                 }
             }
-            else if(rdoSwitch.Checked)
-            {
-                //NEW
-                if ((Candles[1].MA1 > Candles[1].MA2) && (Candles[2].MA1 <= Candles[2].MA2)) // Most recently closed candle crossed over up
-                {
-                    // Did the last full candle have MA1 cross above MA2?  Triggers a buy in switch setting.
-                    Mode = "Buy";
-                }
-                else if ((Candles[1].MA1 < Candles[1].MA2) && (Candles[2].MA1 >= Candles[2].MA2))
-                {
-                    // Did the last full candle have MA1 cross below MA2?  Triggers a sell in switch setting
-                    Mode = "Sell";
-                }
-                else if ((Candles[1].MA1 > Candles[1].MA2) && (Candles[2].MA1 > Candles[2].MA2))
-                {
-                    // If no crossover, is MA1 still above MA2? Keep long position open, close any shorts if they are still open.
-                    Mode = "CloseShortsAndWait";
-                }
-                else if ((Candles[1].MA1 < Candles[1].MA2) && (Candles[2].MA1 < Candles[2].MA2))
-                {
-                    // If no crossover, is MA1 still below MA2? Keep short position open, close any longs if they are still open.
-                    Mode = "CloseLongsAndWait";
-                }
-            }
+            _lastMode = Mode;
         }
 
         private void tmrCandleUpdater_Tick(object sender, EventArgs e)
@@ -616,8 +584,7 @@ namespace BitMexSampleBot
             if(chkUpdateCandles.Checked)
             {
                 UpdateCandles();
-            }
-            
+            }           
         }
 
         private void chkUpdateCandles_CheckedChanged(object sender, EventArgs e)
@@ -1233,7 +1200,8 @@ namespace BitMexSampleBot
         //CHANGE 2: Price set from UI
         private void btnSetPrice_Click(object sender, EventArgs e)
         {
-            InputPrice = decimal.ToDouble(nudPriceBuy.Value);
+            InputPriceBuy = decimal.ToDouble(nudPriceBuy.Value);
+            InputPriceSell = decimal.ToDouble(nudPriceSell.Value);
             ElementsToTake = decimal.ToInt32(nudElementsToTake.Value);
             PriceDividend = decimal.ToInt32(nudConstantDividend.Value);
         }

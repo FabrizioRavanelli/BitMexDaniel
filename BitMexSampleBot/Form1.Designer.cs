@@ -42,7 +42,11 @@
             this.dgvCandles = new System.Windows.Forms.DataGridView();
             this.ddlCandleTimes = new System.Windows.Forms.ComboBox();
             this.gbCandles = new System.Windows.Forms.GroupBox();
+            this.lblDividend = new System.Windows.Forms.Label();
+            this.lblElementsToTake = new System.Windows.Forms.Label();
+            this.nudConstantDividend = new System.Windows.Forms.NumericUpDown();
             this.lblMA2 = new System.Windows.Forms.Label();
+            this.nudElementsToTake = new System.Windows.Forms.NumericUpDown();
             this.nudMA2 = new System.Windows.Forms.NumericUpDown();
             this.lblMA1 = new System.Windows.Forms.Label();
             this.nudMA1 = new System.Windows.Forms.NumericUpDown();
@@ -82,15 +86,16 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblOverTimeSummary = new System.Windows.Forms.Label();
             this.btnOverTimeStop = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblPriceBuy = new System.Windows.Forms.Label();
             this.nudPriceBuy = new System.Windows.Forms.NumericUpDown();
             this.btnSetPrice = new System.Windows.Forms.Button();
             this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
-            this.nudElementsToTake = new System.Windows.Forms.NumericUpDown();
-            this.nudConstantDividend = new System.Windows.Forms.NumericUpDown();
+            this.lblPriceSell = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudConstantDividend)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudElementsToTake)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -103,8 +108,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudElementsToTake)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudConstantDividend)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -236,13 +239,13 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvCandles.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCandles.Location = new System.Drawing.Point(8, 57);
+            this.dgvCandles.Location = new System.Drawing.Point(8, 55);
             this.dgvCandles.Margin = new System.Windows.Forms.Padding(4);
             this.dgvCandles.Name = "dgvCandles";
             this.dgvCandles.ReadOnly = true;
             this.dgvCandles.RowHeadersVisible = false;
             this.dgvCandles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCandles.Size = new System.Drawing.Size(1636, 251);
+            this.dgvCandles.Size = new System.Drawing.Size(1636, 253);
             this.dgvCandles.TabIndex = 8;
             // 
             // ddlCandleTimes
@@ -263,7 +266,11 @@
             // 
             // gbCandles
             // 
+            this.gbCandles.Controls.Add(this.lblDividend);
+            this.gbCandles.Controls.Add(this.lblElementsToTake);
+            this.gbCandles.Controls.Add(this.nudConstantDividend);
             this.gbCandles.Controls.Add(this.lblMA2);
+            this.gbCandles.Controls.Add(this.nudElementsToTake);
             this.gbCandles.Controls.Add(this.nudMA2);
             this.gbCandles.Controls.Add(this.lblMA1);
             this.gbCandles.Controls.Add(this.nudMA1);
@@ -279,6 +286,55 @@
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
             // 
+            // lblDividend
+            // 
+            this.lblDividend.AutoSize = true;
+            this.lblDividend.Location = new System.Drawing.Point(901, 24);
+            this.lblDividend.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDividend.Name = "lblDividend";
+            this.lblDividend.Size = new System.Drawing.Size(63, 17);
+            this.lblDividend.TabIndex = 40;
+            this.lblDividend.Text = "Dividend";
+            // 
+            // lblElementsToTake
+            // 
+            this.lblElementsToTake.AutoSize = true;
+            this.lblElementsToTake.Location = new System.Drawing.Point(647, 27);
+            this.lblElementsToTake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblElementsToTake.Name = "lblElementsToTake";
+            this.lblElementsToTake.Size = new System.Drawing.Size(118, 17);
+            this.lblElementsToTake.TabIndex = 39;
+            this.lblElementsToTake.Text = "Elements to Take";
+            // 
+            // nudConstantDividend
+            // 
+            this.nudConstantDividend.DecimalPlaces = 2;
+            this.nudConstantDividend.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudConstantDividend.Location = new System.Drawing.Point(972, 24);
+            this.nudConstantDividend.Margin = new System.Windows.Forms.Padding(4);
+            this.nudConstantDividend.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.nudConstantDividend.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudConstantDividend.Name = "nudConstantDividend";
+            this.nudConstantDividend.Size = new System.Drawing.Size(105, 22);
+            this.nudConstantDividend.TabIndex = 38;
+            this.nudConstantDividend.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            // 
             // lblMA2
             // 
             this.lblMA2.AutoSize = true;
@@ -288,6 +344,35 @@
             this.lblMA2.Size = new System.Drawing.Size(36, 17);
             this.lblMA2.TabIndex = 16;
             this.lblMA2.Text = "MA2";
+            // 
+            // nudElementsToTake
+            // 
+            this.nudElementsToTake.DecimalPlaces = 2;
+            this.nudElementsToTake.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.nudElementsToTake.Location = new System.Drawing.Point(773, 24);
+            this.nudElementsToTake.Margin = new System.Windows.Forms.Padding(4);
+            this.nudElementsToTake.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.nudElementsToTake.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudElementsToTake.Name = "nudElementsToTake";
+            this.nudElementsToTake.Size = new System.Drawing.Size(105, 22);
+            this.nudElementsToTake.TabIndex = 37;
+            this.nudElementsToTake.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // nudMA2
             // 
@@ -786,15 +871,15 @@
             this.btnOverTimeStop.UseVisualStyleBackColor = true;
             this.btnOverTimeStop.Click += new System.EventHandler(this.btnOverTimeStop_Click);
             // 
-            // label7
+            // lblPriceBuy
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(744, 48);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 17);
-            this.label7.TabIndex = 33;
-            this.label7.Text = "Price";
+            this.lblPriceBuy.AutoSize = true;
+            this.lblPriceBuy.Location = new System.Drawing.Point(744, 48);
+            this.lblPriceBuy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPriceBuy.Name = "lblPriceBuy";
+            this.lblPriceBuy.Size = new System.Drawing.Size(68, 17);
+            this.lblPriceBuy.TabIndex = 33;
+            this.lblPriceBuy.Text = "Price Buy";
             // 
             // nudPriceBuy
             // 
@@ -817,7 +902,7 @@
             // 
             // btnSetPrice
             // 
-            this.btnSetPrice.Location = new System.Drawing.Point(859, 51);
+            this.btnSetPrice.Location = new System.Drawing.Point(859, 76);
             this.btnSetPrice.Margin = new System.Windows.Forms.Padding(4);
             this.btnSetPrice.Name = "btnSetPrice";
             this.btnSetPrice.Size = new System.Drawing.Size(65, 54);
@@ -834,7 +919,7 @@
             0,
             0,
             131072});
-            this.nudPriceSell.Location = new System.Drawing.Point(746, 98);
+            this.nudPriceSell.Location = new System.Drawing.Point(746, 119);
             this.nudPriceSell.Margin = new System.Windows.Forms.Padding(4);
             this.nudPriceSell.Maximum = new decimal(new int[] {
             1000000,
@@ -845,75 +930,26 @@
             this.nudPriceSell.Size = new System.Drawing.Size(105, 22);
             this.nudPriceSell.TabIndex = 36;
             // 
-            // nudElementsToTake
+            // lblPriceSell
             // 
-            this.nudElementsToTake.DecimalPlaces = 2;
-            this.nudElementsToTake.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.nudElementsToTake.Location = new System.Drawing.Point(747, 125);
-            this.nudElementsToTake.Margin = new System.Windows.Forms.Padding(4);
-            this.nudElementsToTake.Maximum = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-            this.nudElementsToTake.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudElementsToTake.Name = "nudElementsToTake";
-            this.nudElementsToTake.Size = new System.Drawing.Size(105, 22);
-            this.nudElementsToTake.TabIndex = 37;
-            this.nudElementsToTake.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // nudConstantDividend
-            // 
-            this.nudConstantDividend.DecimalPlaces = 2;
-            this.nudConstantDividend.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.nudConstantDividend.Location = new System.Drawing.Point(860, 122);
-            this.nudConstantDividend.Margin = new System.Windows.Forms.Padding(4);
-            this.nudConstantDividend.Maximum = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-            this.nudConstantDividend.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudConstantDividend.Name = "nudConstantDividend";
-            this.nudConstantDividend.Size = new System.Drawing.Size(105, 22);
-            this.nudConstantDividend.TabIndex = 38;
-            this.nudConstantDividend.Value = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
+            this.lblPriceSell.AutoSize = true;
+            this.lblPriceSell.Location = new System.Drawing.Point(744, 98);
+            this.lblPriceSell.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPriceSell.Name = "lblPriceSell";
+            this.lblPriceSell.Size = new System.Drawing.Size(67, 17);
+            this.lblPriceSell.TabIndex = 37;
+            this.lblPriceSell.Text = "Price Sell";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1679, 486);
-            this.Controls.Add(this.nudConstantDividend);
-            this.Controls.Add(this.nudElementsToTake);
+            this.Controls.Add(this.lblPriceSell);
             this.Controls.Add(this.nudPriceSell);
             this.Controls.Add(this.btnSetPrice);
             this.Controls.Add(this.nudPriceBuy);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblPriceBuy);
             this.Controls.Add(this.btnOverTimeStop);
             this.Controls.Add(this.lblOverTimeSummary);
             this.Controls.Add(this.label6);
@@ -950,6 +986,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).EndInit();
             this.gbCandles.ResumeLayout(false);
             this.gbCandles.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudConstantDividend)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudElementsToTake)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -964,8 +1002,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudElementsToTake)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudConstantDividend)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1024,12 +1060,15 @@
         private System.Windows.Forms.Label lblOverTimeSummary;
         private System.Windows.Forms.ToolStripProgressBar stsOTProgress;
         private System.Windows.Forms.Button btnOverTimeStop;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblPriceBuy;
         private System.Windows.Forms.NumericUpDown nudPriceBuy;
         private System.Windows.Forms.Button btnSetPrice;
         private System.Windows.Forms.NumericUpDown nudPriceSell;
         private System.Windows.Forms.NumericUpDown nudElementsToTake;
         private System.Windows.Forms.NumericUpDown nudConstantDividend;
+        private System.Windows.Forms.Label lblDividend;
+        private System.Windows.Forms.Label lblElementsToTake;
+        private System.Windows.Forms.Label lblPriceSell;
     }
 }
 
