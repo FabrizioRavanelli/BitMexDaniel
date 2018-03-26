@@ -14,11 +14,16 @@ namespace BitMexSampleBot
     public partial class Form1 : Form
     {
 
+        #region Constants
+
+        private const int CONST_ORDER_BOOK_DEPTH = 25;
+        #endregion
+
         // IMPORTANT - Enter your API Key information below
 
         //TEST NET - NEW
-        private static string TestbitmexKey = "ZPYsrzKM9-RFXix5On2AJKzA";
-        private static string TestbitmexSecret = "RNZJ6zA1czX5bXijkIgAO8Ewc89Ufh7zzu2-nzVYqWaV1kt1";
+        private static string TestbitmexKey = "WKavTbY4L7WLSByrbfy6xl1p";
+        private static string TestbitmexSecret = "UjEbiTfY09zrwVPJGMdgFMyFOuqCVGxie3tU86XpSwuSOtl_";
         private static string TestbitmexDomain = "https://testnet.bitmex.com";
 
         //REAL NET
@@ -87,6 +92,12 @@ namespace BitMexSampleBot
 
         public int PriceDividend { get; set; }
 
+        public double SumSellFirstItems { get; set; }
+        public double SumBuyFirstItems { get; set; }
+
+        public int InputSellSTOCHK { get; set; }
+        public int InputBuySTOCHK { get; set; }
+
         #endregion
 
         public Form1()
@@ -96,8 +107,9 @@ namespace BitMexSampleBot
             InitializeAPI();
             InitializeCandleArea();
             InitializeOverTime();
-
+            InitializeBuySellStochk();
         }
+
         private void InitializeDropdownsAndSettings()
         {
             ddlNetwork.SelectedIndex = 0;
@@ -106,6 +118,12 @@ namespace BitMexSampleBot
             ddlAutoOrderType.SelectedIndex = 0;
 
             LoadAPISettings();
+        }
+
+        private void InitializeBuySellStochk()
+        {
+            InputSellSTOCHK = Convert.ToInt32(nudSellStochk.Value);
+            InputBuySTOCHK = Convert.ToInt32(nudBuyStochk.Value);
         }
 
         private void LoadAPISettings()
@@ -162,7 +180,7 @@ namespace BitMexSampleBot
 
         private double CalculateMakerOrderPrice(string Side)
         {
-            CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, 1);
+            CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
 
             double SellPrice = CalculateSellPrice(CurrentBook);
             double BuyPrice = CalculateBuyPrice(CurrentBook);
@@ -172,19 +190,20 @@ namespace BitMexSampleBot
             switch (Side)
             {
                 case "Buy":
-                    OrderPrice = BuyPrice;
-                    //wenn BuyPrice größer als Eingabe Feld InputPriceBuy, nehmen wir InputPriceBuy
+                    OrderPrice = InputPriceBuy;
+                    //wenn BuyPrice kleiner als InputPriceBuy dann BuyPrice
                     if (BuyPrice > InputPriceBuy)
                     {
-                        OrderPrice = InputPriceBuy;
+                        OrderPrice = BuyPrice;
                     }
                     break;
+           
                 case "Sell":
-                    OrderPrice = SellPrice;
-                    //wenn SellPrice kleiner als Eingabe Feld InputPriceSell, nehmen wir InputPriceSell
-                    if (SellPrice < InputPriceSell)
+                    OrderPrice = InputPriceSell;
+                    //wenn InputPriceSell größer als SellPrice, nehmen wir SellPrice
+                    if (SellPrice > InputPriceSell)
                     {
-                        OrderPrice = InputPriceSell;
+                        OrderPrice = SellPrice;
                     }
                     break;
             }
@@ -210,7 +229,7 @@ namespace BitMexSampleBot
                             DoLimitPostOnly(Side, Qty, Price);
                             break;
                         case "Market":
-                            bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
+                            DoLimitPostOnly(Side, Qty, Price);
                             break;
                     }
                     break;
@@ -232,7 +251,7 @@ namespace BitMexSampleBot
                             DoLimitPostOnly(Side, Qty, Price);
                             break;
                         case "Market":
-                            bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
+                            DoLimitPostOnly(Side, Qty, Price);
                             break;
                     }
                     break;
@@ -506,73 +525,73 @@ namespace BitMexSampleBot
             }
             else
             {
-                int roe = 0;
-                if(!Int32.TryParse(lblAutoUnrealizedROEPercent.Text, out roe))
+                if (_lastMode.Equals("Sell") && (SumBuyFirstItems >= SumSellFirstItems))
                 {
-                    roe = 0;
+                    Mode = "Buy";
                 }
-                // This is where we are going to determine what mode the bot is in
-                if (rdoBuy.Checked)
+                else if (_lastMode.Equals("Buy") && (SumBuyFirstItems <= SumSellFirstItems))
                 {
-                    //wenn es keine OpenPosition und keine OpenOrder gibt, dann darf auch buy machen
-                    int totalOpenPositions = OpenPositions.Count();
-                    int totalOpenOrders = OpenOrders.Count();
-                    // Nach Buy kommt  Close and wait
-                    if (_lastMode.Equals("Buy"))
-                    {
-                        Mode = "CloseAndWait";
-                    }
-                    // c.STOCHK unter 10%
-                    else if ((currentCandle.STOCHK <= 10) || (currentCandle.STOCHK >= 75) || (roe >= 10) || (totalOpenPositions == 0 && totalOpenOrders == 0))
-                    {
-                        Mode = "Buy";
-                    }
-                    // c.STOCHK über 10%
-                    else if (currentCandle.STOCHK > 10)
-                    {
-                        Mode = "Wait";
-                    }
+                    Mode = "Sell";
                 }
-                else if (rdoSell.Checked)
+                else
                 {
-                    // Nach Sell kommt  Close and wait
-                    if (_lastMode.Equals("Sell"))
+                    int roe = 0;
+                    if (!Int32.TryParse(lblAutoUnrealizedROEPercent.Text, out roe))
                     {
-                        Mode = "CloseAndWait";
+                        roe = 0;
                     }
-                    else if ((roe >= 10) || (roe <= -10) || (roe == 0))
+                    // This is where we are going to determine what mode the bot is in
+                    if (rdoBuy.Checked)
                     {
-                        Mode = "Sell";
-                    }
-                    else
-                    {
-                        Mode = "Wait";
-                    }
-                }
-                else if (rdoSwitch.Checked)
-                {
-                    //wenn es keine OpenPosition und keine OpenOrder gibt, dann darf auch buy machen
-                    int totalOpenPositions = OpenPositions.Count();
-                    int totalOpenOrders = OpenOrders.Count();
+                        //wenn es keine OpenPosition und keine OpenOrder gibt, dann darf auch buy machen
 
-                    // Nach Buy and Sell kommt  Close and wait
-                    if (_lastMode.Equals("Sell") || _lastMode.Equals("Buy"))
-                    {
-                        Mode = "CloseAndWait";
+                        // Nach Buy kommt  Close and wait
+
+                        // c.STOCHK unter 20%
+                        if (currentCandle.STOCHK <= InputBuySTOCHK)  //|| (totalOpenPositions == 0 && totalOpenOrders == 0))
+                        {
+                            Mode = "Buy";
+                        }
+                        // c.STOCHK über 10%
+                        else if ((currentCandle.STOCHK > InputBuySTOCHK) || (currentCandle.STOCHK < InputSellSTOCHK))
+                        {
+                            Mode = "Wait";
+                        }
                     }
-                    //prio verkaufen
-                    else if ((roe >= 10) || (roe <= -10) || (roe == 0))
+                    else if (rdoSell.Checked)
                     {
-                        Mode = "Sell";
+                        // Nach Sell kommt  Close and wait
+
+                        if (currentCandle.STOCHK >= InputSellSTOCHK)
+                        {
+                            Mode = "Sell";
+                        }
+                        else
+                        {
+                            Mode = "Wait";
+                        }
                     }
-                    // c.STOCHK unter 10%
-                    else if ((currentCandle.STOCHK <= 10) || (currentCandle.STOCHK >= 75) || (totalOpenPositions == 0 && totalOpenOrders == 0))
+                    else if (rdoSwitch.Checked)
                     {
-                        Mode = "Buy";
-                    }
-                    else
-                    {
-                        Mode = "Wait";
+                        //wenn es keine OpenPosition und keine OpenOrder gibt, dann darf auch buy machen
+                        // int totalOpenPositions = OpenPositions.Count();
+                        //  int totalOpenOrders = OpenOrders.Count();
+
+                        // Nach Buy and Sell kommt  Close and wait
+                        if (_lastMode.Equals("Sell") || _lastMode.Equals("Buy"))
+                        {
+                            Mode = "Wait";
+                        }
+                        //prio verkaufen
+                        if (currentCandle.STOCHK >= InputSellSTOCHK)
+                        {
+                            Mode = "Sell";
+                        }
+                        // c.STOCHK unter 20% 
+                        else if (currentCandle.STOCHK <= InputBuySTOCHK)
+                        {
+                            Mode = "Buy";
+                        }
                     }
                 }
             }
@@ -1213,6 +1232,7 @@ namespace BitMexSampleBot
             CurrentBookBuy = orderBooks.Where(item => item.Side == "Buy").OrderByDescending(item => item.Price).ToList();
             // addieren die erste *ElementsToTake* (5) elementen
             double sumFirstItems = CurrentBookBuy.Take(ElementsToTake).Sum(item => item.Size);
+            SumBuyFirstItems = sumFirstItems;
             // addiere der Preis von allen "Buy" Elementen
             double summAllBuyItems = CurrentBookBuy.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
@@ -1228,6 +1248,7 @@ namespace BitMexSampleBot
             CurrentBookSell = orderBooks.Where(item => item.Side == "Sell").OrderBy(item => item.Price).ToList();
             // addieren die erste *ElementsToTake* (5) elementen
             double sumFirstItems = CurrentBookSell.Take(ElementsToTake).Sum(item => item.Size);
+            SumSellFirstItems = sumFirstItems;
             // addiere der Preis von allen "Sell" Elementen
             double summAllSellItems = CurrentBookSell.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
@@ -1243,7 +1264,7 @@ namespace BitMexSampleBot
             double sum = 0;
             OrderBook lastOrderBook = null;
             OrderBook currentOrderBook = null;
-
+             
             foreach (var orderBook in orderBooks)
             {
                 currentOrderBook = orderBook;
@@ -1263,6 +1284,16 @@ namespace BitMexSampleBot
             //in Sell mode nehme ich den sofort unter der Grenze
             //in Buy mode nehme ich den sofort über der Grenze
             return "Sell".Equals(side) ? lastOrderBook.Price : currentOrderBook.Price;
+        }
+
+        private void nudSellStochk_ValueChanged(object sender, EventArgs e)
+        {
+            InputSellSTOCHK = Convert.ToInt32(nudSellStochk.Value);
+        }
+
+        private void nudBuyStochk_ValueChanged(object sender, EventArgs e)
+        {
+            InputBuySTOCHK = Convert.ToInt32(nudBuyStochk.Value);
         }
     }
 }

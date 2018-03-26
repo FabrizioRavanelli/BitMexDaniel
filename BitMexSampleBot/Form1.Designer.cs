@@ -91,6 +91,10 @@
             this.btnSetPrice = new System.Windows.Forms.Button();
             this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
             this.lblPriceSell = new System.Windows.Forms.Label();
+            this.nudBuyStochk = new System.Windows.Forms.NumericUpDown();
+            this.nudSellStochk = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -108,6 +112,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBuyStochk)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSellStochk)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -443,7 +449,7 @@
             // 
             this.rdoBuy.AutoSize = true;
             this.rdoBuy.Checked = true;
-            this.rdoBuy.Location = new System.Drawing.Point(189, 16);
+            this.rdoBuy.Location = new System.Drawing.Point(99, 21);
             this.rdoBuy.Margin = new System.Windows.Forms.Padding(4);
             this.rdoBuy.Name = "rdoBuy";
             this.rdoBuy.Size = new System.Drawing.Size(53, 21);
@@ -455,7 +461,7 @@
             // rdoSell
             // 
             this.rdoSell.AutoSize = true;
-            this.rdoSell.Location = new System.Drawing.Point(189, 38);
+            this.rdoSell.Location = new System.Drawing.Point(99, 43);
             this.rdoSell.Margin = new System.Windows.Forms.Padding(4);
             this.rdoSell.Name = "rdoSell";
             this.rdoSell.Size = new System.Drawing.Size(52, 21);
@@ -466,7 +472,7 @@
             // rdoSwitch
             // 
             this.rdoSwitch.AutoSize = true;
-            this.rdoSwitch.Location = new System.Drawing.Point(189, 58);
+            this.rdoSwitch.Location = new System.Drawing.Point(99, 63);
             this.rdoSwitch.Margin = new System.Windows.Forms.Padding(4);
             this.rdoSwitch.Name = "rdoSwitch";
             this.rdoSwitch.Size = new System.Drawing.Size(69, 21);
@@ -476,6 +482,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.nudSellStochk);
+            this.groupBox1.Controls.Add(this.nudBuyStochk);
             this.groupBox1.Controls.Add(this.lblAutoUnrealizedROEPercent);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.nudAutoMarketTakeProfitPercent);
@@ -507,7 +517,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(264, 91);
+            this.label1.Location = new System.Drawing.Point(264, 101);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(161, 17);
@@ -522,7 +532,7 @@
             0,
             0,
             131072});
-            this.nudAutoMarketTakeProfitPercent.Location = new System.Drawing.Point(176, 87);
+            this.nudAutoMarketTakeProfitPercent.Location = new System.Drawing.Point(176, 97);
             this.nudAutoMarketTakeProfitPercent.Margin = new System.Windows.Forms.Padding(4);
             this.nudAutoMarketTakeProfitPercent.Maximum = new decimal(new int[] {
             1000000,
@@ -543,7 +553,7 @@
             this.chkAutoMarketTakeProfits.AutoSize = true;
             this.chkAutoMarketTakeProfits.Checked = true;
             this.chkAutoMarketTakeProfits.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoMarketTakeProfits.Location = new System.Drawing.Point(9, 90);
+            this.chkAutoMarketTakeProfits.Location = new System.Drawing.Point(9, 100);
             this.chkAutoMarketTakeProfits.Margin = new System.Windows.Forms.Padding(4);
             this.chkAutoMarketTakeProfits.Name = "chkAutoMarketTakeProfits";
             this.chkAutoMarketTakeProfits.Size = new System.Drawing.Size(163, 21);
@@ -598,7 +608,7 @@
             this.btnAutomatedTrading.Location = new System.Drawing.Point(9, 25);
             this.btnAutomatedTrading.Margin = new System.Windows.Forms.Padding(4);
             this.btnAutomatedTrading.Name = "btnAutomatedTrading";
-            this.btnAutomatedTrading.Size = new System.Drawing.Size(159, 53);
+            this.btnAutomatedTrading.Size = new System.Drawing.Size(82, 57);
             this.btnAutomatedTrading.TabIndex = 14;
             this.btnAutomatedTrading.Text = "Start";
             this.btnAutomatedTrading.UseVisualStyleBackColor = false;
@@ -606,7 +616,7 @@
             // 
             // tmrAutoTradeExecution
             // 
-            this.tmrAutoTradeExecution.Interval = 5000;
+            this.tmrAutoTradeExecution.Interval = 1000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
             // statusStrip1
@@ -940,6 +950,54 @@
             this.lblPriceSell.TabIndex = 37;
             this.lblPriceSell.Text = "Price Sell";
             // 
+            // nudBuyStochk
+            // 
+            this.nudBuyStochk.Location = new System.Drawing.Point(251, 18);
+            this.nudBuyStochk.Margin = new System.Windows.Forms.Padding(4);
+            this.nudBuyStochk.Name = "nudBuyStochk";
+            this.nudBuyStochk.Size = new System.Drawing.Size(55, 22);
+            this.nudBuyStochk.TabIndex = 39;
+            this.nudBuyStochk.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.nudBuyStochk.ValueChanged += new System.EventHandler(this.nudBuyStochk_ValueChanged);
+            // 
+            // nudSellStochk
+            // 
+            this.nudSellStochk.Location = new System.Drawing.Point(250, 51);
+            this.nudSellStochk.Margin = new System.Windows.Forms.Padding(4);
+            this.nudSellStochk.Name = "nudSellStochk";
+            this.nudSellStochk.Size = new System.Drawing.Size(55, 22);
+            this.nudSellStochk.TabIndex = 41;
+            this.nudSellStochk.Value = new decimal(new int[] {
+            85,
+            0,
+            0,
+            0});
+            this.nudSellStochk.ValueChanged += new System.EventHandler(this.nudSellStochk_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(166, 21);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(81, 17);
+            this.label7.TabIndex = 38;
+            this.label7.Text = "Buy StochK";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(166, 53);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(80, 17);
+            this.label8.TabIndex = 42;
+            this.label8.Text = "Sell StochK";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1002,6 +1060,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBuyStochk)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSellStochk)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1069,6 +1129,10 @@
         private System.Windows.Forms.Label lblDividend;
         private System.Windows.Forms.Label lblElementsToTake;
         private System.Windows.Forms.Label lblPriceSell;
+        private System.Windows.Forms.NumericUpDown nudSellStochk;
+        private System.Windows.Forms.NumericUpDown nudBuyStochk;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }
 
