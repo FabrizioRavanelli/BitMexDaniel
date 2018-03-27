@@ -88,9 +88,11 @@ namespace BitMexSampleBot
         public double InputPriceBuy { get; set; }
         public double InputPriceSell { get; set; }
 
-        public int ElementsToTake { get; set; }
+        public int BuyElementsToTake { get; set; }
+        public int SellElementsToTake { get; set; }
 
-        public int PriceDividend { get; set; }
+        public int PriceBuyDividend { get; set; }
+        public int PriceSellDividend { get; set; }
 
         public double SumSellFirstItems { get; set; }
         public double SumBuyFirstItems { get; set; }
@@ -108,6 +110,7 @@ namespace BitMexSampleBot
             InitializeCandleArea();
             InitializeOverTime();
             InitializeBuySellStochk();
+            InitializeParameterSettings();
         }
 
         private void InitializeDropdownsAndSettings()
@@ -124,6 +127,16 @@ namespace BitMexSampleBot
         {
             InputSellSTOCHK = Convert.ToInt32(nudSellStochk.Value);
             InputBuySTOCHK = Convert.ToInt32(nudBuyStochk.Value);
+        }
+
+        private void InitializeParameterSettings()
+        {
+            InputPriceBuy = decimal.ToDouble(nudPriceBuy.Value);
+            InputPriceSell = decimal.ToDouble(nudPriceSell.Value);
+            BuyElementsToTake = decimal.ToInt32(nudBuyElementsToTake.Value);
+            SellElementsToTake = decimal.ToInt32(nudSellElementsToTake.Value);
+            PriceBuyDividend = decimal.ToInt32(nudConstantBuyDividend.Value);
+            PriceSellDividend = decimal.ToInt32(nudConstantSellDividend.Value);
         }
 
         private void LoadAPISettings()
@@ -201,7 +214,7 @@ namespace BitMexSampleBot
                 case "Sell":
                     OrderPrice = InputPriceSell;
                     //wenn InputPriceSell größer als SellPrice, nehmen wir SellPrice
-                    if (SellPrice > InputPriceSell)
+                    if (SellPrice < InputPriceSell)
                     {
                         OrderPrice = SellPrice;
                     }
@@ -525,11 +538,11 @@ namespace BitMexSampleBot
             }
             else
             {
-                if (_lastMode.Equals("Sell") && (SumBuyFirstItems >= SumSellFirstItems))
+                if (_lastMode.Equals("Sell") && (currentCandle.STOCHK <= InputBuySTOCHK))
                 {
                     Mode = "Buy";
                 }
-                else if (_lastMode.Equals("Buy") && (SumBuyFirstItems <= SumSellFirstItems))
+                else if (_lastMode.Equals("Buy") && (currentCandle.STOCHK >= InputSellSTOCHK))
                 {
                     Mode = "Sell";
                 }
@@ -1147,7 +1160,7 @@ namespace BitMexSampleBot
             OTIntervalSeconds = Convert.ToInt32(nudOverTimeInterval.Value);
             OTIntervalCount = Convert.ToInt32(nudOverTimeIntervalCount.Value);
 
-            lblOverTimeSummary.Text = (OTContractsPer * OTIntervalCount).ToString() + " Contracts over " + OTIntervalCount.ToString() + " orders during a total of " + (OTIntervalCount * OTIntervalSeconds).ToString() + " seconds.";
+            
 
         }
 
@@ -1219,10 +1232,7 @@ namespace BitMexSampleBot
         //CHANGE 2: Price set from UI
         private void btnSetPrice_Click(object sender, EventArgs e)
         {
-            InputPriceBuy = decimal.ToDouble(nudPriceBuy.Value);
-            InputPriceSell = decimal.ToDouble(nudPriceSell.Value);
-            ElementsToTake = decimal.ToInt32(nudElementsToTake.Value);
-            PriceDividend = decimal.ToInt32(nudConstantDividend.Value);
+            InitializeParameterSettings();
         }
 
         //Berechnung der Preis für Buy
@@ -1231,12 +1241,12 @@ namespace BitMexSampleBot
             //Aus der OrderBook nehme ich Buy Orders und sortiere ich sie (erstes element => das mit dem höchsten Preis)
             CurrentBookBuy = orderBooks.Where(item => item.Side == "Buy").OrderByDescending(item => item.Price).ToList();
             // addieren die erste *ElementsToTake* (5) elementen
-            double sumFirstItems = CurrentBookBuy.Take(ElementsToTake).Sum(item => item.Size);
+            double sumFirstItems = CurrentBookBuy.Take(BuyElementsToTake).Sum(item => item.Size);
             SumBuyFirstItems = sumFirstItems;
             // addiere der Preis von allen "Buy" Elementen
             double summAllBuyItems = CurrentBookBuy.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
-            double sizeLimit = summAllBuyItems / PriceDividend;
+            double sizeLimit = summAllBuyItems / PriceBuyDividend;
             //Price durch die Grenze festlegen in Buy Mode
             return SelectPrice(CurrentBookBuy, sizeLimit, "Buy");
         }
@@ -1247,12 +1257,12 @@ namespace BitMexSampleBot
             //Aus der OrderBook nehme ich Sell Orders und sortiere ich sie (erstes element => das mit dem niedrigsten Preis)
             CurrentBookSell = orderBooks.Where(item => item.Side == "Sell").OrderBy(item => item.Price).ToList();
             // addieren die erste *ElementsToTake* (5) elementen
-            double sumFirstItems = CurrentBookSell.Take(ElementsToTake).Sum(item => item.Size);
+            double sumFirstItems = CurrentBookSell.Take(SellElementsToTake).Sum(item => item.Size);
             SumSellFirstItems = sumFirstItems;
             // addiere der Preis von allen "Sell" Elementen
             double summAllSellItems = CurrentBookSell.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
-            double sizeLimit = summAllSellItems / PriceDividend;
+            double sizeLimit = summAllSellItems / PriceSellDividend;
             //Price durch die Grenze festlegen in Sell Mode
             return SelectPrice(CurrentBookSell, sizeLimit, "Sell");
         }
@@ -1264,7 +1274,7 @@ namespace BitMexSampleBot
             double sum = 0;
             OrderBook lastOrderBook = null;
             OrderBook currentOrderBook = null;
-             
+
             foreach (var orderBook in orderBooks)
             {
                 currentOrderBook = orderBook;
@@ -1295,5 +1305,6 @@ namespace BitMexSampleBot
         {
             InputBuySTOCHK = Convert.ToInt32(nudBuyStochk.Value);
         }
+
     }
 }

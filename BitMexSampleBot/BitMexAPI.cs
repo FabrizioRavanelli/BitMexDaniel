@@ -29,7 +29,7 @@ namespace BitMEX
         private string apiSecret;
         private int rateLimit;
 
-        public BitMEXApi(string bitmexKey = "", string bitmexSecret = "", string bitmexDomain = "", int rateLimit = 5000)
+        public BitMEXApi(string bitmexKey = "", string bitmexSecret = "", string bitmexDomain = "", int rateLimit = 1000)
         {
             this.apiKey = bitmexKey;
             this.apiSecret = bitmexSecret;
