@@ -94,7 +94,7 @@ namespace BitMexSampleBot
         public int PriceBuyDividend { get; set; }
         public int PriceSellDividend { get; set; }
 
-        public int InputVolume24h { get; set; }
+        public double InputVolume24h { get; set; }
 
         public double SumSellFirstItems { get; set; }
         public double SumBuyFirstItems { get; set; }
@@ -113,6 +113,38 @@ namespace BitMexSampleBot
             InitializeOverTime();
             InitializeBuySellStochk();
             InitializeParameterSettings();
+            InitializeColors();
+        }
+
+        private void InitializeColors()
+        {
+            //form background und foreground
+            this.BackColor = System.Drawing.Color.Black;
+            this.ForeColor = System.Drawing.Color.Yellow;
+            
+            //grid header
+            this.dgvCandles.ColumnHeadersDefaultCellStyle.BackColor = Color.Black;
+            this.dgvCandles.ColumnHeadersDefaultCellStyle.ForeColor = Color.Yellow;
+            this.dgvCandles.EnableHeadersVisualStyles = false;
+
+            this.gbAutomatedTrading.ForeColor = Color.Yellow;
+            this.gbBuy.ForeColor = Color.Yellow;
+            this.gbSell.ForeColor = Color.Yellow;
+            this.gbCandles.ForeColor = Color.Yellow;
+            this.btnSetPrice.ForeColor = Color.Black;
+            this.btnAutomatedTrading.ForeColor = Color.Black;
+            this.ddlAutoOrderType.ForeColor = Color.Black;
+            this.ddlAutoOrderType.ForeColor = Color.Black;
+            this.ddlCandleTimes.ForeColor = Color.Black;
+            this.btnBuy.ForeColor = Color.Black;
+            this.btnSell.ForeColor = Color.Black;
+            this.btnCancelOpenOrders.ForeColor = Color.Black;
+            this.btnManualSetStop.ForeColor = Color.Black;
+            this.btnBuyOverTimeOrder.ForeColor = Color.Black;
+            this.btnSellOverTimeOrder.ForeColor = Color.Black;
+            this.btnOverTimeStop.ForeColor = Color.Black;
+            this.btnAccountBalance.ForeColor = Color.Black;
+
         }
 
         private void InitializeDropdownsAndSettings()
@@ -139,7 +171,7 @@ namespace BitMexSampleBot
             SellElementsToTake = decimal.ToInt32(nudSellElementsToTake.Value);
             PriceBuyDividend = decimal.ToInt32(nudConstantBuyDividend.Value);
             PriceSellDividend = decimal.ToInt32(nudConstantSellDividend.Value);
-            InputVolume24h = decimal.ToInt32(nudVolume24h.Value);
+            InputVolume24h = decimal.ToDouble(nudVolume24h.Value);
         }
 
         private void LoadAPISettings()
@@ -541,8 +573,21 @@ namespace BitMexSampleBot
             }
             else
             {
-                //SumBuyFirstItems SumSellFirstItems
-                if (_lastMode.Equals("Sell") && (currentCandle.STOCHK <= InputBuySTOCHK))
+                if (ActiveInstrument.Volume24H > InputVolume24h)
+                {
+                    // wenn "Peak kommt" dann bevor er prüft ob er buy oder sell ausführen soll 
+                    // müssen alle orders gelöscht werden
+                    bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                    if (SumBuyFirstItems > SumSellFirstItems)
+                    {
+                        Mode = "Buy";
+                    }
+                    else
+                    {
+                        Mode = "Sell";
+                    }
+                }
+                else if (_lastMode.Equals("Sell") && (currentCandle.STOCHK <= InputBuySTOCHK))
                 {
                     Mode = "Buy";
                 }
@@ -1310,5 +1355,10 @@ namespace BitMexSampleBot
             InputBuySTOCHK = Convert.ToInt32(nudBuyStochk.Value);
         }
 
+        private void dgvCandles_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            e.CellStyle.BackColor = Color.Black;
+            e.CellStyle.ForeColor = Color.Yellow;
+        }   
     }
 }

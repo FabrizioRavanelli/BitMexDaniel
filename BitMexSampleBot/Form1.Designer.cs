@@ -44,6 +44,8 @@
             this.dgvCandles = new System.Windows.Forms.DataGridView();
             this.ddlCandleTimes = new System.Windows.Forms.ComboBox();
             this.gbCandles = new System.Windows.Forms.GroupBox();
+            this.lblVolume24h = new System.Windows.Forms.Label();
+            this.nudVolume24h = new System.Windows.Forms.NumericUpDown();
             this.gbSell = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.nudConstantSellDividend = new System.Windows.Forms.NumericUpDown();
@@ -63,7 +65,7 @@
             this.rdoBuy = new System.Windows.Forms.RadioButton();
             this.rdoSell = new System.Windows.Forms.RadioButton();
             this.rdoSwitch = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbAutomatedTrading = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -103,11 +105,10 @@
             this.btnSetPrice = new System.Windows.Forms.Button();
             this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
             this.lblPriceSell = new System.Windows.Forms.Label();
-            this.nudVolume24h = new System.Windows.Forms.NumericUpDown();
-            this.lblVolume24h = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).BeginInit();
             this.gbSell.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudConstantSellDividend)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSellElementsToTake)).BeginInit();
@@ -116,7 +117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudBuyElementsToTake)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbAutomatedTrading.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSellStochk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBuyStochk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoMarketTakeProfitPercent)).BeginInit();
@@ -128,7 +129,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -292,6 +292,7 @@
             this.dgvCandles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCandles.Size = new System.Drawing.Size(1636, 223);
             this.dgvCandles.TabIndex = 8;
+            this.dgvCandles.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCandles_CellFormatting);
             // 
             // ddlCandleTimes
             // 
@@ -331,6 +332,39 @@
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
+            // 
+            // lblVolume24h
+            // 
+            this.lblVolume24h.AutoSize = true;
+            this.lblVolume24h.Location = new System.Drawing.Point(918, 27);
+            this.lblVolume24h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVolume24h.Name = "lblVolume24h";
+            this.lblVolume24h.Size = new System.Drawing.Size(79, 17);
+            this.lblVolume24h.TabIndex = 48;
+            this.lblVolume24h.Text = "Volume24h";
+            // 
+            // nudVolume24h
+            // 
+            this.nudVolume24h.Location = new System.Drawing.Point(921, 49);
+            this.nudVolume24h.Margin = new System.Windows.Forms.Padding(4);
+            this.nudVolume24h.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.nudVolume24h.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudVolume24h.Name = "nudVolume24h";
+            this.nudVolume24h.Size = new System.Drawing.Size(102, 22);
+            this.nudVolume24h.TabIndex = 47;
+            this.nudVolume24h.Value = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
             // 
             // gbSell
             // 
@@ -600,32 +634,32 @@
             this.rdoSwitch.Text = "Switch";
             this.rdoSwitch.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // gbAutomatedTrading
             // 
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.nudSellStochk);
-            this.groupBox1.Controls.Add(this.nudBuyStochk);
-            this.groupBox1.Controls.Add(this.lblAutoUnrealizedROEPercent);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.nudAutoMarketTakeProfitPercent);
-            this.groupBox1.Controls.Add(this.chkAutoMarketTakeProfits);
-            this.groupBox1.Controls.Add(this.ddlAutoOrderType);
-            this.groupBox1.Controls.Add(this.nudAutoQuantity);
-            this.groupBox1.Controls.Add(this.btnAutomatedTrading);
-            this.groupBox1.Controls.Add(this.rdoSell);
-            this.groupBox1.Controls.Add(this.rdoSwitch);
-            this.groupBox1.Controls.Add(this.rdoBuy);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(718, 19);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(363, 169);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Automated Trading";
+            this.gbAutomatedTrading.Controls.Add(this.label9);
+            this.gbAutomatedTrading.Controls.Add(this.label8);
+            this.gbAutomatedTrading.Controls.Add(this.label7);
+            this.gbAutomatedTrading.Controls.Add(this.nudSellStochk);
+            this.gbAutomatedTrading.Controls.Add(this.nudBuyStochk);
+            this.gbAutomatedTrading.Controls.Add(this.lblAutoUnrealizedROEPercent);
+            this.gbAutomatedTrading.Controls.Add(this.label1);
+            this.gbAutomatedTrading.Controls.Add(this.nudAutoMarketTakeProfitPercent);
+            this.gbAutomatedTrading.Controls.Add(this.chkAutoMarketTakeProfits);
+            this.gbAutomatedTrading.Controls.Add(this.ddlAutoOrderType);
+            this.gbAutomatedTrading.Controls.Add(this.nudAutoQuantity);
+            this.gbAutomatedTrading.Controls.Add(this.btnAutomatedTrading);
+            this.gbAutomatedTrading.Controls.Add(this.rdoSell);
+            this.gbAutomatedTrading.Controls.Add(this.rdoSwitch);
+            this.gbAutomatedTrading.Controls.Add(this.rdoBuy);
+            this.gbAutomatedTrading.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbAutomatedTrading.Location = new System.Drawing.Point(718, 19);
+            this.gbAutomatedTrading.Margin = new System.Windows.Forms.Padding(4);
+            this.gbAutomatedTrading.Name = "gbAutomatedTrading";
+            this.gbAutomatedTrading.Padding = new System.Windows.Forms.Padding(4);
+            this.gbAutomatedTrading.Size = new System.Drawing.Size(363, 169);
+            this.gbAutomatedTrading.TabIndex = 14;
+            this.gbAutomatedTrading.TabStop = false;
+            this.gbAutomatedTrading.Text = "Automated Trading";
             // 
             // label9
             // 
@@ -1155,39 +1189,6 @@
             this.lblPriceSell.TabIndex = 37;
             this.lblPriceSell.Text = "Price Sell";
             // 
-            // nudVolume24h
-            // 
-            this.nudVolume24h.Location = new System.Drawing.Point(994, 28);
-            this.nudVolume24h.Margin = new System.Windows.Forms.Padding(4);
-            this.nudVolume24h.Maximum = new decimal(new int[] {
-            5000000,
-            0,
-            0,
-            0});
-            this.nudVolume24h.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudVolume24h.Name = "nudVolume24h";
-            this.nudVolume24h.Size = new System.Drawing.Size(70, 22);
-            this.nudVolume24h.TabIndex = 47;
-            this.nudVolume24h.Value = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            // 
-            // lblVolume24h
-            // 
-            this.lblVolume24h.AutoSize = true;
-            this.lblVolume24h.Location = new System.Drawing.Point(907, 28);
-            this.lblVolume24h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblVolume24h.Name = "lblVolume24h";
-            this.lblVolume24h.Size = new System.Drawing.Size(79, 17);
-            this.lblVolume24h.TabIndex = 48;
-            this.lblVolume24h.Text = "Volume24h";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1215,7 +1216,7 @@
             this.Controls.Add(this.nudStopPercent);
             this.Controls.Add(this.btnAccountBalance);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbAutomatedTrading);
             this.Controls.Add(this.gbCandles);
             this.Controls.Add(this.ddlSymbol);
             this.Controls.Add(this.ddlNetwork);
@@ -1228,11 +1229,12 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "BitMex Bot";
+            this.Text = "Snipers Bot";
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).EndInit();
             this.gbCandles.ResumeLayout(false);
             this.gbCandles.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).EndInit();
             this.gbSell.ResumeLayout(false);
             this.gbSell.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudConstantSellDividend)).EndInit();
@@ -1243,8 +1245,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudBuyElementsToTake)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbAutomatedTrading.ResumeLayout(false);
+            this.gbAutomatedTrading.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSellStochk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBuyStochk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoMarketTakeProfitPercent)).EndInit();
@@ -1257,7 +1259,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1285,7 +1286,7 @@
         private System.Windows.Forms.RadioButton rdoBuy;
         private System.Windows.Forms.RadioButton rdoSell;
         private System.Windows.Forms.RadioButton rdoSwitch;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbAutomatedTrading;
         private System.Windows.Forms.Button btnAutomatedTrading;
         private System.Windows.Forms.ComboBox ddlAutoOrderType;
         private System.Windows.Forms.NumericUpDown nudAutoQuantity;
