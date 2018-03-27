@@ -94,6 +94,8 @@ namespace BitMexSampleBot
         public int PriceBuyDividend { get; set; }
         public int PriceSellDividend { get; set; }
 
+        public int InputVolume24h { get; set; }
+
         public double SumSellFirstItems { get; set; }
         public double SumBuyFirstItems { get; set; }
 
@@ -137,6 +139,7 @@ namespace BitMexSampleBot
             SellElementsToTake = decimal.ToInt32(nudSellElementsToTake.Value);
             PriceBuyDividend = decimal.ToInt32(nudConstantBuyDividend.Value);
             PriceSellDividend = decimal.ToInt32(nudConstantSellDividend.Value);
+            InputVolume24h = decimal.ToInt32(nudVolume24h.Value);
         }
 
         private void LoadAPISettings()
@@ -538,6 +541,7 @@ namespace BitMexSampleBot
             }
             else
             {
+                //SumBuyFirstItems SumSellFirstItems
                 if (_lastMode.Equals("Sell") && (currentCandle.STOCHK <= InputBuySTOCHK))
                 {
                     Mode = "Buy";

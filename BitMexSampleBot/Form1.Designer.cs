@@ -103,6 +103,8 @@
             this.btnSetPrice = new System.Windows.Forms.Button();
             this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
             this.lblPriceSell = new System.Windows.Forms.Label();
+            this.nudVolume24h = new System.Windows.Forms.NumericUpDown();
+            this.lblVolume24h = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -126,6 +128,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -308,6 +311,8 @@
             // 
             // gbCandles
             // 
+            this.gbCandles.Controls.Add(this.lblVolume24h);
+            this.gbCandles.Controls.Add(this.nudVolume24h);
             this.gbCandles.Controls.Add(this.gbSell);
             this.gbCandles.Controls.Add(this.gbBuy);
             this.gbCandles.Controls.Add(this.lblMA2);
@@ -1150,6 +1155,39 @@
             this.lblPriceSell.TabIndex = 37;
             this.lblPriceSell.Text = "Price Sell";
             // 
+            // nudVolume24h
+            // 
+            this.nudVolume24h.Location = new System.Drawing.Point(994, 28);
+            this.nudVolume24h.Margin = new System.Windows.Forms.Padding(4);
+            this.nudVolume24h.Maximum = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+            this.nudVolume24h.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudVolume24h.Name = "nudVolume24h";
+            this.nudVolume24h.Size = new System.Drawing.Size(70, 22);
+            this.nudVolume24h.TabIndex = 47;
+            this.nudVolume24h.Value = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            // 
+            // lblVolume24h
+            // 
+            this.lblVolume24h.AutoSize = true;
+            this.lblVolume24h.Location = new System.Drawing.Point(907, 28);
+            this.lblVolume24h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVolume24h.Name = "lblVolume24h";
+            this.lblVolume24h.Size = new System.Drawing.Size(79, 17);
+            this.lblVolume24h.TabIndex = 48;
+            this.lblVolume24h.Text = "Volume24h";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1219,6 +1257,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1296,6 +1335,8 @@
         private System.Windows.Forms.NumericUpDown nudConstantSellDividend;
         private System.Windows.Forms.Label lblSellElementsToTake;
         private System.Windows.Forms.NumericUpDown nudSellElementsToTake;
+        private System.Windows.Forms.Label lblVolume24h;
+        private System.Windows.Forms.NumericUpDown nudVolume24h;
     }
 }
 
