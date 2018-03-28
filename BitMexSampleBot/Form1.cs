@@ -13,6 +13,7 @@ namespace BitMexSampleBot
 {
     public partial class Form1 : Form
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region Constants
 
@@ -172,6 +173,9 @@ namespace BitMexSampleBot
             PriceBuyDividend = decimal.ToInt32(nudConstantBuyDividend.Value);
             PriceSellDividend = decimal.ToInt32(nudConstantSellDividend.Value);
             InputVolume24h = decimal.ToDouble(nudVolume24h.Value);
+            log.InfoFormat("Set Input Setting: InputPriceBuy = {0}, InputPriceSell = {1}, BuyElementsToTake = {2}, " +
+                "SellElementsToTake={3}, PriceBuyDividend={4}, PriceSellDividend={5}, InputVolume24h={6}", InputPriceBuy, InputPriceSell,
+                BuyElementsToTake, SellElementsToTake, PriceBuyDividend, PriceSellDividend, InputVolume24h);
         }
 
         private void LoadAPISettings()
@@ -231,8 +235,10 @@ namespace BitMexSampleBot
             CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
 
             double SellPrice = CalculateSellPrice(CurrentBook);
+            log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
             double BuyPrice = CalculateBuyPrice(CurrentBook);
-            
+            log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
+
             double OrderPrice = 0;
 
             switch (Side)
@@ -244,8 +250,8 @@ namespace BitMexSampleBot
                     {
                         OrderPrice = BuyPrice;
                     }
+                    log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}, InputPriceBuy:{1} => OrderPrice: {2}", BuyPrice, InputPriceBuy, OrderPrice);
                     break;
-           
                 case "Sell":
                     OrderPrice = InputPriceSell;
                     //wenn InputPriceSell größer als SellPrice, nehmen wir SellPrice
@@ -253,6 +259,7 @@ namespace BitMexSampleBot
                     {
                         OrderPrice = SellPrice;
                     }
+                    log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}, InputPriceSell:{1} => OrderPrice: {2}", SellPrice, InputPriceSell, OrderPrice);
                     break;
             }
             return OrderPrice;
@@ -657,6 +664,7 @@ namespace BitMexSampleBot
                     }
                 }
             }
+            log.InfoFormat("SetBotMode - Mode: {0}, _lastMode: {1}", Mode, _lastMode);
             _lastMode = Mode;
         }
 
@@ -1296,6 +1304,7 @@ namespace BitMexSampleBot
             double summAllBuyItems = CurrentBookBuy.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
             double sizeLimit = summAllBuyItems / PriceBuyDividend;
+            log.InfoFormat("CalculateBuyPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", SumSellFirstItems, sizeLimit);
             //Price durch die Grenze festlegen in Buy Mode
             return SelectPrice(CurrentBookBuy, sizeLimit, "Buy");
         }
@@ -1312,6 +1321,9 @@ namespace BitMexSampleBot
             double summAllSellItems = CurrentBookSell.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
             double sizeLimit = summAllSellItems / PriceSellDividend;
+
+            log.InfoFormat("CalculatedSellPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", SellElementsToTake, SumSellFirstItems, sizeLimit);
+
             //Price durch die Grenze festlegen in Sell Mode
             return SelectPrice(CurrentBookSell, sizeLimit, "Sell");
         }
@@ -1325,10 +1337,11 @@ namespace BitMexSampleBot
             OrderBook currentOrderBook = null;
 
             foreach (var orderBook in orderBooks)
-            {
+            {   
                 currentOrderBook = orderBook;
 
                 sum += orderBook.Size;
+                log.InfoFormat("SelectPrice - orderBook.Size: {0}, sum: {1}, sizeLimit: {2}", orderBook.Size, sum, sizeLimit);
                 if (sum > sizeLimit)
                 {
                     break;
