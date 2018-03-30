@@ -27,14 +27,14 @@ namespace BitMexSampleBot
             Application.Run(new Form1());
         }
 
-        private static void CurrentThreadException(object sender, ThreadExceptionEventArgs e)
+        private static void CurrentThreadException(object sender, ThreadExceptionEventArgs args)
         {
-            log.InfoFormat("Unhandled Thread Exception: {0}", e.Exception.Message);
+            log.Error("Unhandled Thread Exception", args.Exception);
         }
 
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs args)
         {
-            throw new NotImplementedException();
+            log.Error("Unhandled Thread Exception", (Exception)args.ExceptionObject);
         }
 
     }

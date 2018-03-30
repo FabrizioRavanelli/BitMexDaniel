@@ -105,7 +105,14 @@
             this.btnSetPrice = new System.Windows.Forms.Button();
             this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
             this.lblPriceSell = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtBuyElementsDivisionOutput = new System.Windows.Forms.TextBox();
+            this.txtSellElementsDivisionOutput = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtFirstBuyOrderOutput = new System.Windows.Forms.TextBox();
+            this.lblFirstBuyOrder = new System.Windows.Forms.Label();
+            this.txtFirstSellOrderOutput = new System.Windows.Forms.TextBox();
+            this.lblFirstSellOrder = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -313,6 +320,10 @@
             // 
             // gbCandles
             // 
+            this.gbCandles.Controls.Add(this.txtFirstSellOrderOutput);
+            this.gbCandles.Controls.Add(this.lblFirstSellOrder);
+            this.gbCandles.Controls.Add(this.txtFirstBuyOrderOutput);
+            this.gbCandles.Controls.Add(this.lblFirstBuyOrder);
             this.gbCandles.Controls.Add(this.lblVolume24h);
             this.gbCandles.Controls.Add(this.nudVolume24h);
             this.gbCandles.Controls.Add(this.gbSell);
@@ -329,7 +340,7 @@
             this.gbCandles.Margin = new System.Windows.Forms.Padding(4);
             this.gbCandles.Name = "gbCandles";
             this.gbCandles.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCandles.Size = new System.Drawing.Size(1064, 270);
+            this.gbCandles.Size = new System.Drawing.Size(1252, 270);
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
@@ -337,7 +348,7 @@
             // lblVolume24h
             // 
             this.lblVolume24h.AutoSize = true;
-            this.lblVolume24h.Location = new System.Drawing.Point(950, 27);
+            this.lblVolume24h.Location = new System.Drawing.Point(1009, 19);
             this.lblVolume24h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblVolume24h.Name = "lblVolume24h";
             this.lblVolume24h.Size = new System.Drawing.Size(79, 17);
@@ -346,7 +357,7 @@
             // 
             // nudVolume24h
             // 
-            this.nudVolume24h.Location = new System.Drawing.Point(953, 49);
+            this.nudVolume24h.Location = new System.Drawing.Point(1142, 17);
             this.nudVolume24h.Margin = new System.Windows.Forms.Padding(4);
             this.nudVolume24h.Maximum = new decimal(new int[] {
             5000000,
@@ -369,13 +380,15 @@
             // 
             // gbSell
             // 
+            this.gbSell.Controls.Add(this.txtSellElementsDivisionOutput);
+            this.gbSell.Controls.Add(this.label12);
             this.gbSell.Controls.Add(this.label10);
             this.gbSell.Controls.Add(this.nudConstantSellDividend);
             this.gbSell.Controls.Add(this.lblSellElementsToTake);
             this.gbSell.Controls.Add(this.nudSellElementsToTake);
-            this.gbSell.Location = new System.Drawing.Point(710, 11);
+            this.gbSell.Location = new System.Drawing.Point(675, 10);
             this.gbSell.Name = "gbSell";
-            this.gbSell.Size = new System.Drawing.Size(236, 68);
+            this.gbSell.Size = new System.Drawing.Size(327, 68);
             this.gbSell.TabIndex = 46;
             this.gbSell.TabStop = false;
             this.gbSell.Text = "Sell";
@@ -383,7 +396,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(102, 48);
+            this.label10.Location = new System.Drawing.Point(186, 47);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(63, 17);
@@ -392,7 +405,7 @@
             // 
             // nudConstantSellDividend
             // 
-            this.nudConstantSellDividend.Location = new System.Drawing.Point(175, 46);
+            this.nudConstantSellDividend.Location = new System.Drawing.Point(259, 45);
             this.nudConstantSellDividend.Margin = new System.Windows.Forms.Padding(4);
             this.nudConstantSellDividend.Maximum = new decimal(new int[] {
             50,
@@ -408,7 +421,7 @@
             this.nudConstantSellDividend.Size = new System.Drawing.Size(55, 22);
             this.nudConstantSellDividend.TabIndex = 46;
             this.nudConstantSellDividend.Value = new decimal(new int[] {
-            15,
+            3,
             0,
             0,
             0});
@@ -416,7 +429,7 @@
             // lblSellElementsToTake
             // 
             this.lblSellElementsToTake.AutoSize = true;
-            this.lblSellElementsToTake.Location = new System.Drawing.Point(54, 23);
+            this.lblSellElementsToTake.Location = new System.Drawing.Point(138, 22);
             this.lblSellElementsToTake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSellElementsToTake.Name = "lblSellElementsToTake";
             this.lblSellElementsToTake.Size = new System.Drawing.Size(118, 17);
@@ -425,7 +438,7 @@
             // 
             // nudSellElementsToTake
             // 
-            this.nudSellElementsToTake.Location = new System.Drawing.Point(175, 22);
+            this.nudSellElementsToTake.Location = new System.Drawing.Point(259, 21);
             this.nudSellElementsToTake.Margin = new System.Windows.Forms.Padding(4);
             this.nudSellElementsToTake.Maximum = new decimal(new int[] {
             25,
@@ -448,14 +461,15 @@
             // 
             // gbBuy
             // 
-            this.gbBuy.Controls.Add(this.textBox1);
+            this.gbBuy.Controls.Add(this.txtBuyElementsDivisionOutput);
+            this.gbBuy.Controls.Add(this.label11);
             this.gbBuy.Controls.Add(this.lblDividend);
             this.gbBuy.Controls.Add(this.lblBuyElementsToTake);
             this.gbBuy.Controls.Add(this.nudConstantBuyDividend);
             this.gbBuy.Controls.Add(this.nudBuyElementsToTake);
-            this.gbBuy.Location = new System.Drawing.Point(486, 11);
+            this.gbBuy.Location = new System.Drawing.Point(350, 13);
             this.gbBuy.Name = "gbBuy";
-            this.gbBuy.Size = new System.Drawing.Size(197, 68);
+            this.gbBuy.Size = new System.Drawing.Size(320, 68);
             this.gbBuy.TabIndex = 45;
             this.gbBuy.TabStop = false;
             this.gbBuy.Text = "Buy";
@@ -463,7 +477,7 @@
             // lblDividend
             // 
             this.lblDividend.AutoSize = true;
-            this.lblDividend.Location = new System.Drawing.Point(65, 45);
+            this.lblDividend.Location = new System.Drawing.Point(187, 42);
             this.lblDividend.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDividend.Name = "lblDividend";
             this.lblDividend.Size = new System.Drawing.Size(63, 17);
@@ -473,7 +487,7 @@
             // lblBuyElementsToTake
             // 
             this.lblBuyElementsToTake.AutoSize = true;
-            this.lblBuyElementsToTake.Location = new System.Drawing.Point(10, 22);
+            this.lblBuyElementsToTake.Location = new System.Drawing.Point(132, 19);
             this.lblBuyElementsToTake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBuyElementsToTake.Name = "lblBuyElementsToTake";
             this.lblBuyElementsToTake.Size = new System.Drawing.Size(118, 17);
@@ -482,7 +496,7 @@
             // 
             // nudConstantBuyDividend
             // 
-            this.nudConstantBuyDividend.Location = new System.Drawing.Point(136, 43);
+            this.nudConstantBuyDividend.Location = new System.Drawing.Point(258, 40);
             this.nudConstantBuyDividend.Margin = new System.Windows.Forms.Padding(4);
             this.nudConstantBuyDividend.Maximum = new decimal(new int[] {
             50,
@@ -498,14 +512,14 @@
             this.nudConstantBuyDividend.Size = new System.Drawing.Size(55, 22);
             this.nudConstantBuyDividend.TabIndex = 42;
             this.nudConstantBuyDividend.Value = new decimal(new int[] {
-            15,
+            3,
             0,
             0,
             0});
             // 
             // nudBuyElementsToTake
             // 
-            this.nudBuyElementsToTake.Location = new System.Drawing.Point(136, 20);
+            this.nudBuyElementsToTake.Location = new System.Drawing.Point(258, 17);
             this.nudBuyElementsToTake.Margin = new System.Windows.Forms.Padding(4);
             this.nudBuyElementsToTake.Maximum = new decimal(new int[] {
             25,
@@ -529,7 +543,7 @@
             // lblMA2
             // 
             this.lblMA2.AutoSize = true;
-            this.lblMA2.Location = new System.Drawing.Point(428, 26);
+            this.lblMA2.Location = new System.Drawing.Point(310, 61);
             this.lblMA2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMA2.Name = "lblMA2";
             this.lblMA2.Size = new System.Drawing.Size(36, 17);
@@ -538,7 +552,7 @@
             // 
             // nudMA2
             // 
-            this.nudMA2.Location = new System.Drawing.Point(364, 23);
+            this.nudMA2.Location = new System.Drawing.Point(248, 59);
             this.nudMA2.Margin = new System.Windows.Forms.Padding(4);
             this.nudMA2.Minimum = new decimal(new int[] {
             1,
@@ -815,7 +829,7 @@
             this.nudAutoQuantity.Size = new System.Drawing.Size(95, 22);
             this.nudAutoQuantity.TabIndex = 15;
             this.nudAutoQuantity.Value = new decimal(new int[] {
-            100,
+            1,
             0,
             0,
             0});
@@ -848,7 +862,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 459);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1109, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1282, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1137,7 +1151,7 @@
             this.nudPriceBuy.Size = new System.Drawing.Size(105, 22);
             this.nudPriceBuy.TabIndex = 34;
             this.nudPriceBuy.Value = new decimal(new int[] {
-            7700,
+            6200,
             0,
             0,
             0});
@@ -1191,18 +1205,83 @@
             this.lblPriceSell.TabIndex = 37;
             this.lblPriceSell.Text = "Price Sell";
             // 
-            // textBox1
+            // label11
             // 
-            this.textBox1.Location = new System.Drawing.Point(7, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 22);
-            this.textBox1.TabIndex = 45;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1, 20);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(125, 17);
+            this.label11.TabIndex = 45;
+            this.label11.Text = "Elements/Dividend";
+            // 
+            // txtBuyElementsDivisionOutput
+            // 
+            this.txtBuyElementsDivisionOutput.Location = new System.Drawing.Point(6, 41);
+            this.txtBuyElementsDivisionOutput.Name = "txtBuyElementsDivisionOutput";
+            this.txtBuyElementsDivisionOutput.ReadOnly = true;
+            this.txtBuyElementsDivisionOutput.Size = new System.Drawing.Size(100, 22);
+            this.txtBuyElementsDivisionOutput.TabIndex = 49;
+            // 
+            // txtSellElementsDivisionOutput
+            // 
+            this.txtSellElementsDivisionOutput.Location = new System.Drawing.Point(12, 43);
+            this.txtSellElementsDivisionOutput.Name = "txtSellElementsDivisionOutput";
+            this.txtSellElementsDivisionOutput.ReadOnly = true;
+            this.txtSellElementsDivisionOutput.Size = new System.Drawing.Size(100, 22);
+            this.txtSellElementsDivisionOutput.TabIndex = 51;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 22);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(125, 17);
+            this.label12.TabIndex = 50;
+            this.label12.Text = "Elements/Dividend";
+            // 
+            // txtFirstBuyOrderOutput
+            // 
+            this.txtFirstBuyOrderOutput.Location = new System.Drawing.Point(1142, 38);
+            this.txtFirstBuyOrderOutput.Name = "txtFirstBuyOrderOutput";
+            this.txtFirstBuyOrderOutput.ReadOnly = true;
+            this.txtFirstBuyOrderOutput.Size = new System.Drawing.Size(100, 22);
+            this.txtFirstBuyOrderOutput.TabIndex = 53;
+            // 
+            // lblFirstBuyOrder
+            // 
+            this.lblFirstBuyOrder.AutoSize = true;
+            this.lblFirstBuyOrder.Location = new System.Drawing.Point(1009, 41);
+            this.lblFirstBuyOrder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFirstBuyOrder.Name = "lblFirstBuyOrder";
+            this.lblFirstBuyOrder.Size = new System.Drawing.Size(104, 17);
+            this.lblFirstBuyOrder.TabIndex = 52;
+            this.lblFirstBuyOrder.Text = "First Order Buy";
+            // 
+            // txtFirstSellOrderOutput
+            // 
+            this.txtFirstSellOrderOutput.Location = new System.Drawing.Point(1141, 61);
+            this.txtFirstSellOrderOutput.Name = "txtFirstSellOrderOutput";
+            this.txtFirstSellOrderOutput.ReadOnly = true;
+            this.txtFirstSellOrderOutput.Size = new System.Drawing.Size(100, 22);
+            this.txtFirstSellOrderOutput.TabIndex = 55;
+            // 
+            // lblFirstSellOrder
+            // 
+            this.lblFirstSellOrder.AutoSize = true;
+            this.lblFirstSellOrder.Location = new System.Drawing.Point(1009, 64);
+            this.lblFirstSellOrder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFirstSellOrder.Name = "lblFirstSellOrder";
+            this.lblFirstSellOrder.Size = new System.Drawing.Size(103, 17);
+            this.lblFirstSellOrder.TabIndex = 54;
+            this.lblFirstSellOrder.Text = "First Order Sell";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1109, 481);
+            this.ClientSize = new System.Drawing.Size(1282, 481);
             this.Controls.Add(this.lblPriceSell);
             this.Controls.Add(this.nudPriceSell);
             this.Controls.Add(this.btnSetPrice);
@@ -1347,7 +1426,14 @@
         private System.Windows.Forms.NumericUpDown nudSellElementsToTake;
         private System.Windows.Forms.Label lblVolume24h;
         private System.Windows.Forms.NumericUpDown nudVolume24h;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtSellElementsDivisionOutput;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtBuyElementsDivisionOutput;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtFirstSellOrderOutput;
+        private System.Windows.Forms.Label lblFirstSellOrder;
+        private System.Windows.Forms.TextBox txtFirstBuyOrderOutput;
+        private System.Windows.Forms.Label lblFirstBuyOrder;
     }
 }
 

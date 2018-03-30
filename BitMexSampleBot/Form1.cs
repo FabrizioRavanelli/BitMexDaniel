@@ -28,9 +28,9 @@ namespace BitMexSampleBot
         private static string TestbitmexDomain = "https://testnet.bitmex.com";
 
         //REAL NET        
-        private static string bitmexKey = "k-nwWE--NME5Mk4qSYDsGWr3";
-        private static string bitmexSecret = "b-FZEARq1BqCjnNTdSQzMMOKX9OjJZzlhU-NLPSuv_4gktqD";
-        private static string bitmexDomain = "https://www.bitmex.com";
+        private static string BitmexKey = "k-nwWE--NME5Mk4qSYDsGWr3";
+        private static string BitmexSecret = "b-FZEARq1BqCjnNTdSQzMMOKX9OjJZzlhU-NLPSuv_4gktqD";
+        private static string BitmexDomain = "https://www.bitmex.com";
 
 
         BitMEXApi bitmex;
@@ -183,12 +183,12 @@ namespace BitMexSampleBot
             switch (ddlNetwork.SelectedItem.ToString())
             {
                 case "TestNet":
-                    txtAPIKey.Text = Properties.Settings.Default.TestAPIKey;
-                    txtAPISecret.Text = Properties.Settings.Default.TestAPISecret;
+                    txtAPIKey.Text = TestbitmexKey;
+                    txtAPISecret.Text = TestbitmexSecret;
                     break;
                 case "RealNet":
-                    txtAPIKey.Text = Properties.Settings.Default.APIKey;
-                    txtAPISecret.Text = Properties.Settings.Default.APISecret;
+                    txtAPIKey.Text = BitmexKey;
+                    txtAPISecret.Text = BitmexSecret;
                     break;
             }
         }
@@ -211,7 +211,7 @@ namespace BitMexSampleBot
                     bitmex = new BitMEXApi(txtAPIKey.Text, txtAPISecret.Text, TestbitmexDomain);
                     break;
                 case "RealNet":
-                    bitmex = new BitMEXApi(txtAPIKey.Text, txtAPISecret.Text, bitmexDomain);
+                    bitmex = new BitMEXApi(txtAPIKey.Text, txtAPISecret.Text, BitmexDomain);
                     break;
             }
 
@@ -589,6 +589,12 @@ namespace BitMexSampleBot
                 {
                     if (SumBuyFirstItems > SumSellFirstItems)
                     {
+                        //todo das bringt nichts
+                        if (_lastMode.Equals("Sell") || _lastMode.Equals("Buy"))
+                        {
+                            Mode = "Wait";
+                        }
+
                         // wenn "Peak kommt" dann bevor er prüft ob er buy oder sell ausführen soll 
                         // müssen alle orders gelöscht werden
                         bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
@@ -1136,6 +1142,7 @@ namespace BitMexSampleBot
             }
             catch (Exception ex)
             {
+                log.Error("API keys are invalid", ex);
                 APIValid = false;
                 stsAPIValid.Text = "API keys are invalid";
                 stsAccountBalance.Text = "Balance: 0";
@@ -1310,6 +1317,7 @@ namespace BitMexSampleBot
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
             double sizeLimit = summAllBuyItems / PriceBuyDividend;
             log.InfoFormat("CalculateBuyPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", BuyElementsToTake, SumSellFirstItems, sizeLimit);
+            RefreshDataUi("Buy", sizeLimit, CurrentBookBuy.Any()? CurrentBookBuy[0].Size : 0);
             //Price durch die Grenze festlegen in Buy Mode
             return SelectPrice(CurrentBookBuy, sizeLimit, "Buy");
         }
@@ -1328,7 +1336,7 @@ namespace BitMexSampleBot
             double sizeLimit = summAllSellItems / PriceSellDividend;
 
             log.InfoFormat("CalculatedSellPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", SellElementsToTake, SumSellFirstItems, sizeLimit);
-
+            RefreshDataUi("Sell", sizeLimit, CurrentBookSell.Any() ? CurrentBookSell[0].Size : 0);
             //Price durch die Grenze festlegen in Sell Mode
             return SelectPrice(CurrentBookSell, sizeLimit, "Sell"); 
         }
@@ -1364,6 +1372,24 @@ namespace BitMexSampleBot
             {
                 return orderBooks.Any() ? orderBooks[0].Price : default(double);
             }
+            //in Sell mode nehme ich den sofort unter der Grenze
+            //in Buy mode nehme ich den sofort über der Grenze
+            return "Sell".Equals(side) ? lastOrderBook.Price : currentOrderBook.Price;
+        }
+
+        private void RefreshDataUi(string side, double sizeLimit, double sizeFirstOrder)
+        {
+            if ("Buy".Equals(side))
+            {
+                this.txtBuyElementsDivisionOutput.Text = sizeLimit.ToString();
+                this.txtFirstBuyOrderOutput.Text = sizeFirstOrder.ToString();
+            }
+            else if ("Sell".Equals(side))
+            {
+                this.txtSellElementsDivisionOutput.Text = sizeLimit.ToString();
+                this.txtFirstSellOrderOutput.Text = sizeFirstOrder.ToString();
+            }
+
         }
 
         private void nudSellStochk_ValueChanged(object sender, EventArgs e)
