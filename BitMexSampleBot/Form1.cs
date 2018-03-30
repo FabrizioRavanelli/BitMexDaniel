@@ -23,13 +23,13 @@ namespace BitMexSampleBot
         // IMPORTANT - Enter your API Key information below
 
         //TEST NET - NEW
-        private static string TestbitmexKey = "WKavTbY4L7WLSByrbfy6xl1p";
-        private static string TestbitmexSecret = "UjEbiTfY09zrwVPJGMdgFMyFOuqCVGxie3tU86XpSwuSOtl_";
+        private static string TestbitmexKey = "3kJ2pCI1VSe3rpJkU0yjiZbz";
+        private static string TestbitmexSecret = "JmtnXTx04XR5g_HlTeDlnDYImLWsIqZzoShW2gxPhLbdElAJ";
         private static string TestbitmexDomain = "https://testnet.bitmex.com";
 
-        //REAL NET
-        //private static string bitmexKey = "YOURHEREKEYHERE";
-        //private static string bitmexSecret = "YOURSECRETHERE";
+        //REAL NET        
+        private static string bitmexKey = "k-nwWE--NME5Mk4qSYDsGWr3";
+        private static string bitmexSecret = "b-FZEARq1BqCjnNTdSQzMMOKX9OjJZzlhU-NLPSuv_4gktqD";
         private static string bitmexDomain = "https://www.bitmex.com";
 
 
@@ -237,6 +237,8 @@ namespace BitMexSampleBot
             double SellPrice = CalculateSellPrice(CurrentBook);
             log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
             double BuyPrice = CalculateBuyPrice(CurrentBook);
+            //immer +1 usd addieren
+            BuyPrice = BuyPrice + 1;
             log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
 
             double OrderPrice = 0;
@@ -577,16 +579,19 @@ namespace BitMexSampleBot
             if(currentCandle == null)
             {
                 Mode = "Wait";
+                // wenn "Peak kommt" dann bevor er prüft ob er buy oder sell ausführen soll 
+                // müssen alle orders gelöscht werden
+                bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
             else
             {
                 if (ActiveInstrument.Volume24H > InputVolume24h)
                 {
-                    // wenn "Peak kommt" dann bevor er prüft ob er buy oder sell ausführen soll 
-                    // müssen alle orders gelöscht werden
-                    bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                     if (SumBuyFirstItems > SumSellFirstItems)
                     {
+                        // wenn "Peak kommt" dann bevor er prüft ob er buy oder sell ausführen soll 
+                        // müssen alle orders gelöscht werden
+                        bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                         Mode = "Buy";
                     }
                     else
@@ -1304,7 +1309,7 @@ namespace BitMexSampleBot
             double summAllBuyItems = CurrentBookBuy.Sum(item => item.Price);
             // grenze herausfinden aus DIVISION Total Buy Preis durch *PriceDividend* (15)
             double sizeLimit = summAllBuyItems / PriceBuyDividend;
-            log.InfoFormat("CalculateBuyPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", SumSellFirstItems, sizeLimit);
+            log.InfoFormat("CalculateBuyPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", BuyElementsToTake, SumSellFirstItems, sizeLimit);
             //Price durch die Grenze festlegen in Buy Mode
             return SelectPrice(CurrentBookBuy, sizeLimit, "Buy");
         }
@@ -1325,7 +1330,7 @@ namespace BitMexSampleBot
             log.InfoFormat("CalculatedSellPrice - SumSellFirstItems der ersten {0} OrderBooks: {1}, sizeLimit: {2}", SellElementsToTake, SumSellFirstItems, sizeLimit);
 
             //Price durch die Grenze festlegen in Sell Mode
-            return SelectPrice(CurrentBookSell, sizeLimit, "Sell");
+            return SelectPrice(CurrentBookSell, sizeLimit, "Sell"); 
         }
 
         private double SelectPrice(List<OrderBook> orderBooks, double sizeLimit, string side)
@@ -1349,13 +1354,16 @@ namespace BitMexSampleBot
 
                 lastOrderBook = orderBook;
             }
-            if (("Sell".Equals(side) && lastOrderBook == null)|| ("Buy".Equals(side) && currentOrderBook == null))
+
+
+            if (("Sell".Equals(side) && (lastOrderBook == null || lastOrderBook.Price < 0)))
             {
-                return default(double);
+                return orderBooks.Any() ? orderBooks[0].Price : default(double);
             }
-            //in Sell mode nehme ich den sofort unter der Grenze
-            //in Buy mode nehme ich den sofort über der Grenze
-            return "Sell".Equals(side) ? lastOrderBook.Price : currentOrderBook.Price;
+            else if ("Buy".Equals(side) && (currentOrderBook == null || currentOrderBook.Price < 0))
+            {
+                return orderBooks.Any() ? orderBooks[0].Price : default(double);
+            }
         }
 
         private void nudSellStochk_ValueChanged(object sender, EventArgs e)
