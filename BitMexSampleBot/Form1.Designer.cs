@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnBuy = new System.Windows.Forms.Button();
             this.btnSell = new System.Windows.Forms.Button();
@@ -44,14 +41,22 @@
             this.dgvCandles = new System.Windows.Forms.DataGridView();
             this.ddlCandleTimes = new System.Windows.Forms.ComboBox();
             this.gbCandles = new System.Windows.Forms.GroupBox();
+            this.txtFirstSellOrderOutput = new System.Windows.Forms.TextBox();
+            this.lblFirstSellOrder = new System.Windows.Forms.Label();
+            this.txtFirstBuyOrderOutput = new System.Windows.Forms.TextBox();
+            this.lblFirstBuyOrder = new System.Windows.Forms.Label();
             this.lblVolume24h = new System.Windows.Forms.Label();
             this.nudVolume24h = new System.Windows.Forms.NumericUpDown();
             this.gbSell = new System.Windows.Forms.GroupBox();
+            this.txtSellElementsDivisionOutput = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.nudConstantSellDividend = new System.Windows.Forms.NumericUpDown();
             this.lblSellElementsToTake = new System.Windows.Forms.Label();
             this.nudSellElementsToTake = new System.Windows.Forms.NumericUpDown();
             this.gbBuy = new System.Windows.Forms.GroupBox();
+            this.txtBuyElementsDivisionOutput = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.lblDividend = new System.Windows.Forms.Label();
             this.lblBuyElementsToTake = new System.Windows.Forms.Label();
             this.nudConstantBuyDividend = new System.Windows.Forms.NumericUpDown();
@@ -105,14 +110,6 @@
             this.btnSetPrice = new System.Windows.Forms.Button();
             this.nudPriceSell = new System.Windows.Forms.NumericUpDown();
             this.lblPriceSell = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtBuyElementsDivisionOutput = new System.Windows.Forms.TextBox();
-            this.txtSellElementsDivisionOutput = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtFirstBuyOrderOutput = new System.Windows.Forms.TextBox();
-            this.lblFirstBuyOrder = new System.Windows.Forms.Label();
-            this.txtFirstSellOrderOutput = new System.Windows.Forms.TextBox();
-            this.lblFirstSellOrder = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -143,10 +140,9 @@
             // 
             this.btnBuy.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnBuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuy.Location = new System.Drawing.Point(17, 39);
-            this.btnBuy.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBuy.Location = new System.Drawing.Point(13, 32);
             this.btnBuy.Name = "btnBuy";
-            this.btnBuy.Size = new System.Drawing.Size(100, 28);
+            this.btnBuy.Size = new System.Drawing.Size(75, 23);
             this.btnBuy.TabIndex = 0;
             this.btnBuy.Text = "Buy";
             this.btnBuy.UseVisualStyleBackColor = false;
@@ -156,10 +152,9 @@
             // 
             this.btnSell.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnSell.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSell.Location = new System.Drawing.Point(263, 39);
-            this.btnSell.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSell.Location = new System.Drawing.Point(197, 32);
             this.btnSell.Name = "btnSell";
-            this.btnSell.Size = new System.Drawing.Size(100, 28);
+            this.btnSell.Size = new System.Drawing.Size(75, 23);
             this.btnSell.TabIndex = 1;
             this.btnSell.Text = "Sell";
             this.btnSell.UseVisualStyleBackColor = false;
@@ -173,8 +168,7 @@
             0,
             0,
             0});
-            this.nudQty.Location = new System.Drawing.Point(156, 42);
-            this.nudQty.Margin = new System.Windows.Forms.Padding(4);
+            this.nudQty.Location = new System.Drawing.Point(117, 34);
             this.nudQty.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -186,10 +180,10 @@
             0,
             0});
             this.nudQty.Name = "nudQty";
-            this.nudQty.Size = new System.Drawing.Size(89, 22);
+            this.nudQty.Size = new System.Drawing.Size(67, 19);
             this.nudQty.TabIndex = 2;
             this.nudQty.Value = new decimal(new int[] {
-            100,
+            1,
             0,
             0,
             0});
@@ -200,10 +194,9 @@
             this.chkCancelWhileOrdering.Checked = true;
             this.chkCancelWhileOrdering.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCancelWhileOrdering.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkCancelWhileOrdering.Location = new System.Drawing.Point(17, 72);
-            this.chkCancelWhileOrdering.Margin = new System.Windows.Forms.Padding(4);
+            this.chkCancelWhileOrdering.Location = new System.Drawing.Point(13, 58);
             this.chkCancelWhileOrdering.Name = "chkCancelWhileOrdering";
-            this.chkCancelWhileOrdering.Size = new System.Drawing.Size(172, 21);
+            this.chkCancelWhileOrdering.Size = new System.Drawing.Size(132, 17);
             this.chkCancelWhileOrdering.TabIndex = 3;
             this.chkCancelWhileOrdering.Text = "Cancel While Ordering";
             this.chkCancelWhileOrdering.UseVisualStyleBackColor = true;
@@ -212,10 +205,9 @@
             // 
             this.btnCancelOpenOrders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnCancelOpenOrders.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelOpenOrders.Location = new System.Drawing.Point(263, 71);
-            this.btnCancelOpenOrders.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelOpenOrders.Location = new System.Drawing.Point(197, 58);
             this.btnCancelOpenOrders.Name = "btnCancelOpenOrders";
-            this.btnCancelOpenOrders.Size = new System.Drawing.Size(100, 28);
+            this.btnCancelOpenOrders.Size = new System.Drawing.Size(75, 23);
             this.btnCancelOpenOrders.TabIndex = 4;
             this.btnCancelOpenOrders.Text = "Cancel";
             this.btnCancelOpenOrders.UseVisualStyleBackColor = false;
@@ -229,10 +221,9 @@
             this.ddlOrderType.Items.AddRange(new object[] {
             "Limit Post Only",
             "Market"});
-            this.ddlOrderType.Location = new System.Drawing.Point(17, 6);
-            this.ddlOrderType.Margin = new System.Windows.Forms.Padding(4);
+            this.ddlOrderType.Location = new System.Drawing.Point(13, 5);
             this.ddlOrderType.Name = "ddlOrderType";
-            this.ddlOrderType.Size = new System.Drawing.Size(129, 24);
+            this.ddlOrderType.Size = new System.Drawing.Size(98, 21);
             this.ddlOrderType.TabIndex = 5;
             // 
             // ddlNetwork
@@ -241,12 +232,11 @@
             this.ddlNetwork.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlNetwork.FormattingEnabled = true;
             this.ddlNetwork.Items.AddRange(new object[] {
-            "TestNet",
-            "RealNet"});
-            this.ddlNetwork.Location = new System.Drawing.Point(156, 6);
-            this.ddlNetwork.Margin = new System.Windows.Forms.Padding(4);
+            "RealNet",
+            "TestNet"});
+            this.ddlNetwork.Location = new System.Drawing.Point(117, 5);
             this.ddlNetwork.Name = "ddlNetwork";
-            this.ddlNetwork.Size = new System.Drawing.Size(96, 24);
+            this.ddlNetwork.Size = new System.Drawing.Size(73, 21);
             this.ddlNetwork.TabIndex = 6;
             this.ddlNetwork.SelectedIndexChanged += new System.EventHandler(this.ddlNetwork_SelectedIndexChanged);
             // 
@@ -255,10 +245,9 @@
             this.ddlSymbol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ddlSymbol.FormattingEnabled = true;
-            this.ddlSymbol.Location = new System.Drawing.Point(265, 6);
-            this.ddlSymbol.Margin = new System.Windows.Forms.Padding(4);
+            this.ddlSymbol.Location = new System.Drawing.Point(199, 5);
             this.ddlSymbol.Name = "ddlSymbol";
-            this.ddlSymbol.Size = new System.Drawing.Size(96, 24);
+            this.ddlSymbol.Size = new System.Drawing.Size(73, 21);
             this.ddlSymbol.TabIndex = 7;
             this.ddlSymbol.SelectedIndexChanged += new System.EventHandler(this.ddlSymbol_SelectedIndexChanged);
             // 
@@ -267,38 +256,13 @@
             this.dgvCandles.AllowUserToAddRows = false;
             this.dgvCandles.AllowUserToDeleteRows = false;
             this.dgvCandles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCandles.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCandles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCandles.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCandles.Location = new System.Drawing.Point(8, 85);
-            this.dgvCandles.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvCandles.Location = new System.Drawing.Point(13, 232);
             this.dgvCandles.Name = "dgvCandles";
             this.dgvCandles.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCandles.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCandles.RowHeadersVisible = false;
             this.dgvCandles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCandles.Size = new System.Drawing.Size(1636, 223);
+            this.dgvCandles.Size = new System.Drawing.Size(939, 58);
             this.dgvCandles.TabIndex = 8;
             this.dgvCandles.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCandles_CellFormatting);
             // 
@@ -311,54 +275,76 @@
             "5m",
             "1h",
             "1d"});
-            this.ddlCandleTimes.Location = new System.Drawing.Point(8, 23);
-            this.ddlCandleTimes.Margin = new System.Windows.Forms.Padding(4);
+            this.ddlCandleTimes.Location = new System.Drawing.Point(6, 19);
             this.ddlCandleTimes.Name = "ddlCandleTimes";
-            this.ddlCandleTimes.Size = new System.Drawing.Size(60, 24);
+            this.ddlCandleTimes.Size = new System.Drawing.Size(46, 21);
             this.ddlCandleTimes.TabIndex = 9;
             this.ddlCandleTimes.SelectedIndexChanged += new System.EventHandler(this.ddlCandleTimes_SelectedIndexChanged);
             // 
             // gbCandles
             // 
-            this.gbCandles.Controls.Add(this.txtFirstSellOrderOutput);
-            this.gbCandles.Controls.Add(this.lblFirstSellOrder);
-            this.gbCandles.Controls.Add(this.txtFirstBuyOrderOutput);
-            this.gbCandles.Controls.Add(this.lblFirstBuyOrder);
-            this.gbCandles.Controls.Add(this.lblVolume24h);
-            this.gbCandles.Controls.Add(this.nudVolume24h);
-            this.gbCandles.Controls.Add(this.gbSell);
-            this.gbCandles.Controls.Add(this.gbBuy);
             this.gbCandles.Controls.Add(this.lblMA2);
             this.gbCandles.Controls.Add(this.nudMA2);
             this.gbCandles.Controls.Add(this.lblMA1);
             this.gbCandles.Controls.Add(this.nudMA1);
             this.gbCandles.Controls.Add(this.chkUpdateCandles);
-            this.gbCandles.Controls.Add(this.dgvCandles);
             this.gbCandles.Controls.Add(this.ddlCandleTimes);
             this.gbCandles.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbCandles.Location = new System.Drawing.Point(17, 185);
-            this.gbCandles.Margin = new System.Windows.Forms.Padding(4);
+            this.gbCandles.Location = new System.Drawing.Point(13, 296);
             this.gbCandles.Name = "gbCandles";
-            this.gbCandles.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCandles.Size = new System.Drawing.Size(1252, 270);
+            this.gbCandles.Size = new System.Drawing.Size(939, 73);
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
             // 
+            // txtFirstSellOrderOutput
+            // 
+            this.txtFirstSellOrderOutput.Location = new System.Drawing.Point(634, 207);
+            this.txtFirstSellOrderOutput.Margin = new System.Windows.Forms.Padding(2);
+            this.txtFirstSellOrderOutput.Name = "txtFirstSellOrderOutput";
+            this.txtFirstSellOrderOutput.ReadOnly = true;
+            this.txtFirstSellOrderOutput.Size = new System.Drawing.Size(76, 20);
+            this.txtFirstSellOrderOutput.TabIndex = 55;
+            // 
+            // lblFirstSellOrder
+            // 
+            this.lblFirstSellOrder.AutoSize = true;
+            this.lblFirstSellOrder.Location = new System.Drawing.Point(535, 209);
+            this.lblFirstSellOrder.Name = "lblFirstSellOrder";
+            this.lblFirstSellOrder.Size = new System.Drawing.Size(75, 13);
+            this.lblFirstSellOrder.TabIndex = 54;
+            this.lblFirstSellOrder.Text = "First Order Sell";
+            // 
+            // txtFirstBuyOrderOutput
+            // 
+            this.txtFirstBuyOrderOutput.Location = new System.Drawing.Point(634, 188);
+            this.txtFirstBuyOrderOutput.Margin = new System.Windows.Forms.Padding(2);
+            this.txtFirstBuyOrderOutput.Name = "txtFirstBuyOrderOutput";
+            this.txtFirstBuyOrderOutput.ReadOnly = true;
+            this.txtFirstBuyOrderOutput.Size = new System.Drawing.Size(76, 20);
+            this.txtFirstBuyOrderOutput.TabIndex = 53;
+            // 
+            // lblFirstBuyOrder
+            // 
+            this.lblFirstBuyOrder.AutoSize = true;
+            this.lblFirstBuyOrder.Location = new System.Drawing.Point(535, 190);
+            this.lblFirstBuyOrder.Name = "lblFirstBuyOrder";
+            this.lblFirstBuyOrder.Size = new System.Drawing.Size(76, 13);
+            this.lblFirstBuyOrder.TabIndex = 52;
+            this.lblFirstBuyOrder.Text = "First Order Buy";
+            // 
             // lblVolume24h
             // 
             this.lblVolume24h.AutoSize = true;
-            this.lblVolume24h.Location = new System.Drawing.Point(1009, 19);
-            this.lblVolume24h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblVolume24h.Location = new System.Drawing.Point(535, 172);
             this.lblVolume24h.Name = "lblVolume24h";
-            this.lblVolume24h.Size = new System.Drawing.Size(79, 17);
+            this.lblVolume24h.Size = new System.Drawing.Size(60, 13);
             this.lblVolume24h.TabIndex = 48;
             this.lblVolume24h.Text = "Volume24h";
             // 
             // nudVolume24h
             // 
-            this.nudVolume24h.Location = new System.Drawing.Point(1142, 17);
-            this.nudVolume24h.Margin = new System.Windows.Forms.Padding(4);
+            this.nudVolume24h.Location = new System.Drawing.Point(634, 171);
             this.nudVolume24h.Maximum = new decimal(new int[] {
             5000000,
             0,
@@ -370,10 +356,10 @@
             0,
             0});
             this.nudVolume24h.Name = "nudVolume24h";
-            this.nudVolume24h.Size = new System.Drawing.Size(102, 22);
+            this.nudVolume24h.Size = new System.Drawing.Size(76, 20);
             this.nudVolume24h.TabIndex = 47;
             this.nudVolume24h.Value = new decimal(new int[] {
-            100000,
+            500000,
             0,
             0,
             0});
@@ -386,27 +372,45 @@
             this.gbSell.Controls.Add(this.nudConstantSellDividend);
             this.gbSell.Controls.Add(this.lblSellElementsToTake);
             this.gbSell.Controls.Add(this.nudSellElementsToTake);
-            this.gbSell.Location = new System.Drawing.Point(675, 10);
+            this.gbSell.Location = new System.Drawing.Point(286, 166);
+            this.gbSell.Margin = new System.Windows.Forms.Padding(2);
             this.gbSell.Name = "gbSell";
-            this.gbSell.Size = new System.Drawing.Size(327, 68);
+            this.gbSell.Padding = new System.Windows.Forms.Padding(2);
+            this.gbSell.Size = new System.Drawing.Size(245, 55);
             this.gbSell.TabIndex = 46;
             this.gbSell.TabStop = false;
             this.gbSell.Text = "Sell";
             // 
+            // txtSellElementsDivisionOutput
+            // 
+            this.txtSellElementsDivisionOutput.Location = new System.Drawing.Point(9, 35);
+            this.txtSellElementsDivisionOutput.Margin = new System.Windows.Forms.Padding(2);
+            this.txtSellElementsDivisionOutput.Name = "txtSellElementsDivisionOutput";
+            this.txtSellElementsDivisionOutput.ReadOnly = true;
+            this.txtSellElementsDivisionOutput.Size = new System.Drawing.Size(76, 20);
+            this.txtSellElementsDivisionOutput.TabIndex = 51;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(5, 18);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(97, 13);
+            this.label12.TabIndex = 50;
+            this.label12.Text = "Elements/Dividend";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(186, 47);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(140, 38);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 17);
+            this.label10.Size = new System.Drawing.Size(49, 13);
             this.label10.TabIndex = 47;
             this.label10.Text = "Dividend";
             // 
             // nudConstantSellDividend
             // 
-            this.nudConstantSellDividend.Location = new System.Drawing.Point(259, 45);
-            this.nudConstantSellDividend.Margin = new System.Windows.Forms.Padding(4);
+            this.nudConstantSellDividend.Location = new System.Drawing.Point(194, 37);
             this.nudConstantSellDividend.Maximum = new decimal(new int[] {
             50,
             0,
@@ -418,10 +422,10 @@
             0,
             0});
             this.nudConstantSellDividend.Name = "nudConstantSellDividend";
-            this.nudConstantSellDividend.Size = new System.Drawing.Size(55, 22);
+            this.nudConstantSellDividend.Size = new System.Drawing.Size(41, 20);
             this.nudConstantSellDividend.TabIndex = 46;
             this.nudConstantSellDividend.Value = new decimal(new int[] {
-            3,
+            1,
             0,
             0,
             0});
@@ -429,17 +433,15 @@
             // lblSellElementsToTake
             // 
             this.lblSellElementsToTake.AutoSize = true;
-            this.lblSellElementsToTake.Location = new System.Drawing.Point(138, 22);
-            this.lblSellElementsToTake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSellElementsToTake.Location = new System.Drawing.Point(104, 18);
             this.lblSellElementsToTake.Name = "lblSellElementsToTake";
-            this.lblSellElementsToTake.Size = new System.Drawing.Size(118, 17);
+            this.lblSellElementsToTake.Size = new System.Drawing.Size(90, 13);
             this.lblSellElementsToTake.TabIndex = 45;
             this.lblSellElementsToTake.Text = "Elements to Take";
             // 
             // nudSellElementsToTake
             // 
-            this.nudSellElementsToTake.Location = new System.Drawing.Point(259, 21);
-            this.nudSellElementsToTake.Margin = new System.Windows.Forms.Padding(4);
+            this.nudSellElementsToTake.Location = new System.Drawing.Point(194, 17);
             this.nudSellElementsToTake.Maximum = new decimal(new int[] {
             25,
             0,
@@ -451,10 +453,10 @@
             0,
             0});
             this.nudSellElementsToTake.Name = "nudSellElementsToTake";
-            this.nudSellElementsToTake.Size = new System.Drawing.Size(53, 22);
+            this.nudSellElementsToTake.Size = new System.Drawing.Size(40, 20);
             this.nudSellElementsToTake.TabIndex = 44;
             this.nudSellElementsToTake.Value = new decimal(new int[] {
-            5,
+            3,
             0,
             0,
             0});
@@ -467,37 +469,54 @@
             this.gbBuy.Controls.Add(this.lblBuyElementsToTake);
             this.gbBuy.Controls.Add(this.nudConstantBuyDividend);
             this.gbBuy.Controls.Add(this.nudBuyElementsToTake);
-            this.gbBuy.Location = new System.Drawing.Point(350, 13);
+            this.gbBuy.Location = new System.Drawing.Point(13, 166);
+            this.gbBuy.Margin = new System.Windows.Forms.Padding(2);
             this.gbBuy.Name = "gbBuy";
-            this.gbBuy.Size = new System.Drawing.Size(320, 68);
+            this.gbBuy.Padding = new System.Windows.Forms.Padding(2);
+            this.gbBuy.Size = new System.Drawing.Size(240, 55);
             this.gbBuy.TabIndex = 45;
             this.gbBuy.TabStop = false;
             this.gbBuy.Text = "Buy";
             // 
+            // txtBuyElementsDivisionOutput
+            // 
+            this.txtBuyElementsDivisionOutput.Location = new System.Drawing.Point(4, 33);
+            this.txtBuyElementsDivisionOutput.Margin = new System.Windows.Forms.Padding(2);
+            this.txtBuyElementsDivisionOutput.Name = "txtBuyElementsDivisionOutput";
+            this.txtBuyElementsDivisionOutput.ReadOnly = true;
+            this.txtBuyElementsDivisionOutput.Size = new System.Drawing.Size(76, 20);
+            this.txtBuyElementsDivisionOutput.TabIndex = 49;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(1, 16);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(97, 13);
+            this.label11.TabIndex = 45;
+            this.label11.Text = "Elements/Dividend";
+            // 
             // lblDividend
             // 
             this.lblDividend.AutoSize = true;
-            this.lblDividend.Location = new System.Drawing.Point(187, 42);
-            this.lblDividend.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDividend.Location = new System.Drawing.Point(140, 34);
             this.lblDividend.Name = "lblDividend";
-            this.lblDividend.Size = new System.Drawing.Size(63, 17);
+            this.lblDividend.Size = new System.Drawing.Size(49, 13);
             this.lblDividend.TabIndex = 44;
             this.lblDividend.Text = "Dividend";
             // 
             // lblBuyElementsToTake
             // 
             this.lblBuyElementsToTake.AutoSize = true;
-            this.lblBuyElementsToTake.Location = new System.Drawing.Point(132, 19);
-            this.lblBuyElementsToTake.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBuyElementsToTake.Location = new System.Drawing.Point(99, 15);
             this.lblBuyElementsToTake.Name = "lblBuyElementsToTake";
-            this.lblBuyElementsToTake.Size = new System.Drawing.Size(118, 17);
+            this.lblBuyElementsToTake.Size = new System.Drawing.Size(90, 13);
             this.lblBuyElementsToTake.TabIndex = 43;
             this.lblBuyElementsToTake.Text = "Elements to Take";
             // 
             // nudConstantBuyDividend
             // 
-            this.nudConstantBuyDividend.Location = new System.Drawing.Point(258, 40);
-            this.nudConstantBuyDividend.Margin = new System.Windows.Forms.Padding(4);
+            this.nudConstantBuyDividend.Location = new System.Drawing.Point(194, 32);
             this.nudConstantBuyDividend.Maximum = new decimal(new int[] {
             50,
             0,
@@ -509,18 +528,17 @@
             0,
             0});
             this.nudConstantBuyDividend.Name = "nudConstantBuyDividend";
-            this.nudConstantBuyDividend.Size = new System.Drawing.Size(55, 22);
+            this.nudConstantBuyDividend.Size = new System.Drawing.Size(41, 20);
             this.nudConstantBuyDividend.TabIndex = 42;
             this.nudConstantBuyDividend.Value = new decimal(new int[] {
-            3,
+            1,
             0,
             0,
             0});
             // 
             // nudBuyElementsToTake
             // 
-            this.nudBuyElementsToTake.Location = new System.Drawing.Point(258, 17);
-            this.nudBuyElementsToTake.Margin = new System.Windows.Forms.Padding(4);
+            this.nudBuyElementsToTake.Location = new System.Drawing.Point(194, 14);
             this.nudBuyElementsToTake.Maximum = new decimal(new int[] {
             25,
             0,
@@ -532,10 +550,10 @@
             0,
             0});
             this.nudBuyElementsToTake.Name = "nudBuyElementsToTake";
-            this.nudBuyElementsToTake.Size = new System.Drawing.Size(53, 22);
+            this.nudBuyElementsToTake.Size = new System.Drawing.Size(40, 20);
             this.nudBuyElementsToTake.TabIndex = 41;
             this.nudBuyElementsToTake.Value = new decimal(new int[] {
-            5,
+            3,
             0,
             0,
             0});
@@ -543,24 +561,22 @@
             // lblMA2
             // 
             this.lblMA2.AutoSize = true;
-            this.lblMA2.Location = new System.Drawing.Point(310, 61);
-            this.lblMA2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMA2.Location = new System.Drawing.Point(321, 21);
             this.lblMA2.Name = "lblMA2";
-            this.lblMA2.Size = new System.Drawing.Size(36, 17);
+            this.lblMA2.Size = new System.Drawing.Size(29, 13);
             this.lblMA2.TabIndex = 16;
             this.lblMA2.Text = "MA2";
             // 
             // nudMA2
             // 
-            this.nudMA2.Location = new System.Drawing.Point(248, 59);
-            this.nudMA2.Margin = new System.Windows.Forms.Padding(4);
+            this.nudMA2.Location = new System.Drawing.Point(273, 15);
             this.nudMA2.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudMA2.Name = "nudMA2";
-            this.nudMA2.Size = new System.Drawing.Size(56, 22);
+            this.nudMA2.Size = new System.Drawing.Size(42, 19);
             this.nudMA2.TabIndex = 15;
             this.nudMA2.Value = new decimal(new int[] {
             5,
@@ -571,24 +587,22 @@
             // lblMA1
             // 
             this.lblMA1.AutoSize = true;
-            this.lblMA1.Location = new System.Drawing.Point(310, 26);
-            this.lblMA1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMA1.Location = new System.Drawing.Point(239, 22);
             this.lblMA1.Name = "lblMA1";
-            this.lblMA1.Size = new System.Drawing.Size(36, 17);
+            this.lblMA1.Size = new System.Drawing.Size(29, 13);
             this.lblMA1.TabIndex = 14;
             this.lblMA1.Text = "MA1";
             // 
             // nudMA1
             // 
-            this.nudMA1.Location = new System.Drawing.Point(248, 23);
-            this.nudMA1.Margin = new System.Windows.Forms.Padding(4);
+            this.nudMA1.Location = new System.Drawing.Point(198, 15);
             this.nudMA1.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudMA1.Name = "nudMA1";
-            this.nudMA1.Size = new System.Drawing.Size(56, 22);
+            this.nudMA1.Size = new System.Drawing.Size(42, 19);
             this.nudMA1.TabIndex = 13;
             this.nudMA1.Value = new decimal(new int[] {
             3,
@@ -601,10 +615,9 @@
             this.chkUpdateCandles.AutoSize = true;
             this.chkUpdateCandles.Checked = true;
             this.chkUpdateCandles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkUpdateCandles.Location = new System.Drawing.Point(77, 26);
-            this.chkUpdateCandles.Margin = new System.Windows.Forms.Padding(4);
+            this.chkUpdateCandles.Location = new System.Drawing.Point(58, 21);
             this.chkUpdateCandles.Name = "chkUpdateCandles";
-            this.chkUpdateCandles.Size = new System.Drawing.Size(143, 21);
+            this.chkUpdateCandles.Size = new System.Drawing.Size(111, 17);
             this.chkUpdateCandles.TabIndex = 12;
             this.chkUpdateCandles.Text = "Update Every 10s";
             this.chkUpdateCandles.UseVisualStyleBackColor = true;
@@ -619,10 +632,9 @@
             // 
             this.rdoBuy.AutoSize = true;
             this.rdoBuy.Checked = true;
-            this.rdoBuy.Location = new System.Drawing.Point(70, 23);
-            this.rdoBuy.Margin = new System.Windows.Forms.Padding(4);
+            this.rdoBuy.Location = new System.Drawing.Point(52, 19);
             this.rdoBuy.Name = "rdoBuy";
-            this.rdoBuy.Size = new System.Drawing.Size(53, 21);
+            this.rdoBuy.Size = new System.Drawing.Size(43, 17);
             this.rdoBuy.TabIndex = 11;
             this.rdoBuy.TabStop = true;
             this.rdoBuy.Text = "Buy";
@@ -631,10 +643,9 @@
             // rdoSell
             // 
             this.rdoSell.AutoSize = true;
-            this.rdoSell.Location = new System.Drawing.Point(70, 45);
-            this.rdoSell.Margin = new System.Windows.Forms.Padding(4);
+            this.rdoSell.Location = new System.Drawing.Point(52, 37);
             this.rdoSell.Name = "rdoSell";
-            this.rdoSell.Size = new System.Drawing.Size(52, 21);
+            this.rdoSell.Size = new System.Drawing.Size(42, 17);
             this.rdoSell.TabIndex = 12;
             this.rdoSell.Text = "Sell";
             this.rdoSell.UseVisualStyleBackColor = true;
@@ -642,10 +653,9 @@
             // rdoSwitch
             // 
             this.rdoSwitch.AutoSize = true;
-            this.rdoSwitch.Location = new System.Drawing.Point(70, 65);
-            this.rdoSwitch.Margin = new System.Windows.Forms.Padding(4);
+            this.rdoSwitch.Location = new System.Drawing.Point(52, 53);
             this.rdoSwitch.Name = "rdoSwitch";
-            this.rdoSwitch.Size = new System.Drawing.Size(69, 21);
+            this.rdoSwitch.Size = new System.Drawing.Size(57, 17);
             this.rdoSwitch.TabIndex = 13;
             this.rdoSwitch.Text = "Switch";
             this.rdoSwitch.UseVisualStyleBackColor = true;
@@ -668,11 +678,9 @@
             this.gbAutomatedTrading.Controls.Add(this.rdoSwitch);
             this.gbAutomatedTrading.Controls.Add(this.rdoBuy);
             this.gbAutomatedTrading.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbAutomatedTrading.Location = new System.Drawing.Point(718, 19);
-            this.gbAutomatedTrading.Margin = new System.Windows.Forms.Padding(4);
+            this.gbAutomatedTrading.Location = new System.Drawing.Point(538, 15);
             this.gbAutomatedTrading.Name = "gbAutomatedTrading";
-            this.gbAutomatedTrading.Padding = new System.Windows.Forms.Padding(4);
-            this.gbAutomatedTrading.Size = new System.Drawing.Size(363, 169);
+            this.gbAutomatedTrading.Size = new System.Drawing.Size(272, 137);
             this.gbAutomatedTrading.TabIndex = 14;
             this.gbAutomatedTrading.TabStop = false;
             this.gbAutomatedTrading.Text = "Automated Trading";
@@ -680,39 +688,35 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(138, 73);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(104, 59);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(50, 17);
+            this.label9.Size = new System.Drawing.Size(38, 13);
             this.label9.TabIndex = 38;
             this.label9.Text = "Pieses";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(138, 47);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(104, 38);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(80, 17);
+            this.label8.Size = new System.Drawing.Size(62, 13);
             this.label8.TabIndex = 42;
             this.label8.Text = "Sell StochK";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(137, 23);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(103, 19);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(81, 17);
+            this.label7.Size = new System.Drawing.Size(63, 13);
             this.label7.TabIndex = 38;
             this.label7.Text = "Buy StochK";
             // 
             // nudSellStochk
             // 
-            this.nudSellStochk.Location = new System.Drawing.Point(235, 45);
-            this.nudSellStochk.Margin = new System.Windows.Forms.Padding(4);
+            this.nudSellStochk.Location = new System.Drawing.Point(176, 37);
             this.nudSellStochk.Name = "nudSellStochk";
-            this.nudSellStochk.Size = new System.Drawing.Size(55, 22);
+            this.nudSellStochk.Size = new System.Drawing.Size(41, 19);
             this.nudSellStochk.TabIndex = 41;
             this.nudSellStochk.Value = new decimal(new int[] {
             85,
@@ -723,13 +727,12 @@
             // 
             // nudBuyStochk
             // 
-            this.nudBuyStochk.Location = new System.Drawing.Point(235, 20);
-            this.nudBuyStochk.Margin = new System.Windows.Forms.Padding(4);
+            this.nudBuyStochk.Location = new System.Drawing.Point(176, 16);
             this.nudBuyStochk.Name = "nudBuyStochk";
-            this.nudBuyStochk.Size = new System.Drawing.Size(55, 22);
+            this.nudBuyStochk.Size = new System.Drawing.Size(41, 19);
             this.nudBuyStochk.TabIndex = 39;
             this.nudBuyStochk.Value = new decimal(new int[] {
-            20,
+            10,
             0,
             0,
             0});
@@ -739,20 +742,18 @@
             // 
             this.lblAutoUnrealizedROEPercent.AutoSize = true;
             this.lblAutoUnrealizedROEPercent.ForeColor = System.Drawing.Color.Aqua;
-            this.lblAutoUnrealizedROEPercent.Location = new System.Drawing.Point(316, 141);
-            this.lblAutoUnrealizedROEPercent.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAutoUnrealizedROEPercent.Location = new System.Drawing.Point(237, 115);
             this.lblAutoUnrealizedROEPercent.Name = "lblAutoUnrealizedROEPercent";
-            this.lblAutoUnrealizedROEPercent.Size = new System.Drawing.Size(0, 17);
+            this.lblAutoUnrealizedROEPercent.Size = new System.Drawing.Size(0, 13);
             this.lblAutoUnrealizedROEPercent.TabIndex = 21;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(147, 141);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(110, 115);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 17);
+            this.label1.Size = new System.Drawing.Size(121, 13);
             this.label1.TabIndex = 20;
             this.label1.Text = "Unrealized Mark ROE %";
             // 
@@ -764,15 +765,14 @@
             0,
             0,
             131072});
-            this.nudAutoMarketTakeProfitPercent.Location = new System.Drawing.Point(176, 97);
-            this.nudAutoMarketTakeProfitPercent.Margin = new System.Windows.Forms.Padding(4);
+            this.nudAutoMarketTakeProfitPercent.Location = new System.Drawing.Point(132, 79);
             this.nudAutoMarketTakeProfitPercent.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.nudAutoMarketTakeProfitPercent.Name = "nudAutoMarketTakeProfitPercent";
-            this.nudAutoMarketTakeProfitPercent.Size = new System.Drawing.Size(80, 22);
+            this.nudAutoMarketTakeProfitPercent.Size = new System.Drawing.Size(60, 19);
             this.nudAutoMarketTakeProfitPercent.TabIndex = 19;
             this.nudAutoMarketTakeProfitPercent.Value = new decimal(new int[] {
             25,
@@ -783,12 +783,9 @@
             // chkAutoMarketTakeProfits
             // 
             this.chkAutoMarketTakeProfits.AutoSize = true;
-            this.chkAutoMarketTakeProfits.Checked = true;
-            this.chkAutoMarketTakeProfits.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutoMarketTakeProfits.Location = new System.Drawing.Point(9, 100);
-            this.chkAutoMarketTakeProfits.Margin = new System.Windows.Forms.Padding(4);
+            this.chkAutoMarketTakeProfits.Location = new System.Drawing.Point(7, 81);
             this.chkAutoMarketTakeProfits.Name = "chkAutoMarketTakeProfits";
-            this.chkAutoMarketTakeProfits.Size = new System.Drawing.Size(163, 21);
+            this.chkAutoMarketTakeProfits.Size = new System.Drawing.Size(126, 17);
             this.chkAutoMarketTakeProfits.TabIndex = 16;
             this.chkAutoMarketTakeProfits.Text = "Market take profits at";
             this.chkAutoMarketTakeProfits.UseVisualStyleBackColor = true;
@@ -800,10 +797,9 @@
             this.ddlAutoOrderType.Items.AddRange(new object[] {
             "Limit Post Only",
             "Market"});
-            this.ddlAutoOrderType.Location = new System.Drawing.Point(10, 137);
-            this.ddlAutoOrderType.Margin = new System.Windows.Forms.Padding(4);
+            this.ddlAutoOrderType.Location = new System.Drawing.Point(8, 111);
             this.ddlAutoOrderType.Name = "ddlAutoOrderType";
-            this.ddlAutoOrderType.Size = new System.Drawing.Size(129, 24);
+            this.ddlAutoOrderType.Size = new System.Drawing.Size(98, 21);
             this.ddlAutoOrderType.TabIndex = 15;
             // 
             // nudAutoQuantity
@@ -813,8 +809,7 @@
             0,
             0,
             0});
-            this.nudAutoQuantity.Location = new System.Drawing.Point(195, 71);
-            this.nudAutoQuantity.Margin = new System.Windows.Forms.Padding(4);
+            this.nudAutoQuantity.Location = new System.Drawing.Point(146, 58);
             this.nudAutoQuantity.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -826,7 +821,7 @@
             0,
             0});
             this.nudAutoQuantity.Name = "nudAutoQuantity";
-            this.nudAutoQuantity.Size = new System.Drawing.Size(95, 22);
+            this.nudAutoQuantity.Size = new System.Drawing.Size(71, 19);
             this.nudAutoQuantity.TabIndex = 15;
             this.nudAutoQuantity.Value = new decimal(new int[] {
             1,
@@ -837,10 +832,9 @@
             // btnAutomatedTrading
             // 
             this.btnAutomatedTrading.BackColor = System.Drawing.Color.Aqua;
-            this.btnAutomatedTrading.Location = new System.Drawing.Point(9, 18);
-            this.btnAutomatedTrading.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAutomatedTrading.Location = new System.Drawing.Point(7, 15);
             this.btnAutomatedTrading.Name = "btnAutomatedTrading";
-            this.btnAutomatedTrading.Size = new System.Drawing.Size(53, 75);
+            this.btnAutomatedTrading.Size = new System.Drawing.Size(40, 61);
             this.btnAutomatedTrading.TabIndex = 14;
             this.btnAutomatedTrading.Text = "Start";
             this.btnAutomatedTrading.UseVisualStyleBackColor = false;
@@ -859,38 +853,36 @@
             this.stsAPIValid,
             this.stsAccountBalance,
             this.stsOTProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 459);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 369);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1282, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(962, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // stsAPIValid
             // 
             this.stsAPIValid.Name = "stsAPIValid";
-            this.stsAPIValid.Size = new System.Drawing.Size(131, 17);
+            this.stsAPIValid.Size = new System.Drawing.Size(100, 17);
             this.stsAPIValid.Text = "API keys are invalid";
             // 
             // stsAccountBalance
             // 
             this.stsAccountBalance.Name = "stsAccountBalance";
-            this.stsAccountBalance.Size = new System.Drawing.Size(75, 17);
+            this.stsAccountBalance.Size = new System.Drawing.Size(58, 17);
             this.stsAccountBalance.Text = "Balance: 0";
             // 
             // stsOTProgress
             // 
             this.stsOTProgress.Name = "stsOTProgress";
-            this.stsOTProgress.Size = new System.Drawing.Size(133, 20);
+            this.stsOTProgress.Size = new System.Drawing.Size(100, 16);
             this.stsOTProgress.Visible = false;
             // 
             // btnAccountBalance
             // 
             this.btnAccountBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAccountBalance.Location = new System.Drawing.Point(17, 97);
-            this.btnAccountBalance.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAccountBalance.Location = new System.Drawing.Point(13, 79);
             this.btnAccountBalance.Name = "btnAccountBalance";
-            this.btnAccountBalance.Size = new System.Drawing.Size(133, 28);
+            this.btnAccountBalance.Size = new System.Drawing.Size(100, 23);
             this.btnAccountBalance.TabIndex = 16;
             this.btnAccountBalance.Text = "Update Balance";
             this.btnAccountBalance.UseVisualStyleBackColor = true;
@@ -905,10 +897,9 @@
             0,
             0,
             131072});
-            this.nudStopPercent.Location = new System.Drawing.Point(156, 101);
-            this.nudStopPercent.Margin = new System.Windows.Forms.Padding(4);
+            this.nudStopPercent.Location = new System.Drawing.Point(117, 82);
             this.nudStopPercent.Name = "nudStopPercent";
-            this.nudStopPercent.Size = new System.Drawing.Size(54, 22);
+            this.nudStopPercent.Size = new System.Drawing.Size(40, 19);
             this.nudStopPercent.TabIndex = 17;
             this.nudStopPercent.Value = new decimal(new int[] {
             1,
@@ -919,10 +910,9 @@
             // btnManualSetStop
             // 
             this.btnManualSetStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnManualSetStop.Location = new System.Drawing.Point(263, 102);
-            this.btnManualSetStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btnManualSetStop.Location = new System.Drawing.Point(197, 83);
             this.btnManualSetStop.Name = "btnManualSetStop";
-            this.btnManualSetStop.Size = new System.Drawing.Size(100, 28);
+            this.btnManualSetStop.Size = new System.Drawing.Size(75, 23);
             this.btnManualSetStop.TabIndex = 18;
             this.btnManualSetStop.Text = "Set Stop";
             this.btnManualSetStop.UseVisualStyleBackColor = true;
@@ -931,10 +921,9 @@
             // txtAPIKey
             // 
             this.txtAPIKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAPIKey.Location = new System.Drawing.Point(381, 100);
-            this.txtAPIKey.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAPIKey.Location = new System.Drawing.Point(286, 81);
             this.txtAPIKey.Name = "txtAPIKey";
-            this.txtAPIKey.Size = new System.Drawing.Size(211, 22);
+            this.txtAPIKey.Size = new System.Drawing.Size(159, 19);
             this.txtAPIKey.TabIndex = 19;
             this.txtAPIKey.UseSystemPasswordChar = true;
             this.txtAPIKey.TextChanged += new System.EventHandler(this.txtAPIKey_TextChanged);
@@ -942,10 +931,9 @@
             // txtAPISecret
             // 
             this.txtAPISecret.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAPISecret.Location = new System.Drawing.Point(381, 125);
-            this.txtAPISecret.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAPISecret.Location = new System.Drawing.Point(286, 102);
             this.txtAPISecret.Name = "txtAPISecret";
-            this.txtAPISecret.Size = new System.Drawing.Size(211, 22);
+            this.txtAPISecret.Size = new System.Drawing.Size(159, 19);
             this.txtAPISecret.TabIndex = 20;
             this.txtAPISecret.UseSystemPasswordChar = true;
             this.txtAPISecret.TextChanged += new System.EventHandler(this.txtAPISecret_TextChanged);
@@ -954,10 +942,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(600, 108);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(450, 88);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 17);
+            this.label2.Size = new System.Drawing.Size(25, 13);
             this.label2.TabIndex = 22;
             this.label2.Text = "Key";
             // 
@@ -965,20 +952,18 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(600, 130);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(450, 106);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 17);
+            this.label3.Size = new System.Drawing.Size(38, 13);
             this.label3.TabIndex = 23;
             this.label3.Text = "Secret";
             // 
             // btnBuyOverTimeOrder
             // 
             this.btnBuyOverTimeOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuyOverTimeOrder.Location = new System.Drawing.Point(381, 2);
-            this.btnBuyOverTimeOrder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnBuyOverTimeOrder.Location = new System.Drawing.Point(286, 2);
             this.btnBuyOverTimeOrder.Name = "btnBuyOverTimeOrder";
-            this.btnBuyOverTimeOrder.Size = new System.Drawing.Size(119, 28);
+            this.btnBuyOverTimeOrder.Size = new System.Drawing.Size(89, 23);
             this.btnBuyOverTimeOrder.TabIndex = 24;
             this.btnBuyOverTimeOrder.Text = "Buy Over Time";
             this.btnBuyOverTimeOrder.UseVisualStyleBackColor = true;
@@ -987,10 +972,9 @@
             // btnSellOverTimeOrder
             // 
             this.btnSellOverTimeOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSellOverTimeOrder.Location = new System.Drawing.Point(381, 39);
-            this.btnSellOverTimeOrder.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSellOverTimeOrder.Location = new System.Drawing.Point(286, 32);
             this.btnSellOverTimeOrder.Name = "btnSellOverTimeOrder";
-            this.btnSellOverTimeOrder.Size = new System.Drawing.Size(119, 28);
+            this.btnSellOverTimeOrder.Size = new System.Drawing.Size(89, 23);
             this.btnSellOverTimeOrder.TabIndex = 25;
             this.btnSellOverTimeOrder.Text = "Sell Over Time";
             this.btnSellOverTimeOrder.UseVisualStyleBackColor = true;
@@ -1003,8 +987,7 @@
             // nudOverTimeContracts
             // 
             this.nudOverTimeContracts.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudOverTimeContracts.Location = new System.Drawing.Point(503, 7);
-            this.nudOverTimeContracts.Margin = new System.Windows.Forms.Padding(4);
+            this.nudOverTimeContracts.Location = new System.Drawing.Point(377, 6);
             this.nudOverTimeContracts.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -1016,7 +999,7 @@
             0,
             0});
             this.nudOverTimeContracts.Name = "nudOverTimeContracts";
-            this.nudOverTimeContracts.Size = new System.Drawing.Size(89, 22);
+            this.nudOverTimeContracts.Size = new System.Drawing.Size(67, 19);
             this.nudOverTimeContracts.TabIndex = 26;
             this.nudOverTimeContracts.Value = new decimal(new int[] {
             100,
@@ -1028,8 +1011,7 @@
             // nudOverTimeInterval
             // 
             this.nudOverTimeInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudOverTimeInterval.Location = new System.Drawing.Point(503, 44);
-            this.nudOverTimeInterval.Margin = new System.Windows.Forms.Padding(4);
+            this.nudOverTimeInterval.Location = new System.Drawing.Point(377, 36);
             this.nudOverTimeInterval.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -1041,7 +1023,7 @@
             0,
             0});
             this.nudOverTimeInterval.Name = "nudOverTimeInterval";
-            this.nudOverTimeInterval.Size = new System.Drawing.Size(63, 22);
+            this.nudOverTimeInterval.Size = new System.Drawing.Size(47, 19);
             this.nudOverTimeInterval.TabIndex = 27;
             this.nudOverTimeInterval.Value = new decimal(new int[] {
             10,
@@ -1053,8 +1035,7 @@
             // nudOverTimeIntervalCount
             // 
             this.nudOverTimeIntervalCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nudOverTimeIntervalCount.Location = new System.Drawing.Point(503, 79);
-            this.nudOverTimeIntervalCount.Margin = new System.Windows.Forms.Padding(4);
+            this.nudOverTimeIntervalCount.Location = new System.Drawing.Point(377, 64);
             this.nudOverTimeIntervalCount.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -1066,7 +1047,7 @@
             0,
             0});
             this.nudOverTimeIntervalCount.Name = "nudOverTimeIntervalCount";
-            this.nudOverTimeIntervalCount.Size = new System.Drawing.Size(63, 22);
+            this.nudOverTimeIntervalCount.Size = new System.Drawing.Size(47, 19);
             this.nudOverTimeIntervalCount.TabIndex = 28;
             this.nudOverTimeIntervalCount.Value = new decimal(new int[] {
             6,
@@ -1079,10 +1060,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(600, 9);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(450, 7);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(94, 17);
+            this.label4.Size = new System.Drawing.Size(71, 13);
             this.label4.TabIndex = 22;
             this.label4.Text = "Contracts Per";
             // 
@@ -1090,10 +1070,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(600, 44);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(450, 36);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 17);
+            this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 29;
             this.label5.Text = "Seconds";
             // 
@@ -1101,20 +1080,18 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(600, 81);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(450, 66);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(59, 17);
+            this.label6.Size = new System.Drawing.Size(45, 13);
             this.label6.TabIndex = 30;
             this.label6.Text = "X Times";
             // 
             // btnOverTimeStop
             // 
             this.btnOverTimeStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOverTimeStop.Location = new System.Drawing.Point(381, 71);
-            this.btnOverTimeStop.Margin = new System.Windows.Forms.Padding(4);
+            this.btnOverTimeStop.Location = new System.Drawing.Point(286, 58);
             this.btnOverTimeStop.Name = "btnOverTimeStop";
-            this.btnOverTimeStop.Size = new System.Drawing.Size(119, 28);
+            this.btnOverTimeStop.Size = new System.Drawing.Size(89, 23);
             this.btnOverTimeStop.TabIndex = 31;
             this.btnOverTimeStop.Text = "Stop";
             this.btnOverTimeStop.UseVisualStyleBackColor = true;
@@ -1124,10 +1101,9 @@
             // 
             this.lblPriceBuy.AutoSize = true;
             this.lblPriceBuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPriceBuy.Location = new System.Drawing.Point(121, 142);
-            this.lblPriceBuy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPriceBuy.Location = new System.Drawing.Point(91, 115);
             this.lblPriceBuy.Name = "lblPriceBuy";
-            this.lblPriceBuy.Size = new System.Drawing.Size(68, 17);
+            this.lblPriceBuy.Size = new System.Drawing.Size(52, 13);
             this.lblPriceBuy.TabIndex = 33;
             this.lblPriceBuy.Text = "Price Buy";
             // 
@@ -1140,15 +1116,14 @@
             0,
             0,
             131072});
-            this.nudPriceBuy.Location = new System.Drawing.Point(17, 140);
-            this.nudPriceBuy.Margin = new System.Windows.Forms.Padding(4);
+            this.nudPriceBuy.Location = new System.Drawing.Point(13, 114);
             this.nudPriceBuy.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.nudPriceBuy.Name = "nudPriceBuy";
-            this.nudPriceBuy.Size = new System.Drawing.Size(105, 22);
+            this.nudPriceBuy.Size = new System.Drawing.Size(79, 19);
             this.nudPriceBuy.TabIndex = 34;
             this.nudPriceBuy.Value = new decimal(new int[] {
             6200,
@@ -1160,10 +1135,9 @@
             // 
             this.btnSetPrice.BackColor = System.Drawing.Color.Aqua;
             this.btnSetPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSetPrice.Location = new System.Drawing.Point(381, 155);
-            this.btnSetPrice.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSetPrice.Location = new System.Drawing.Point(286, 126);
             this.btnSetPrice.Name = "btnSetPrice";
-            this.btnSetPrice.Size = new System.Drawing.Size(211, 33);
+            this.btnSetPrice.Size = new System.Drawing.Size(158, 27);
             this.btnSetPrice.TabIndex = 35;
             this.btnSetPrice.Text = "Set settings";
             this.btnSetPrice.UseVisualStyleBackColor = false;
@@ -1178,15 +1152,14 @@
             0,
             0,
             131072});
-            this.nudPriceSell.Location = new System.Drawing.Point(197, 142);
-            this.nudPriceSell.Margin = new System.Windows.Forms.Padding(4);
+            this.nudPriceSell.Location = new System.Drawing.Point(148, 115);
             this.nudPriceSell.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.nudPriceSell.Name = "nudPriceSell";
-            this.nudPriceSell.Size = new System.Drawing.Size(105, 22);
+            this.nudPriceSell.Size = new System.Drawing.Size(79, 19);
             this.nudPriceSell.TabIndex = 36;
             this.nudPriceSell.Value = new decimal(new int[] {
             8500,
@@ -1198,98 +1171,34 @@
             // 
             this.lblPriceSell.AutoSize = true;
             this.lblPriceSell.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPriceSell.Location = new System.Drawing.Point(306, 142);
-            this.lblPriceSell.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPriceSell.Location = new System.Drawing.Point(230, 115);
             this.lblPriceSell.Name = "lblPriceSell";
-            this.lblPriceSell.Size = new System.Drawing.Size(67, 17);
+            this.lblPriceSell.Size = new System.Drawing.Size(51, 13);
             this.lblPriceSell.TabIndex = 37;
             this.lblPriceSell.Text = "Price Sell";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(1, 20);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(125, 17);
-            this.label11.TabIndex = 45;
-            this.label11.Text = "Elements/Dividend";
-            // 
-            // txtBuyElementsDivisionOutput
-            // 
-            this.txtBuyElementsDivisionOutput.Location = new System.Drawing.Point(6, 41);
-            this.txtBuyElementsDivisionOutput.Name = "txtBuyElementsDivisionOutput";
-            this.txtBuyElementsDivisionOutput.ReadOnly = true;
-            this.txtBuyElementsDivisionOutput.Size = new System.Drawing.Size(100, 22);
-            this.txtBuyElementsDivisionOutput.TabIndex = 49;
-            // 
-            // txtSellElementsDivisionOutput
-            // 
-            this.txtSellElementsDivisionOutput.Location = new System.Drawing.Point(12, 43);
-            this.txtSellElementsDivisionOutput.Name = "txtSellElementsDivisionOutput";
-            this.txtSellElementsDivisionOutput.ReadOnly = true;
-            this.txtSellElementsDivisionOutput.Size = new System.Drawing.Size(100, 22);
-            this.txtSellElementsDivisionOutput.TabIndex = 51;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 22);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(125, 17);
-            this.label12.TabIndex = 50;
-            this.label12.Text = "Elements/Dividend";
-            // 
-            // txtFirstBuyOrderOutput
-            // 
-            this.txtFirstBuyOrderOutput.Location = new System.Drawing.Point(1142, 38);
-            this.txtFirstBuyOrderOutput.Name = "txtFirstBuyOrderOutput";
-            this.txtFirstBuyOrderOutput.ReadOnly = true;
-            this.txtFirstBuyOrderOutput.Size = new System.Drawing.Size(100, 22);
-            this.txtFirstBuyOrderOutput.TabIndex = 53;
-            // 
-            // lblFirstBuyOrder
-            // 
-            this.lblFirstBuyOrder.AutoSize = true;
-            this.lblFirstBuyOrder.Location = new System.Drawing.Point(1009, 41);
-            this.lblFirstBuyOrder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFirstBuyOrder.Name = "lblFirstBuyOrder";
-            this.lblFirstBuyOrder.Size = new System.Drawing.Size(104, 17);
-            this.lblFirstBuyOrder.TabIndex = 52;
-            this.lblFirstBuyOrder.Text = "First Order Buy";
-            // 
-            // txtFirstSellOrderOutput
-            // 
-            this.txtFirstSellOrderOutput.Location = new System.Drawing.Point(1141, 61);
-            this.txtFirstSellOrderOutput.Name = "txtFirstSellOrderOutput";
-            this.txtFirstSellOrderOutput.ReadOnly = true;
-            this.txtFirstSellOrderOutput.Size = new System.Drawing.Size(100, 22);
-            this.txtFirstSellOrderOutput.TabIndex = 55;
-            // 
-            // lblFirstSellOrder
-            // 
-            this.lblFirstSellOrder.AutoSize = true;
-            this.lblFirstSellOrder.Location = new System.Drawing.Point(1009, 64);
-            this.lblFirstSellOrder.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFirstSellOrder.Name = "lblFirstSellOrder";
-            this.lblFirstSellOrder.Size = new System.Drawing.Size(103, 17);
-            this.lblFirstSellOrder.TabIndex = 54;
-            this.lblFirstSellOrder.Text = "First Order Sell";
-            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1282, 481);
+            this.ClientSize = new System.Drawing.Size(962, 391);
+            this.Controls.Add(this.txtFirstSellOrderOutput);
             this.Controls.Add(this.lblPriceSell);
+            this.Controls.Add(this.lblFirstSellOrder);
             this.Controls.Add(this.nudPriceSell);
+            this.Controls.Add(this.txtFirstBuyOrderOutput);
             this.Controls.Add(this.btnSetPrice);
+            this.Controls.Add(this.lblFirstBuyOrder);
+            this.Controls.Add(this.lblVolume24h);
             this.Controls.Add(this.nudPriceBuy);
+            this.Controls.Add(this.nudVolume24h);
             this.Controls.Add(this.lblPriceBuy);
             this.Controls.Add(this.btnOverTimeStop);
+            this.Controls.Add(this.gbSell);
             this.Controls.Add(this.label6);
+            this.Controls.Add(this.gbBuy);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.dgvCandles);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.nudOverTimeIntervalCount);
             this.Controls.Add(this.nudOverTimeInterval);
@@ -1315,7 +1224,6 @@
             this.Controls.Add(this.btnSell);
             this.Controls.Add(this.btnBuy);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Snipers Bot";
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).EndInit();
