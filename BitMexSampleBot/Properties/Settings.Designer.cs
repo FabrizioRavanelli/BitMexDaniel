@@ -12,7 +12,7 @@ namespace BitMexSampleBot.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace BitMexSampleBot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("k-nwWE--NME5Mk4qSYDsGWr3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("X6_egTD7fQFUZcmT4Dk3H9Gl")]
         public string APIKey {
             get {
                 return ((string)(this["APIKey"]));
@@ -37,7 +37,7 @@ namespace BitMexSampleBot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("b-FZEARq1BqCjnNTdSQzMMOKX9OjJZzlhU-NLPSuv_4gktqD")]
+        [global::System.Configuration.DefaultSettingValueAttribute("v7xCkLn6Ee9noeY7oVhAsa5Jz-DVFFLAAVezI4AKl5AdOW00")]
         public string APISecret {
             get {
                 return ((string)(this["APISecret"]));
