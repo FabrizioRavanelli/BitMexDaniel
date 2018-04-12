@@ -46,8 +46,8 @@ namespace BitMEX
             StringBuilder b = new StringBuilder();
             foreach (var item in param)
                 b.Append(string.Format("&{0}={1}", item.Key, WebUtility.UrlEncode(item.Value)));
-
-            try { return b.ToString().Substring(1); }
+            
+            try { return b.ToString().Length>1 ? b.ToString().Substring(1) : ""; }
             catch (Exception) { return ""; }
         }
 

@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitMexAPI.cs" />
+    <Compile Include="Coin.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +102,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="BitMexSampleBot_TemporaryKey.pfx" />
+    <None Include="json\coins.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
