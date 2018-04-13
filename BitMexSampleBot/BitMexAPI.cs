@@ -24,6 +24,8 @@ namespace BitMEX
 
     public class BitMEXApi
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string domain = "https://testnet.bitmex.com";
         private string apiKey;
         private string apiSecret;
@@ -46,8 +48,8 @@ namespace BitMEX
             StringBuilder b = new StringBuilder();
             foreach (var item in param)
                 b.Append(string.Format("&{0}={1}", item.Key, WebUtility.UrlEncode(item.Value)));
-            
-            try { return b.ToString().Length>1 ? b.ToString().Substring(1) : ""; }
+
+            try { return b.ToString().Length > 1 ? b.ToString().Substring(1) : ""; }
             catch (Exception) { return ""; }
         }
 
@@ -194,7 +196,15 @@ namespace BitMEX
             param["symbol"] = symbol;
             param["depth"] = depth.ToString();
             string res = Query("GET", "/orderBook/L2", param);
-            return JsonConvert.DeserializeObject<List<OrderBook>>(res);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<OrderBook>>(res);
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetOrderBook json: {0}", res);
+                throw;
+            }
         }
 
         public string PostOrderPostOnly(string Symbol, string Side, double Price, int Quantity)
@@ -231,7 +241,15 @@ namespace BitMEX
         public List<Instrument> GetActiveInstruments()
         {
             string res = Query("GET", "/instrument/active");
-            return JsonConvert.DeserializeObject<List<Instrument>>(res);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Instrument>>(res);
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetActiveInstruments json: {0}", res);
+                throw;
+            }
         }
 
         public List<Instrument> GetInstrument(string symbol)
@@ -239,7 +257,15 @@ namespace BitMEX
             var param = new Dictionary<string, string>();
             param["symbol"] = symbol;
             string res = Query("GET", "/instrument", param);
-            return JsonConvert.DeserializeObject<List<Instrument>>(res);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Instrument>>(res);
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetInstrument json: {0}", res);
+                throw;
+            }
         }
 
         public List<Candle> GetCandleHistory(string symbol, int count, string size)
@@ -251,14 +277,30 @@ namespace BitMEX
             param["partial"] = false.ToString();
             param["binSize"] = size;
             string res = Query("GET", "/trade/bucketed", param);
-            return JsonConvert.DeserializeObject<List<Candle>>(res).OrderByDescending(a => a.TimeStamp).ToList();
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Candle>>(res).OrderByDescending(a => a.TimeStamp).ToList();
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetCandleHistory json: {0}", res);
+                throw;
+            }
         }
 
         public List<Position> GetOpenPositions(string symbol)
         {
             var param = new Dictionary<string, string>();
             string res = Query("GET", "/position", param, true);
-            return JsonConvert.DeserializeObject<List<Position>>(res).Where(a => a.Symbol == symbol && a.IsOpen == true).OrderByDescending(a => a.TimeStamp).ToList();
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Position>>(res).Where(a => a.Symbol == symbol && a.IsOpen == true).OrderByDescending(a => a.TimeStamp).ToList();
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetOpenPositions json: {0}", res);
+                throw;
+            }
         }
 
         public List<Order> GetOpenOrders(string symbol)
@@ -267,7 +309,15 @@ namespace BitMEX
             param["symbol"] = symbol;
             param["reverse"] = true.ToString();
             string res = Query("GET", "/order", param, true);
-            return JsonConvert.DeserializeObject<List<Order>>(res).Where(a => a.OrdStatus == "New" || a.OrdStatus == "PartiallyFilled").OrderByDescending(a => a.TimeStamp).ToList();
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Order>>(res).Where(a => a.OrdStatus == "New" || a.OrdStatus == "PartiallyFilled").OrderByDescending(a => a.TimeStamp).ToList();
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetOpenOrders json: {0}", res);
+                throw;
+            }
         }
 
         public string EditOrderPrice(string OrderId, double Price)
@@ -290,7 +340,14 @@ namespace BitMEX
             }
             else
             {
-                return Convert.ToDouble(JsonConvert.DeserializeObject<Margin>(res).UsefulBalance); // useful balance is the balance with full decimal places.
+                try{
+                    return Convert.ToDouble(JsonConvert.DeserializeObject<Margin>(res).UsefulBalance); // useful balance is the balance with full decimal places.
+                }
+                catch (Exception e)
+                {
+                    log.ErrorFormat("Error GetAccountBalance json: {0}", res);
+                    throw;
+                }
                 // default wallet balance doesn't show the decimal places like it should.
             }
 
@@ -402,11 +459,6 @@ namespace BitMEX
         public double? RSI; // NEW - For RSI
         public double? AVGGain; // NEW - For RSI
         public double? AVGLoss; // NEW - For RSI
-        
-
-
-
-
 
         public void SetTR(double? PreviousClose)
         {
