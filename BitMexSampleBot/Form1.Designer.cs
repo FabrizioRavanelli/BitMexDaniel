@@ -658,7 +658,7 @@
             // 
             // tmrCandleUpdater
             // 
-            this.tmrCandleUpdater.Interval = 10000;
+            this.tmrCandleUpdater.Interval = 6000;
             this.tmrCandleUpdater.Tick += new System.EventHandler(this.tmrCandleUpdater_Tick);
             // 
             // rdoBuy
@@ -892,7 +892,7 @@
             // 
             // tmrAutoTradeExecution
             // 
-            this.tmrAutoTradeExecution.Interval = 5000;
+            this.tmrAutoTradeExecution.Interval =120000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
             // statusStrip1
@@ -1256,7 +1256,7 @@
             // 
             // tmrUpdateBuySellFirstPriceOrders
             // 
-            this.tmrUpdateBuySellFirstPriceOrders.Interval = 10000;
+            this.tmrUpdateBuySellFirstPriceOrders.Interval = 6000;
             this.tmrUpdateBuySellFirstPriceOrders.Tick += new System.EventHandler(this.tmrUpdateBuySellFirstPriceOrders_Tick);
             // 
             // Form1
