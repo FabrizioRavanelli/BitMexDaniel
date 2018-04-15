@@ -112,6 +112,7 @@
             this.lblPriceSell = new System.Windows.Forms.Label();
             this.tmrUpdateBBMiddle = new System.Windows.Forms.Timer(this.components);
             this.tmrUpdateBuySellFirstPriceOrders = new System.Windows.Forms.Timer(this.components);
+            this.LoggingTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -658,7 +659,7 @@
             // 
             // tmrCandleUpdater
             // 
-            this.tmrCandleUpdater.Interval = 6000;
+            this.tmrCandleUpdater.Interval = 20000;
             this.tmrCandleUpdater.Tick += new System.EventHandler(this.tmrCandleUpdater_Tick);
             // 
             // rdoBuy
@@ -829,6 +830,8 @@
             // chkAutoMarketTakeProfits
             // 
             this.chkAutoMarketTakeProfits.AutoSize = true;
+            this.chkAutoMarketTakeProfits.Checked = true;
+            this.chkAutoMarketTakeProfits.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkAutoMarketTakeProfits.Location = new System.Drawing.Point(9, 100);
             this.chkAutoMarketTakeProfits.Margin = new System.Windows.Forms.Padding(4);
             this.chkAutoMarketTakeProfits.Name = "chkAutoMarketTakeProfits";
@@ -892,7 +895,7 @@
             // 
             // tmrAutoTradeExecution
             // 
-            this.tmrAutoTradeExecution.Interval =120000;
+            this.tmrAutoTradeExecution.Interval = 10000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
             // statusStrip1
@@ -903,7 +906,7 @@
             this.stsAPIValid,
             this.stsAccountBalance,
             this.stsOTProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 459);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 631);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1283, 22);
@@ -1256,14 +1259,25 @@
             // 
             // tmrUpdateBuySellFirstPriceOrders
             // 
-            this.tmrUpdateBuySellFirstPriceOrders.Interval = 6000;
+            this.tmrUpdateBuySellFirstPriceOrders.Interval = 10000;
             this.tmrUpdateBuySellFirstPriceOrders.Tick += new System.EventHandler(this.tmrUpdateBuySellFirstPriceOrders_Tick);
+            // 
+            // LoggingTextBox
+            // 
+            this.LoggingTextBox.Location = new System.Drawing.Point(17, 470);
+            this.LoggingTextBox.Multiline = true;
+            this.LoggingTextBox.Name = "LoggingTextBox";
+            this.LoggingTextBox.ReadOnly = true;
+            this.LoggingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.LoggingTextBox.Size = new System.Drawing.Size(1254, 148);
+            this.LoggingTextBox.TabIndex = 56;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 481);
+            this.ClientSize = new System.Drawing.Size(1283, 653);
+            this.Controls.Add(this.LoggingTextBox);
             this.Controls.Add(this.txtFirstSellOrderOutput);
             this.Controls.Add(this.lblPriceSell);
             this.Controls.Add(this.lblFirstSellOrder);
@@ -1309,6 +1323,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Snipers Bot";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).EndInit();
             this.gbCandles.ResumeLayout(false);
@@ -1427,6 +1442,7 @@
         private System.Windows.Forms.Label lblFirstBuyOrder;
         private System.Windows.Forms.Timer tmrUpdateBBMiddle;
         private System.Windows.Forms.Timer tmrUpdateBuySellFirstPriceOrders;
+        private System.Windows.Forms.TextBox LoggingTextBox;
     }
 }
 

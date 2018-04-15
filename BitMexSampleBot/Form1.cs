@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
+using log4net.Repository.Hierarchy;
 
 namespace BitMexSampleBot
 {
@@ -109,7 +111,7 @@ namespace BitMexSampleBot
 
         double? SellPumpPrice { get; set; }
         double? BuyDumpPrice { get; set; }
-
+        public bool AllowCalculateOrder { get; set; }
         #endregion
 
         public Form1()
@@ -122,6 +124,12 @@ namespace BitMexSampleBot
             InitializeBuySellStochk();
             InitializeParameterSettings();
             InitializeColors();
+            //var rootAppender = ((Hierarchy)LogManager.GetRepository())
+            //    .Root.Appenders.OfType<TextBoxAppender>()
+            //    .FirstOrDefault();
+            var appender = LogManager.GetRepository().GetAppenders().FirstOrDefault(a => a.Name == "TextBoxAppender");
+            if (appender != null)
+                ((TextBoxAppender)appender).AppenderTextBox = this.LoggingTextBox;
         }
 
         private void InitializeColors()
@@ -181,6 +189,7 @@ namespace BitMexSampleBot
             PriceSellDividend = decimal.ToDouble(nudConstantSellDividend.Value);
             InputVolume24h = decimal.ToDouble(nudVolume24h.Value);
             AllowCalculateBBMiddle = true;
+            AllowCalculateOrder = true;
             log.InfoFormat("Set Input Setting: InputPriceBuy = {0}, InputPriceSell = {1}, BuyElementsToTake = {2}, " +
                 "SellElementsToTake={3}, PriceBuyDividend={4}, PriceSellDividend={5}, InputVolume24h={6}", InputPriceBuy, InputPriceSell,
                 BuyElementsToTake, SellElementsToTake, PriceBuyDividend, PriceSellDividend, InputVolume24h);
@@ -239,7 +248,13 @@ namespace BitMexSampleBot
 
         public double CalculateMakerOrderPrice(string Side)
         {
+            Thread.SpinWait(2);
             //every 10 min AllowCalculateBBMiddle is true and then  BuyPumpPrice and BuyDumpPrice are recalculated
+            if (AllowCalculateOrder == true)
+            {
+                AllowCalculateOrder = false;
+
+            }
             if (AllowCalculateBBMiddle)
             {
                 AllowCalculateBBMiddle = false;
@@ -248,7 +263,7 @@ namespace BitMexSampleBot
                 SellPumpPrice = OldBBMiddle + 65;
                 BuyDumpPrice = OldBBMiddle - 55;
             }
-            Thread.Sleep(2000);
+            Candle currentCandle = Candles.Any() ? Candles[0] : null;
             CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
             OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
             double? SellPrice = CalculateSellPrice(CurrentBook);
@@ -256,19 +271,20 @@ namespace BitMexSampleBot
             log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
             double? BuyPrice = CalculateBuyPrice(CurrentBook);
             //immer +1 usd addieren
-            BuyPrice = BuyPrice - 1;
+            BuyPrice = BuyPrice - 2;
             log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
             //lblAutoUnrealizedROEPercent.Text = Math.Round((Convert.ToDouble(OpenPositions[0].UnrealisedRoePcnt * 100)), 2).ToString();
             double? OrderPrice = 0;
             double? AvgEntryPrice = 0;
             double TrendPrice = 0;
+            Thread.Sleep(2000);
             switch (Side)
             {
                 case "Buy":
-                    if (OpenPositions.Count > 0)
+                    if ((OpenPositions.Count > 0 ) & (currentCandle.STOCHK <= InputBuySTOCHK))
                     {
                         AvgEntryPrice = OpenPositions[0].AvgEntryPrice ?? BuyPrice;
-
+                        
                         if ((BuyPrice < BuyDumpPrice) & (AllowCalculateBBMiddle == true))
                         {
                             if (BuyPrice < AvgEntryPrice)
@@ -292,10 +308,12 @@ namespace BitMexSampleBot
                         }
                         log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}, AvgEntryPrice:{1} => OrderPrice: {2}", BuyPrice, TrendPrice, BuyDumpPrice, OrderPrice); //TODO: better check for null values in BreakEvenPrice-Setter method (bitmexApi)
                     }
+                    Mode = "Buy";
+                    btnAutomatedTrading.Text = "Stop - " + Mode;
                     break;
 
                 case "Sell":
-                    if (OpenPositions.Count > 0)
+                    if ((OpenPositions.Count > 0) & (currentCandle.STOCHK >= InputSellSTOCHK))
                     {
                         AvgEntryPrice = OpenPositions[0].AvgEntryPrice ?? SellPrice;
                         AvgEntryPrice = (AvgEntryPrice + 20);
@@ -315,20 +333,29 @@ namespace BitMexSampleBot
                      else
                      {
                             OrderPrice = SellPumpPrice;
+
                             AllowCalculateBBMiddle = false;
                      }
                     log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}, AvgEntryPrice:{1} => OrderPrice: {2}", SellPrice, TrendPrice, SellPumpPrice, OrderPrice); //TODO: better check for null values in BreakEvenPrice-Setter method (bitmexApi)
+                    Mode = "Sell";
+                    btnAutomatedTrading.Text = "Stop - " + Mode;
                     break;
 
             }
-            
-            
-            return OrderPrice!= null ? (long)OrderPrice : 0;
-        }
 
+                AllowCalculateOrder = true;
+                return OrderPrice!= null ? (long)OrderPrice : 0;
+        }
+        
         public double CalculateMakerOrderPrice2(string Side)
         {
-            Thread.Sleep(2000);
+            Thread.SpinWait(2);
+            if (AllowCalculateOrder == true)
+            {
+                AllowCalculateOrder = false;
+
+            }
+            
             //every 10 min AllowCalculateBBMiddle is true and then  BuyPumpPrice and BuyDumpPrice are recalculated
             if (AllowCalculateBBMiddle)
             {
@@ -338,11 +365,11 @@ namespace BitMexSampleBot
                 SellPumpPrice = OldBBMiddle + 65;
                 BuyDumpPrice = OldBBMiddle - 55;
             }
-
+            Candle currentCandle = Candles.Any() ? Candles[0] : null;
             CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
 
             double? SellPrice = CalculateSellPrice(CurrentBook);
-            SellPrice = SellPrice + 3;
+           // SellPrice = SellPrice + 3;
             log.InfoFormat("CalculateMakerOrderPrice2 - SellPrice: {0}", SellPrice);
             double? BuyPrice = CalculateBuyPrice(CurrentBook);
             //immer +1 usd addieren
@@ -355,12 +382,13 @@ namespace BitMexSampleBot
             double? AvgEntryPrice = Candles.Any() ? Candles[0].Open : 0d;
             double Open = Candles.Any() && Candles[0].Open.HasValue ? Candles[0].Open.Value : 0d;
 
-            if (OpenPositions.Count > 0)
+            if (OpenPositions.Count > 3)
             {
+                
                 bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
-           
 
+          
             switch (Side)
             {
                 case "Buy":
@@ -392,20 +420,23 @@ namespace BitMexSampleBot
                         }
                     }
                     */
-                    if ((OpenPositions.Count < 0) & (OpenOrders.Count < 1))
+                    
+                    if ((OpenPositions.Count < 0) & (OpenOrders.Count < 1) & (currentCandle.STOCHK < InputBuySTOCHK))
                     {
-                         OrderPrice = Open + 1;
+                         OrderPrice = BuyPrice + 1;
                     }
                      else
                     {
-                       // OrderPrice = Open + 1;
+                        OrderPrice = BuyDumpPrice;
                     }
                     log.InfoFormat("CalculateMakerOrderPrice2 - Buy((OpenPositions.Count < 0) & (OpenOrders.Count < 1)),  Open + 1  OrderPrice: {3}", BuyPrice, BuyDumpPrice, OpenPositions.Any() ? OpenPositions[0].AvgEntryPrice : 0, OrderPrice); //TODO: better check for null values in BreakEvenPrice-Setter method (bitmexApi)
+                    Mode = "Buy";
+                    btnAutomatedTrading.Text = "Stop - " + Mode;
                     break;
 
                 case "Sell":
                   //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                    if ((OpenPositions.Count < 0) & (OpenOrders.Count < 1))
+                    if ((OpenPositions.Count < 2) & (OpenOrders.Count < 1))
                     {
                         if ((Open > SellPrice) && (AllowCalculateBBMiddle == false))
                         {
@@ -429,16 +460,26 @@ namespace BitMexSampleBot
                     }
                     else
                     {
-                       // OrderPrice = SellPrice;
+                        OrderPrice = SellPrice;
                     }
                     log.InfoFormat("CalculateMakerOrderPrice2 - SellPrice: {0}, SellPumpPrice: {1}, Open:{2}, OrderPrice: {3}", SellPrice, SellPumpPrice, Open, OrderPrice); //TODO: better check for null values in BreakEvenPrice-Setter method (bitmexApi)
+                    Mode = "Sell";
+                    btnAutomatedTrading.Text = "Stop - " + Mode;
                     break;
             }
+            AllowCalculateOrder = true;
             return (long)OrderPrice;
         }
         public double CalculateMakerOrderPrice3(string Side)
         {
-            Thread.Sleep(2000);
+            Thread.SpinWait(2);
+
+            if (AllowCalculateOrder == true)
+            {
+                AllowCalculateOrder = false;
+
+            }
+            Candle currentCandle = Candles.Any() ? Candles[0] : null;
             //every 10 min AllowCalculateBBMiddle is true and then  BuyPumpPrice and BuyDumpPrice are recalculated
             if (AllowCalculateBBMiddle)
             {
@@ -464,9 +505,10 @@ namespace BitMexSampleBot
             Candles = Candles.OrderBy(a => a.TimeStamp).ToList();
             double? AvgEntryPrice = Candles.Any() ? Candles[0].Open : 0d;
             double Open = Candles.Any() && Candles[0].Open.HasValue ? Candles[0].Open.Value : 0d;
-
-            if (OpenPositions.Count > 0)
+            Thread.Sleep(2000);
+            if (OpenPositions.Count > 1)
             {
+                Thread.Sleep(2000);
                 bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
 
@@ -476,7 +518,7 @@ namespace BitMexSampleBot
                 case "Buy":
 
                      bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                     if ((OpenPositions.Count < 1)&(OpenOrders.Count < 1))
+                     if (((OpenPositions.Count < 1)&(OpenOrders.Count < 1)& (currentCandle.STOCHK <= InputBuySTOCHK)))
                      {
 
                          if (Open < BuyPrice)
@@ -506,11 +548,13 @@ namespace BitMexSampleBot
                      }
 
                     log.InfoFormat("CalculateMakerOrderPrice3 - BuyPrice: {0}, BuyDumpPrice: {1}, Open:{2}, OrderPrice: {3}", BuyPrice, BuyDumpPrice, Open, OrderPrice); //TODO: better check for null values in BreakEvenPrice-Setter method (bitmexApi)
+                    Mode = "Buy";
+                    btnAutomatedTrading.Text = "Stop - " + Mode;
                     break;
 
                 case "Sell":
                     //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                    if ((OpenPositions.Count < 1) & (OpenOrders.Count < 1))
+                    if ((OpenPositions.Count < 1) & (OpenOrders.Count < 1) & (currentCandle.STOCHK <= InputSellSTOCHK))
                     {
                         if ((Open > SellPrice) && (AllowCalculateBBMiddle == false))
                         {
@@ -534,18 +578,22 @@ namespace BitMexSampleBot
                     }
                     else
                     {
-                        OrderPrice = SellPrice;
+                       OrderPrice = SellPumpPrice;
                     }
                     log.InfoFormat("CalculateMakerOrderPrice3 - SellPrice: {0}, SellPumpPrice: {1}, Open:{2}, OrderPrice: {3}", SellPrice, SellPumpPrice, Open, OrderPrice); //TODO: better check for null values in BreakEvenPrice-Setter method (bitmexApi)
+                    Mode = "Sell";
+                    btnAutomatedTrading.Text = "Stop - " + Mode;
                     break;
             }
+            AllowCalculateOrder = true;
             return (long)OrderPrice;
         }
         private void MakeOrder(string Side, int Qty, double Price = 0)
         {
             if (chkCancelWhileOrdering.Checked)
             {
-                bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+               // Thread.Sleep(2000);
+              //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
             switch (Side)
@@ -574,7 +622,7 @@ namespace BitMexSampleBot
               //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
-            Thread.Sleep(2000);
+        
             switch (Side)
             {
                 case "Buy":
@@ -609,7 +657,7 @@ namespace BitMexSampleBot
                 //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
-            Thread.Sleep(2000);
+           
             switch (Side)
             {
                 case "Buy":
@@ -644,7 +692,7 @@ namespace BitMexSampleBot
                 //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
             }
             //CHANGE 1: Alle Buy Methoden nur mit "Limit Post Only" ausgeführt
-            Thread.Sleep(2000);
+            
             switch (Side)
             {
                 case "Buy":
@@ -939,9 +987,10 @@ namespace BitMexSampleBot
             if (Running)//We could set this up to also ignore setting bot mode if we've already reviewed current candles
                         //  However, if you wanted to use info from the most current candle, that wouldn't work well
             {
-                SetBotMode();  // We really only need to set bot mode if the bot is running
+                  // We really only need to set bot mode if the bot is running
                 btnAutomatedTrading.Text = "Stop - " + Mode;// so we can see what the mode of the bot is while running
             }
+            SetBotMode();
         }
 
 
@@ -991,122 +1040,55 @@ namespace BitMexSampleBot
                 }
                 else if (rdoSwitch.Checked)
                 {
-                    // Ist Summe Buyorders < Sellorders
-                    if
-                        ((SumBuyFirstItems < SumSellFirstItems) & (currentCandle.STOCHK >= InputSellSTOCHK))
+                    if (AllowCalculateOrder == true)
                     {
 
-                        AutoMakeOrder("Sell", Convert.ToInt32(nudQty.Value));
-                        bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                        Mode = "Sell";
+                        // Ist Summe Buyorders < Sellorders
+                        if
+                            ((SumBuyFirstItems < SumSellFirstItems) & (currentCandle.STOCHK >= InputSellSTOCHK))
+                        {
 
-                    }
-                    else if
-                        ((SumBuyFirstItems > SumSellFirstItems) & (currentCandle.STOCHK < InputBuySTOCHK))
-                    {
-                        bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                        AutoMakeOrder("Buy", Convert.ToInt32(nudQty.Value));
-                        Mode = "Buy";
+                            AutoMakeOrder("Sell", Convert.ToInt32(nudQty.Value));
+                            bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                            Mode = "Sell";
 
-                    }
-                    /*  else
-                      {
-                          Mode = "Wait";
-                          //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-
-                      }
-                  */
-                
-
-                     else if ((currentCandle.STOCHK > InputBuySTOCHK) || (currentCandle.STOCHK < InputSellSTOCHK))
-                   {
-                        Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
-                        double? OldBBMiddle = Candles.OrderByDescending(a => a.TimeStamp).Take(BBLength).Average(a => a.Close);
-                        double? SellPumpPrice = OldBBMiddle + 65;
-                        Double? BuyDumpPrice = OldBBMiddle - 55;
-
-
-                        CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
-                        OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
-                        double? SellPrice = CalculateSellPrice(CurrentBook);
-                        SellPrice = SellPrice + 1;
-                        log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
-                        double? BuyPrice = CalculateBuyPrice(CurrentBook);
-                        //immer +1 usd addieren
-                        BuyPrice = BuyPrice - 1;
-                        log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
-                        Mode = "Wait";
-                      //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                        if (OpenPositions.Count == 0)
-                         {
-                        Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
-                       
-
-
-                        CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
-                        OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
-                        
-                        log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
-                       
-                        //immer +1 usd addieren
-                        BuyPrice = BuyPrice - 1;
-                        log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
-                   //     double? OrderPrice = 0;
-
-
-                           if ((SumBuyFirstItems < SumSellFirstItems) & (currentCandle.STOCHK <= InputSellSTOCHK) & (OpenPositions.Count == 0) && (OpenOrders.Count == 1))
-                           { 
-                             if (OldBBMiddle > SellPrice)
-                            {
-                                    int Quantity = 1;
-                                    if ((SellPumpPrice > OldBBMiddle) & (AllowCalculateBBMiddle == false))
-                                     {
-                                        //    OldBBMiddle = SellPumpPrice;
-                                         Quantity = 1;
-                                        AutoMakeOrder2("Sell", Quantity);
-                                        log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell (SellPumpPrice > OldBBMiddle) ");
-
-                                    }
-                               
-                                AutoMakeOrder2("Sell", Quantity);
-                                    log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell (OldBBMiddle > SellPrice)");
-                              }
-                            else if (OldBBMiddle < SellPrice)
-
-                            {
-                                // SellPrice = OldBBMiddle + 10;
-                                //Double SellPrice2 = Convert.ToDouble(SellPrice + 10);
-                                int Quantity = 1;
-                                AutoMakeOrder2("Sell", Quantity);
-                                    log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell (OldBBMiddle < SellPrice)");
-                            }
-                               else
-                               {
-                                int Quantity = 1;
-                                AutoMakeOrder2("Sell", Quantity);
-                                    log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell else ");
-                                }
-                          }
                         }
+                        else if
+                            ((SumBuyFirstItems > SumSellFirstItems) & (currentCandle.STOCHK < InputBuySTOCHK))
+                        {
+                            bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                            AutoMakeOrder("Buy", Convert.ToInt32(nudQty.Value));
+                            Mode = "Buy";
 
-                        //&& (OpenOrders.Count == 0)
-                       if ((currentCandle.STOCHK > InputBuySTOCHK) || (currentCandle.STOCHK < InputSellSTOCHK) & (OpenPositions.Count == 0) )
-                            { Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
-                            OldBBMiddle = Candles.OrderByDescending(a => a.TimeStamp).Take(BBLength).Average(a => a.Close);
-                             SellPumpPrice = OldBBMiddle + 65;
-                             BuyDumpPrice = OldBBMiddle - 55;
+                        }
+                        /*  else
+                          {
+                              Mode = "Wait";
+                              //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+
+                          }
+                      */
+
+
+                        else if ((currentCandle.STOCHK > InputBuySTOCHK) || (currentCandle.STOCHK < InputSellSTOCHK))
+                        {
+                            Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
+                            double? OldBBMiddle = Candles.OrderByDescending(a => a.TimeStamp).Take(BBLength).Average(a => a.Close);
+                            double? SellPumpPrice = OldBBMiddle + 65;
+                            Double? BuyDumpPrice = OldBBMiddle - 55;
 
 
                             CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
                             OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
-                             SellPrice = CalculateSellPrice(CurrentBook);
+                            double? SellPrice = CalculateSellPrice(CurrentBook);
                             SellPrice = SellPrice + 1;
                             log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
-                            BuyPrice = CalculateBuyPrice(CurrentBook);
+                            double? BuyPrice = CalculateBuyPrice(CurrentBook);
                             //immer +1 usd addieren
                             BuyPrice = BuyPrice - 1;
                             log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
                             Mode = "Wait";
+                            //  bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                             if (OpenPositions.Count == 0)
                             {
                                 Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
@@ -1124,44 +1106,115 @@ namespace BitMexSampleBot
                                 //     double? OrderPrice = 0;
 
 
-                                bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-                               if (OldBBMiddle > BuyPrice)
-                                       {
-                                    int Quantity = 1;
+                                if ((SumBuyFirstItems < SumSellFirstItems) & (currentCandle.STOCHK <= InputSellSTOCHK) & (OpenPositions.Count == 0) && (OpenOrders.Count == 1))
+                                {
+                                    if (OldBBMiddle > SellPrice)
+                                    {
+                                        int Quantity = 1;
+                                        if ((SellPumpPrice > OldBBMiddle) & (AllowCalculateBBMiddle == false))
+                                        {
+                                            //    OldBBMiddle = SellPumpPrice;
+                                            Quantity = 1;
+                                            AutoMakeOrder2("Sell", Quantity);
+                                            log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell (SellPumpPrice > OldBBMiddle) ");
+
+                                        }
+
+                                        AutoMakeOrder2("Sell", Quantity);
+                                        log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell (OldBBMiddle > SellPrice)");
+                                    }
+                                    else if (OldBBMiddle < SellPrice)
+
+                                    {
+                                        // SellPrice = OldBBMiddle + 10;
+                                        //Double SellPrice2 = Convert.ToDouble(SellPrice + 10);
+                                        int Quantity = 1;
+                                        AutoMakeOrder2("Sell", Quantity);
+                                        log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell (OldBBMiddle < SellPrice)");
+                                    }
+                                    else
+                                    {
+                                        int Quantity = 1;
+                                        AutoMakeOrder2("Sell", Quantity);
+                                        log.InfoFormat("Setmode Wait (OpenPositions.Count == 0) && (OpenOrders.Count == 1) AutoMakeOrder2 Sell else ");
+                                    }
+                                }
+                            }
+
+                            //&& (OpenOrders.Count == 0)
+                            if ((currentCandle.STOCHK > InputBuySTOCHK) || (currentCandle.STOCHK < InputSellSTOCHK) & (OpenPositions.Count == 0) & (OpenOrders.Count == 0))
+                            {
+                                Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
+                                OldBBMiddle = Candles.OrderByDescending(a => a.TimeStamp).Take(BBLength).Average(a => a.Close);
+                                SellPumpPrice = OldBBMiddle + 65;
+                                BuyDumpPrice = OldBBMiddle - 55;
+
+
+                                CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
+                                OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
+                                SellPrice = CalculateSellPrice(CurrentBook);
+                                SellPrice = SellPrice + 1;
+                                log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
+                                BuyPrice = CalculateBuyPrice(CurrentBook);
+                                //immer +1 usd addieren
+                                BuyPrice = BuyPrice - 1;
+                                log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
+                                Mode = "Wait";
+                                if (OpenPositions.Count == 0)
+                                {
+                                    Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
+
+
+
+                                    CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
+                                    OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
+
+                                    log.InfoFormat("CalculateMakerOrderPrice - SellPrice: {0}", SellPrice);
+
+                                    //immer +1 usd addieren
+                                    BuyPrice = BuyPrice - 1;
+                                    log.InfoFormat("CalculateMakerOrderPrice - BuyPrice: {0}", BuyPrice);
+                                    //     double? OrderPrice = 0;
+
+
+                                    bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                    if (OldBBMiddle > BuyPrice)
+                                    {
+                                        int Quantity = 1;
                                         if ((BuyDumpPrice < OldBBMiddle) & (AllowCalculateBBMiddle == false))
                                         {
-                                       
+
+                                            AutoMakeOrder3("Sell", Quantity);
+
+                                            log.InfoFormat("Setmode Wait (OpenOrders.Count == 0) AutoMakeOrder3 Sell (BuyDumpPrice > OldBBMiddle)");
+
+                                        }
+
+
+
                                         AutoMakeOrder3("Sell", Quantity);
-                                       
-                                        log.InfoFormat("Setmode Wait (OpenOrders.Count == 0) AutoMakeOrder3 Sell (BuyDumpPrice > OldBBMiddle)");
 
-                                         }
-                                    
-
-                                    
-                                    AutoMakeOrder3("Sell", Quantity);
-                                   
-                                    log.InfoFormat("Setmode Wait (OpenOrders.Count == 0) AutoMakeOrder3 Sell (OldBBMiddle > BuyPrice)");
-                                      }
-                                /*else if (OldBBMiddle > BuyPrice)
-                                 {
-                                int Quantity = 1;
-                                    log.InfoFormat("Setmode Wait AutoMakeOrder3 Buy (OldBBMiddle > BuyPrice)");
-                                    AutoMakeOrder3("Sell", Quantity);
-                                  }*/
-                                else
-                                 {
-                                   bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                        log.InfoFormat("Setmode Wait (OpenOrders.Count == 0) AutoMakeOrder3 Sell (OldBBMiddle > BuyPrice)");
+                                    }
+                                    /*else if (OldBBMiddle > BuyPrice)
+                                     {
                                     int Quantity = 1;
-                                   AutoMakeOrder3("Sell", Quantity);
-                                    log.InfoFormat("Setmode Wait (OpenOrders.Count == 0) AutoMakeOrder3 Sell else");
-                                 }
-                           }
+                                        log.InfoFormat("Setmode Wait AutoMakeOrder3 Buy (OldBBMiddle > BuyPrice)");
+                                        AutoMakeOrder3("Sell", Quantity);
+                                      }*/
+                                    else
+                                    {
+                                        bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                        int Quantity = 1;
+                                        AutoMakeOrder3("Sell", Quantity);
+                                        log.InfoFormat("Setmode Wait (OpenOrders.Count == 0) AutoMakeOrder3 Sell else");
+                                    }
+                                }
+                            }
+                            log.InfoFormat("SetBotMode - Mode: {0}, _lastMode: {1}", Mode, _lastMode);
+                            _lastMode = Mode;
                         }
-                       log.InfoFormat("SetBotMode - Mode: {0}, _lastMode: {1}", Mode, _lastMode);
-                       _lastMode = Mode;
-                     }
-
+                    }
                 }
             }
 
@@ -1227,7 +1280,7 @@ namespace BitMexSampleBot
             Candle currentCandle = Candles.Any() ? Candles[0] : null;
 
             Candles = bitmex.GetCandleHistory(ActiveInstrument.Symbol, 500, ddlCandleTimes.SelectedItem.ToString());
-            SetBotMode();
+          
             log.InfoFormat("tmrAutoTradeExecution_Tick + SetBotMode();");
             if (currentCandle == null)
             {
@@ -1256,6 +1309,12 @@ namespace BitMexSampleBot
 
             if (chkAutoMarketTakeProfits.Checked && Mode != "Sell" && Mode != "Buy") //&& OpenPositions.Any() && ((OpenPositions[0].CurrentQty > 0) || (OpenPositions[0].CurrentQty < 0)))
             {
+                SetBotMode();
+                if (AllowCalculateOrder == true)
+                {
+                    AllowCalculateOrder = false;
+
+                }
                 var averageEntryPrice = OpenPositions[0].AvgEntryPrice;
                 double? OldBBMiddle = Candles.OrderByDescending(a => a.TimeStamp).Take(BBLength).Average(a => a.Close);
                 var part = (OldBBMiddle / averageEntryPrice) * 100;
@@ -1263,6 +1322,7 @@ namespace BitMexSampleBot
                 percent = percent * -100;
                 var InputAutoWin = Convert.ToDouble(nudAutoMarketTakeProfitPercent.Value);
                 log.InfoFormat("(chkAutoMarketTakeProfits.Checked && Mode != Sell && Mode != Buy && OpenPositions.Any() && ((OpenPositions[0].CurrentQty > 0) || (OpenPositions[0].CurrentQty < 0)))");
+              
                 if ((percent >= InputAutoWin) || (percent <= -20))
                 {
                     // Make a market order to close out the position, also cancel all orders so nothing else fills if we had unfilled limit orders still open.
@@ -1270,6 +1330,8 @@ namespace BitMexSampleBot
                     {
                         //TODO CurrentQty ?????
                         int CurrentQty = Convert.ToInt32(OpenPositions[0].CurrentQty);
+                        AllowCalculateOrder = true;
+                       
                         AutoMakeOrder2("Sell", Convert.ToInt32(OpenPositions[0].CurrentQty));
                         log.InfoFormat("tmrAutoTradeExecution_Tick (OpenPositions[0].CurrentQty > 0) Sell");
                     }
@@ -1278,12 +1340,15 @@ namespace BitMexSampleBot
                         //TODO Quantity ?????
                         //int Quantity = Convert.ToInt32(OpenPositions[0].CurrentQty) * -1;
                         //AutoMakeOrder("Buy", Convert.ToInt32(OpenPositions[0].CurrentQty));
+                        AllowCalculateOrder = true;
+                        
                         AutoMakeOrder2("Buy", Convert.ToInt32(OpenPositions[0].CurrentQty) * -1);
                         log.InfoFormat("tmrAutoTradeExecution_Tick (OpenPositions[0].CurrentQty < 0) Buy");
                     }
                     // Get our positions and orders again to be able to process rest of logic with new information.
                     OpenPositions = bitmex.GetOpenPositions(ActiveInstrument.Symbol);
                     OpenOrders = bitmex.GetOpenOrders(ActiveInstrument.Symbol);
+                
                 }
 
                 if (rdoBuy.Checked)
@@ -1561,13 +1626,14 @@ namespace BitMexSampleBot
                                     if (OpenOrders.Any(a => a.Side == "Buy"))
                                     {
                                         // We still have an open Sell order, cancel that order, make a new Buy order
-                                        //     string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                           string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                         AutoMakeOrder("Sell", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) Sell MakeOrder");
                                     }
                                     else if (OpenOrders.Any(a => a.Side == "Sell"))
                                     {
                                         // Edit our only open order, code should not allow for more than 1 at a time for now
+                                        string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                         AutoMakeOrder("Buy", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) Sell MakeOrder");
                                     }
@@ -1577,7 +1643,8 @@ namespace BitMexSampleBot
                                     // No open orders, make one for the difference
                                     if (PositionDifference != 0)
                                     {
-                                        MakeOrder("Sell", Convert.ToInt32(nudQty.Value));
+                                        string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                        AutoMakeOrder("Sell", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) (PositionDifference != 0) Sell MakeOrder");
                                     }
 
@@ -1592,7 +1659,7 @@ namespace BitMexSampleBot
                                     if (OpenOrders.Any(a => a.Side == "Buy"))
                                     {
                                         // We still have an open Sell order, cancel that order, make a new Buy order
-                                        //   string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                          string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                         AutoMakeOrder("Sell", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) (OpenOrders.Any()) Sell MakeOrder");
 
@@ -1600,13 +1667,15 @@ namespace BitMexSampleBot
                                     else if (OpenOrders.Any(a => a.Side == "Sell"))
                                     {
                                         // Edit our only open order, code should not allow for more than 1 at a time for now
+                                        string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                         AutoMakeOrder("Buy", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) (OpenOrders.Any()) Buy MakeOrder");
                                     }
                                 }
                                 else
                                 {
-                                    MakeOrder("Sell", Convert.ToInt32(nudQty.Value));
+                                    string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                    AutoMakeOrder("Sell", Convert.ToInt32(nudQty.Value));
                                     log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) (OpenOrders.Any()) Sell Else MakeOrder");
                                 }
                             }
@@ -1620,13 +1689,14 @@ namespace BitMexSampleBot
                                     if (OpenOrders.Any(a => a.Side == "Buy"))
                                     {
                                         // We still have an open buy order, cancel that order, make a new sell order
-                                        //    string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+                                           string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                         AutoMakeOrder3("Sell", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) Wait (OpenOrders.Any()) Sell  AutoMakeOrder3");
                                     }
                                     else if (OpenOrders.Any(a => a.Side == "Sell"))
                                     {
                                         // Edit our only open order, code should not allow for more than 1 at a time for now
+                                        string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                         AutoMakeOrder3("Buy", Convert.ToInt32(nudQty.Value));
                                         log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) Wait (OpenOrders.Any()) Buy  AutoMakeOrder3");
                                     }
@@ -1635,6 +1705,7 @@ namespace BitMexSampleBot
                                 else if (OpenPositions[0].CurrentQty < 2)
                                 {
                                     // No open orders, need to make an order to sell
+                                    string result = bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
                                     AutoMakeOrder3("Sell", Convert.ToInt32(nudQty.Value));
                                     log.InfoFormat("tmrAutoTradeExecution_Tick (rdoSwitch.Checked) Wait (OpenPositions[0].CurrentQty < 2) Sell  AutoMakeOrder3");
                                 }
@@ -1985,10 +2056,10 @@ namespace BitMexSampleBot
 
         private void tmrUpdateBuySellFirstPriceOrders_Tick(object sender, EventArgs e)
         {
-            //every second these values are going to be updated
-            CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
-            CalculateBuyPrice(CurrentBook);
-            CalculateSellPrice(CurrentBook);
+         //   //every second these values are going to be updated
+         //   CurrentBook = bitmex.GetOrderBook(ActiveInstrument.Symbol, CONST_ORDER_BOOK_DEPTH);
+        //    CalculateBuyPrice(CurrentBook);
+       //     CalculateSellPrice(CurrentBook);
           
         }
 
@@ -1999,6 +2070,11 @@ namespace BitMexSampleBot
                 string json = r.ReadToEnd();
                 Coin fileCoin = new Coin(json);
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //TextBoxAppender.ConfigureTextBoxAppender(LoggingTextBox);
         }
     }
 }
