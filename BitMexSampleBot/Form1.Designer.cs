@@ -659,7 +659,7 @@
             // 
             // tmrCandleUpdater
             // 
-            this.tmrCandleUpdater.Interval = 20000;
+            this.tmrCandleUpdater.Interval = 5000;
             this.tmrCandleUpdater.Tick += new System.EventHandler(this.tmrCandleUpdater_Tick);
             // 
             // rdoBuy
@@ -776,7 +776,7 @@
             this.nudBuyStochk.Size = new System.Drawing.Size(55, 22);
             this.nudBuyStochk.TabIndex = 39;
             this.nudBuyStochk.Value = new decimal(new int[] {
-            20,
+            25,
             0,
             0,
             0});
@@ -806,11 +806,6 @@
             // nudAutoMarketTakeProfitPercent
             // 
             this.nudAutoMarketTakeProfitPercent.DecimalPlaces = 2;
-            this.nudAutoMarketTakeProfitPercent.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
             this.nudAutoMarketTakeProfitPercent.Location = new System.Drawing.Point(176, 97);
             this.nudAutoMarketTakeProfitPercent.Margin = new System.Windows.Forms.Padding(4);
             this.nudAutoMarketTakeProfitPercent.Maximum = new decimal(new int[] {
@@ -822,7 +817,7 @@
             this.nudAutoMarketTakeProfitPercent.Size = new System.Drawing.Size(80, 22);
             this.nudAutoMarketTakeProfitPercent.TabIndex = 19;
             this.nudAutoMarketTakeProfitPercent.Value = new decimal(new int[] {
-            5,
+            15,
             0,
             0,
             0});
@@ -895,7 +890,7 @@
             // 
             // tmrAutoTradeExecution
             // 
-            this.tmrAutoTradeExecution.Interval = 10000;
+            this.tmrAutoTradeExecution.Interval = 6000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
             // statusStrip1
@@ -1259,7 +1254,7 @@
             // 
             // tmrUpdateBuySellFirstPriceOrders
             // 
-            this.tmrUpdateBuySellFirstPriceOrders.Interval = 10000;
+            this.tmrUpdateBuySellFirstPriceOrders.Interval = 1000;
             this.tmrUpdateBuySellFirstPriceOrders.Tick += new System.EventHandler(this.tmrUpdateBuySellFirstPriceOrders_Tick);
             // 
             // LoggingTextBox

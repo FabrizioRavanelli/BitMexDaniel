@@ -162,7 +162,7 @@ namespace BitMEX
             param["symbol"] = Symbol;
             //param["filter"] = "{\"open\":true}";
             //param["columns"] = "";
-            //param["count"] = 100.ToString();
+            param["count"] = 100.ToString();
             //param["start"] = 0.ToString();
             //param["reverse"] = false.ToString();
             //param["startTime"] = "";
