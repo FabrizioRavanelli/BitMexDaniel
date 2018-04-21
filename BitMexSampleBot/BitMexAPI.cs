@@ -31,7 +31,7 @@ namespace BitMEX
         private string apiSecret;
         private int rateLimit;
 
-        public BitMEXApi(string bitmexKey = "", string bitmexSecret = "", string bitmexDomain = "", int rateLimit = 20000)
+        public BitMEXApi(string bitmexKey = "", string bitmexSecret = "", string bitmexDomain = "", int rateLimit = 10000)
         {
             this.apiKey = bitmexKey;
             this.apiSecret = bitmexSecret;
@@ -287,10 +287,29 @@ namespace BitMEX
                 throw;
             }
         }
+        public List<Quote> GetQuote(string symbol)
+        {
+            var param = new Dictionary<string, string>();
+            param["symbol"] = symbol;
+           
+            param["reverse"] = false.ToString();
+            string res = Query("GET", "/quote", param, true);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Quote>>(res).Where(a => a.Symbol == symbol && a.count == 1  && a.reverse == false).OrderByDescending(a => a.TimeStamp).ToList();
+            }
+            catch (Exception e)
+            {
+                log.ErrorFormat("Error GetOpenPositions json: {0}", res);
+                throw;
+            }
+        }
+
 
         public List<Position> GetOpenPositions(string symbol)
         {
             var param = new Dictionary<string, string>();
+            
             string res = Query("GET", "/position", param, true);
             try
             {
@@ -474,6 +493,7 @@ namespace BitMEX
 
     public class Position
     {
+        public string Symbol { get; set; }
         public DateTime TimeStamp { get; set; }
         public double? Leverage { get; set; }
         public int? CurrentQty { get; set; }
@@ -487,8 +507,17 @@ namespace BitMEX
         public double? AvgEntryPrice { get; set; }
         public double? BreakEvenPrice { get; set; }
         public double? LiquidationPrice { get; set; }
-
+    }
+    public class Quote
+    {
+        public DateTime TimeStamp { get; set; }
         public string Symbol { get; set; }
+        public double? count { get; set; }
+        public bool? reverse { get; set; }
+        public double? bidSize { get; set; }
+        public double? bidPrice { get; set; }
+        public double? askPrice { get; set; }
+        public double? askSize { get; set; }
     }
 
     public class Order

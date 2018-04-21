@@ -113,6 +113,10 @@
             this.tmrUpdateBBMiddle = new System.Windows.Forms.Timer(this.components);
             this.tmrUpdateBuySellFirstPriceOrders = new System.Windows.Forms.Timer(this.components);
             this.LoggingTextBox = new System.Windows.Forms.TextBox();
+            this.gbOpenOrders = new System.Windows.Forms.GroupBox();
+            this.dgvOpenOrders = new System.Windows.Forms.DataGridView();
+            this.gbOpenPositions = new System.Windows.Forms.GroupBox();
+            this.dgvOpenPositions = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -137,6 +141,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).BeginInit();
+            this.gbOpenOrders.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOpenOrders)).BeginInit();
+            this.gbOpenPositions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOpenPositions)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -762,7 +770,7 @@
             this.nudSellStochk.Size = new System.Drawing.Size(55, 22);
             this.nudSellStochk.TabIndex = 41;
             this.nudSellStochk.Value = new decimal(new int[] {
-            70,
+            80,
             0,
             0,
             0});
@@ -776,7 +784,7 @@
             this.nudBuyStochk.Size = new System.Drawing.Size(55, 22);
             this.nudBuyStochk.TabIndex = 39;
             this.nudBuyStochk.Value = new decimal(new int[] {
-            25,
+            15,
             0,
             0,
             0});
@@ -890,7 +898,7 @@
             // 
             // tmrAutoTradeExecution
             // 
-            this.tmrAutoTradeExecution.Interval = 6000;
+            this.tmrAutoTradeExecution.Interval = 10000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
             // statusStrip1
@@ -901,7 +909,7 @@
             this.stsAPIValid,
             this.stsAccountBalance,
             this.stsOTProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 631);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 931);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1283, 22);
@@ -1249,12 +1257,12 @@
             // 
             // tmrUpdateBBMiddle
             // 
-            this.tmrUpdateBBMiddle.Interval = 600000;
+            this.tmrUpdateBBMiddle.Interval = 60000;
             this.tmrUpdateBBMiddle.Tick += new System.EventHandler(this.tmrUpdateBBMiddle_Tick);
             // 
             // tmrUpdateBuySellFirstPriceOrders
             // 
-            this.tmrUpdateBuySellFirstPriceOrders.Interval = 1000;
+            this.tmrUpdateBuySellFirstPriceOrders.Interval = 5000;
             this.tmrUpdateBuySellFirstPriceOrders.Tick += new System.EventHandler(this.tmrUpdateBuySellFirstPriceOrders_Tick);
             // 
             // LoggingTextBox
@@ -1267,11 +1275,53 @@
             this.LoggingTextBox.Size = new System.Drawing.Size(1254, 148);
             this.LoggingTextBox.TabIndex = 56;
             // 
+            // gbOpenOrders
+            // 
+            this.gbOpenOrders.Controls.Add(this.dgvOpenOrders);
+            this.gbOpenOrders.Location = new System.Drawing.Point(17, 625);
+            this.gbOpenOrders.Name = "gbOpenOrders";
+            this.gbOpenOrders.Size = new System.Drawing.Size(615, 280);
+            this.gbOpenOrders.TabIndex = 58;
+            this.gbOpenOrders.TabStop = false;
+            this.gbOpenOrders.Text = "Open Orders";
+            // 
+            // dgvOpenOrders
+            // 
+            this.dgvOpenOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOpenOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvOpenOrders.Location = new System.Drawing.Point(3, 18);
+            this.dgvOpenOrders.Name = "dgvOpenOrders";
+            this.dgvOpenOrders.RowTemplate.Height = 24;
+            this.dgvOpenOrders.Size = new System.Drawing.Size(609, 259);
+            this.dgvOpenOrders.TabIndex = 58;
+            // 
+            // gbOpenPositions
+            // 
+            this.gbOpenPositions.Controls.Add(this.dgvOpenPositions);
+            this.gbOpenPositions.Location = new System.Drawing.Point(640, 625);
+            this.gbOpenPositions.Name = "gbOpenPositions";
+            this.gbOpenPositions.Size = new System.Drawing.Size(615, 280);
+            this.gbOpenPositions.TabIndex = 59;
+            this.gbOpenPositions.TabStop = false;
+            this.gbOpenPositions.Text = "Open Positions";
+            // 
+            // dgvOpenPositions
+            // 
+            this.dgvOpenPositions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOpenPositions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvOpenPositions.Location = new System.Drawing.Point(3, 18);
+            this.dgvOpenPositions.Name = "dgvOpenPositions";
+            this.dgvOpenPositions.RowTemplate.Height = 24;
+            this.dgvOpenPositions.Size = new System.Drawing.Size(609, 259);
+            this.dgvOpenPositions.TabIndex = 59;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 653);
+            this.ClientSize = new System.Drawing.Size(1283, 953);
+            this.Controls.Add(this.gbOpenPositions);
+            this.Controls.Add(this.gbOpenOrders);
             this.Controls.Add(this.LoggingTextBox);
             this.Controls.Add(this.txtFirstSellOrderOutput);
             this.Controls.Add(this.lblPriceSell);
@@ -1348,6 +1398,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeIntervalCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceBuy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPriceSell)).EndInit();
+            this.gbOpenOrders.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOpenOrders)).EndInit();
+            this.gbOpenPositions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOpenPositions)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1438,6 +1492,10 @@
         private System.Windows.Forms.Timer tmrUpdateBBMiddle;
         private System.Windows.Forms.Timer tmrUpdateBuySellFirstPriceOrders;
         private System.Windows.Forms.TextBox LoggingTextBox;
+        private System.Windows.Forms.GroupBox gbOpenOrders;
+        private System.Windows.Forms.DataGridView dgvOpenOrders;
+        private System.Windows.Forms.GroupBox gbOpenPositions;
+        private System.Windows.Forms.DataGridView dgvOpenPositions;
     }
 }
 
