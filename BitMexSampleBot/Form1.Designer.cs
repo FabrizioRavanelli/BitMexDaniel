@@ -84,10 +84,6 @@
             this.nudAutoQuantity = new System.Windows.Forms.NumericUpDown();
             this.btnAutomatedTrading = new System.Windows.Forms.Button();
             this.tmrAutoTradeExecution = new System.Windows.Forms.Timer(this.components);
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.stsAPIValid = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stsAccountBalance = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stsOTProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.btnAccountBalance = new System.Windows.Forms.Button();
             this.nudStopPercent = new System.Windows.Forms.NumericUpDown();
             this.btnManualSetStop = new System.Windows.Forms.Button();
@@ -117,6 +113,10 @@
             this.dgvOpenOrders = new System.Windows.Forms.DataGridView();
             this.gbOpenPositions = new System.Windows.Forms.GroupBox();
             this.dgvOpenPositions = new System.Windows.Forms.DataGridView();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stsAPIValid = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stsAccountBalance = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stsOTProgress = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -134,7 +134,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudBuyStochk)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoMarketTakeProfitPercent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoQuantity)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopPercent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeContracts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeInterval)).BeginInit();
@@ -145,6 +144,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenOrders)).BeginInit();
             this.gbOpenPositions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenPositions)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -282,7 +282,7 @@
             this.dgvCandles.ReadOnly = true;
             this.dgvCandles.RowHeadersVisible = false;
             this.dgvCandles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCandles.Size = new System.Drawing.Size(1252, 71);
+            this.dgvCandles.Size = new System.Drawing.Size(1257, 71);
             this.dgvCandles.TabIndex = 8;
             this.dgvCandles.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCandles_CellFormatting);
             // 
@@ -295,7 +295,7 @@
             "5m",
             "1h",
             "1d"});
-            this.ddlCandleTimes.Location = new System.Drawing.Point(8, 23);
+            this.ddlCandleTimes.Location = new System.Drawing.Point(812, 11);
             this.ddlCandleTimes.Margin = new System.Windows.Forms.Padding(4);
             this.ddlCandleTimes.Name = "ddlCandleTimes";
             this.ddlCandleTimes.Size = new System.Drawing.Size(60, 24);
@@ -304,6 +304,7 @@
             // 
             // gbCandles
             // 
+            this.gbCandles.Controls.Add(this.statusStrip1);
             this.gbCandles.Controls.Add(this.lblMA2);
             this.gbCandles.Controls.Add(this.nudMA2);
             this.gbCandles.Controls.Add(this.lblMA1);
@@ -311,11 +312,11 @@
             this.gbCandles.Controls.Add(this.chkUpdateCandles);
             this.gbCandles.Controls.Add(this.ddlCandleTimes);
             this.gbCandles.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbCandles.Location = new System.Drawing.Point(17, 364);
+            this.gbCandles.Location = new System.Drawing.Point(22, 364);
             this.gbCandles.Margin = new System.Windows.Forms.Padding(4);
             this.gbCandles.Name = "gbCandles";
             this.gbCandles.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCandles.Size = new System.Drawing.Size(1252, 63);
+            this.gbCandles.Size = new System.Drawing.Size(1249, 63);
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
@@ -323,7 +324,7 @@
             // lblMA2
             // 
             this.lblMA2.AutoSize = true;
-            this.lblMA2.Location = new System.Drawing.Point(428, 26);
+            this.lblMA2.Location = new System.Drawing.Point(1144, 13);
             this.lblMA2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMA2.Name = "lblMA2";
             this.lblMA2.Size = new System.Drawing.Size(36, 17);
@@ -332,7 +333,7 @@
             // 
             // nudMA2
             // 
-            this.nudMA2.Location = new System.Drawing.Point(364, 18);
+            this.nudMA2.Location = new System.Drawing.Point(1188, 11);
             this.nudMA2.Margin = new System.Windows.Forms.Padding(4);
             this.nudMA2.Minimum = new decimal(new int[] {
             1,
@@ -351,7 +352,7 @@
             // lblMA1
             // 
             this.lblMA1.AutoSize = true;
-            this.lblMA1.Location = new System.Drawing.Point(319, 27);
+            this.lblMA1.Location = new System.Drawing.Point(1036, 13);
             this.lblMA1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMA1.Name = "lblMA1";
             this.lblMA1.Size = new System.Drawing.Size(36, 17);
@@ -360,7 +361,7 @@
             // 
             // nudMA1
             // 
-            this.nudMA1.Location = new System.Drawing.Point(264, 18);
+            this.nudMA1.Location = new System.Drawing.Point(1080, 11);
             this.nudMA1.Margin = new System.Windows.Forms.Padding(4);
             this.nudMA1.Minimum = new decimal(new int[] {
             1,
@@ -381,7 +382,7 @@
             this.chkUpdateCandles.AutoSize = true;
             this.chkUpdateCandles.Checked = true;
             this.chkUpdateCandles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkUpdateCandles.Location = new System.Drawing.Point(77, 26);
+            this.chkUpdateCandles.Location = new System.Drawing.Point(885, 12);
             this.chkUpdateCandles.Margin = new System.Windows.Forms.Padding(4);
             this.chkUpdateCandles.Name = "chkUpdateCandles";
             this.chkUpdateCandles.Size = new System.Drawing.Size(143, 21);
@@ -901,39 +902,6 @@
             this.tmrAutoTradeExecution.Interval = 10000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stsAPIValid,
-            this.stsAccountBalance,
-            this.stsOTProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 931);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1283, 22);
-            this.statusStrip1.TabIndex = 15;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // stsAPIValid
-            // 
-            this.stsAPIValid.Name = "stsAPIValid";
-            this.stsAPIValid.Size = new System.Drawing.Size(131, 17);
-            this.stsAPIValid.Text = "API keys are invalid";
-            // 
-            // stsAccountBalance
-            // 
-            this.stsAccountBalance.Name = "stsAccountBalance";
-            this.stsAccountBalance.Size = new System.Drawing.Size(75, 17);
-            this.stsAccountBalance.Text = "Balance: 0";
-            // 
-            // stsOTProgress
-            // 
-            this.stsOTProgress.Name = "stsOTProgress";
-            this.stsOTProgress.Size = new System.Drawing.Size(133, 20);
-            this.stsOTProgress.Visible = false;
-            // 
             // btnAccountBalance
             // 
             this.btnAccountBalance.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1272,15 +1240,15 @@
             this.LoggingTextBox.Name = "LoggingTextBox";
             this.LoggingTextBox.ReadOnly = true;
             this.LoggingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.LoggingTextBox.Size = new System.Drawing.Size(1254, 148);
+            this.LoggingTextBox.Size = new System.Drawing.Size(1254, 71);
             this.LoggingTextBox.TabIndex = 56;
             // 
             // gbOpenOrders
             // 
             this.gbOpenOrders.Controls.Add(this.dgvOpenOrders);
-            this.gbOpenOrders.Location = new System.Drawing.Point(17, 588);
+            this.gbOpenOrders.Location = new System.Drawing.Point(20, 603);
             this.gbOpenOrders.Name = "gbOpenOrders";
-            this.gbOpenOrders.Size = new System.Drawing.Size(615, 216);
+            this.gbOpenOrders.Size = new System.Drawing.Size(1254, 288);
             this.gbOpenOrders.TabIndex = 58;
             this.gbOpenOrders.TabStop = false;
             this.gbOpenOrders.Text = "Open Orders";
@@ -1293,16 +1261,16 @@
             this.dgvOpenOrders.Name = "dgvOpenOrders";
             this.dgvOpenOrders.ReadOnly = true;
             this.dgvOpenOrders.RowTemplate.Height = 24;
-            this.dgvOpenOrders.Size = new System.Drawing.Size(609, 195);
+            this.dgvOpenOrders.Size = new System.Drawing.Size(1248, 267);
             this.dgvOpenOrders.TabIndex = 58;
             this.dgvOpenOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOpenOrders_CellFormatting);
             // 
             // gbOpenPositions
             // 
             this.gbOpenPositions.Controls.Add(this.dgvOpenPositions);
-            this.gbOpenPositions.Location = new System.Drawing.Point(640, 588);
+            this.gbOpenPositions.Location = new System.Drawing.Point(17, 511);
             this.gbOpenPositions.Name = "gbOpenPositions";
-            this.gbOpenPositions.Size = new System.Drawing.Size(615, 216);
+            this.gbOpenPositions.Size = new System.Drawing.Size(1257, 86);
             this.gbOpenPositions.TabIndex = 59;
             this.gbOpenPositions.TabStop = false;
             this.gbOpenPositions.Text = "Open Positions";
@@ -1315,9 +1283,42 @@
             this.dgvOpenPositions.Name = "dgvOpenPositions";
             this.dgvOpenPositions.ReadOnly = true;
             this.dgvOpenPositions.RowTemplate.Height = 24;
-            this.dgvOpenPositions.Size = new System.Drawing.Size(609, 195);
+            this.dgvOpenPositions.Size = new System.Drawing.Size(1251, 65);
             this.dgvOpenPositions.TabIndex = 59;
             this.dgvOpenPositions.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOpenPositions_CellFormatting);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stsAPIValid,
+            this.stsAccountBalance,
+            this.stsOTProgress});
+            this.statusStrip1.Location = new System.Drawing.Point(4, 37);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1241, 22);
+            this.statusStrip1.TabIndex = 17;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // stsAPIValid
+            // 
+            this.stsAPIValid.Name = "stsAPIValid";
+            this.stsAPIValid.Size = new System.Drawing.Size(131, 17);
+            this.stsAPIValid.Text = "API keys are invalid";
+            // 
+            // stsAccountBalance
+            // 
+            this.stsAccountBalance.Name = "stsAccountBalance";
+            this.stsAccountBalance.Size = new System.Drawing.Size(75, 17);
+            this.stsAccountBalance.Text = "Balance: 0";
+            // 
+            // stsOTProgress
+            // 
+            this.stsOTProgress.Name = "stsOTProgress";
+            this.stsOTProgress.Size = new System.Drawing.Size(133, 20);
+            this.stsOTProgress.Visible = false;
             // 
             // Form1
             // 
@@ -1357,7 +1358,6 @@
             this.Controls.Add(this.btnManualSetStop);
             this.Controls.Add(this.nudStopPercent);
             this.Controls.Add(this.btnAccountBalance);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.gbAutomatedTrading);
             this.Controls.Add(this.gbCandles);
             this.Controls.Add(this.ddlSymbol);
@@ -1394,8 +1394,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudBuyStochk)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoMarketTakeProfitPercent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoQuantity)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudStopPercent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeContracts)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudOverTimeInterval)).EndInit();
@@ -1406,6 +1404,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenOrders)).EndInit();
             this.gbOpenPositions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenPositions)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1438,9 +1438,6 @@
         private System.Windows.Forms.ComboBox ddlAutoOrderType;
         private System.Windows.Forms.NumericUpDown nudAutoQuantity;
         private System.Windows.Forms.Timer tmrAutoTradeExecution;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel stsAPIValid;
-        private System.Windows.Forms.ToolStripStatusLabel stsAccountBalance;
         private System.Windows.Forms.Button btnAccountBalance;
         private System.Windows.Forms.NumericUpDown nudStopPercent;
         private System.Windows.Forms.Button btnManualSetStop;
@@ -1461,7 +1458,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ToolStripProgressBar stsOTProgress;
         private System.Windows.Forms.Button btnOverTimeStop;
         private System.Windows.Forms.Label lblPriceBuy;
         private System.Windows.Forms.NumericUpDown nudPriceBuy;
@@ -1500,6 +1496,10 @@
         private System.Windows.Forms.DataGridView dgvOpenOrders;
         private System.Windows.Forms.GroupBox gbOpenPositions;
         private System.Windows.Forms.DataGridView dgvOpenPositions;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel stsAPIValid;
+        private System.Windows.Forms.ToolStripStatusLabel stsAccountBalance;
+        private System.Windows.Forms.ToolStripProgressBar stsOTProgress;
     }
 }
 
