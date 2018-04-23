@@ -41,6 +41,10 @@
             this.dgvCandles = new System.Windows.Forms.DataGridView();
             this.ddlCandleTimes = new System.Windows.Forms.ComboBox();
             this.gbCandles = new System.Windows.Forms.GroupBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stsAPIValid = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stsAccountBalance = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stsOTProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.lblMA2 = new System.Windows.Forms.Label();
             this.nudMA2 = new System.Windows.Forms.NumericUpDown();
             this.lblMA1 = new System.Windows.Forms.Label();
@@ -113,13 +117,10 @@
             this.dgvOpenOrders = new System.Windows.Forms.DataGridView();
             this.gbOpenPositions = new System.Windows.Forms.GroupBox();
             this.dgvOpenPositions = new System.Windows.Forms.DataGridView();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.stsAPIValid = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stsAccountBalance = new System.Windows.Forms.ToolStripStatusLabel();
-            this.stsOTProgress = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).BeginInit();
@@ -144,7 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenOrders)).BeginInit();
             this.gbOpenPositions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenPositions)).BeginInit();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -320,6 +320,39 @@
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stsAPIValid,
+            this.stsAccountBalance,
+            this.stsOTProgress});
+            this.statusStrip1.Location = new System.Drawing.Point(4, 37);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1241, 22);
+            this.statusStrip1.TabIndex = 17;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // stsAPIValid
+            // 
+            this.stsAPIValid.Name = "stsAPIValid";
+            this.stsAPIValid.Size = new System.Drawing.Size(131, 17);
+            this.stsAPIValid.Text = "API keys are invalid";
+            // 
+            // stsAccountBalance
+            // 
+            this.stsAccountBalance.Name = "stsAccountBalance";
+            this.stsAccountBalance.Size = new System.Drawing.Size(75, 17);
+            this.stsAccountBalance.Text = "Balance: 0";
+            // 
+            // stsOTProgress
+            // 
+            this.stsOTProgress.Name = "stsOTProgress";
+            this.stsOTProgress.Size = new System.Drawing.Size(133, 20);
+            this.stsOTProgress.Visible = false;
             // 
             // lblMA2
             // 
@@ -668,7 +701,7 @@
             // 
             // tmrCandleUpdater
             // 
-            this.tmrCandleUpdater.Interval = 5000;
+            this.tmrCandleUpdater.Interval = 10000;
             this.tmrCandleUpdater.Tick += new System.EventHandler(this.tmrCandleUpdater_Tick);
             // 
             // rdoBuy
@@ -771,7 +804,7 @@
             this.nudSellStochk.Size = new System.Drawing.Size(55, 22);
             this.nudSellStochk.TabIndex = 41;
             this.nudSellStochk.Value = new decimal(new int[] {
-            80,
+            75,
             0,
             0,
             0});
@@ -1287,39 +1320,6 @@
             this.dgvOpenPositions.TabIndex = 59;
             this.dgvOpenPositions.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOpenPositions_CellFormatting);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stsAPIValid,
-            this.stsAccountBalance,
-            this.stsOTProgress});
-            this.statusStrip1.Location = new System.Drawing.Point(4, 37);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1241, 22);
-            this.statusStrip1.TabIndex = 17;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // stsAPIValid
-            // 
-            this.stsAPIValid.Name = "stsAPIValid";
-            this.stsAPIValid.Size = new System.Drawing.Size(131, 17);
-            this.stsAPIValid.Text = "API keys are invalid";
-            // 
-            // stsAccountBalance
-            // 
-            this.stsAccountBalance.Name = "stsAccountBalance";
-            this.stsAccountBalance.Size = new System.Drawing.Size(75, 17);
-            this.stsAccountBalance.Text = "Balance: 0";
-            // 
-            // stsOTProgress
-            // 
-            this.stsOTProgress.Name = "stsOTProgress";
-            this.stsOTProgress.Size = new System.Drawing.Size(133, 20);
-            this.stsOTProgress.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1377,6 +1377,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).EndInit();
             this.gbCandles.ResumeLayout(false);
             this.gbCandles.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudVolume24h)).EndInit();
@@ -1404,8 +1406,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenOrders)).EndInit();
             this.gbOpenPositions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvOpenPositions)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
