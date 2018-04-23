@@ -1664,6 +1664,10 @@ namespace BitMexSampleBot
 
                 log.InfoFormat("tmrAutoTradeExecution_Tick + SetBotMode();");
                 double? averageEntryPrice = OpenPositions[0].AvgEntryPrice ?? 0;
+                if (OpenPositions[0].CurrentQty == 0)
+                {
+                    averageEntryPrice = 0;
+                }
                 double OldBBMiddle = Candles.Any() && Candles[0].Open.HasValue ? Candles[0].Open.Value : 0d;
                 double? part = (OldBBMiddle / averageEntryPrice) * 100;
                 double? percent = part - 100;
@@ -1707,6 +1711,10 @@ namespace BitMexSampleBot
                 //double? OldBBMiddle = Open; //Candles.Any() && Candles[0].Open.HasValue ? Candles[0].Open.Value : 0d;// Candles.OrderByDescending(a => a.TimeStamp).Take(BBLength).Average(a => a.Close);
                 // OldBBMiddle = OldBBMiddle + 5;
                 double? averageEntryPrice = OpenPositions[0].AvgEntryPrice ?? 0;
+                if (OpenPositions[0].CurrentQty == 0)
+                {
+                    averageEntryPrice = 0;
+                }
                 double OldBBMiddle = Candles.Any() && Candles[0].Open.HasValue ? Candles[0].Open.Value : 0d;
                 double? part = (OldBBMiddle / averageEntryPrice) * 100;
                 double? percent = part - 100;
@@ -2481,8 +2489,7 @@ namespace BitMexSampleBot
 
         private void dgvCandles_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            e.CellStyle.BackColor = Color.Black;
-            e.CellStyle.ForeColor = Color.Yellow;
+            DataGridCellFormating(e);
         }
 
         private void tmrUpdateBBMiddle_Tick(object sender, EventArgs e)
@@ -2501,8 +2508,8 @@ namespace BitMexSampleBot
 
         private void RefreshGridOpenOrdersAndPositions()
         {
-            this.dgvOpenOrders.DataSource = OpenOrders.Take(CONST_MAX_TOTAL_TAKE_SHOW_ORDERS);
-            this.dgvOpenPositions.DataSource = OpenPositions.Take(CONST_MAX_TOTAL_TAKE_SHOW_POSITIONS);
+            this.dgvOpenOrders.DataSource = OpenOrders.Take(CONST_MAX_TOTAL_TAKE_SHOW_ORDERS).ToList();
+            this.dgvOpenPositions.DataSource = OpenPositions.Take(CONST_MAX_TOTAL_TAKE_SHOW_POSITIONS).ToList();
        }
 
         private void readCoins()
@@ -2517,6 +2524,22 @@ namespace BitMexSampleBot
         private void Form1_Load(object sender, EventArgs e)
         {
             //TextBoxAppender.ConfigureTextBoxAppender(LoggingTextBox);
+        }
+
+        private void dgvOpenOrders_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridCellFormating(e);
+        }
+
+        private void dgvOpenPositions_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridCellFormating(e);
+        }
+
+        private void DataGridCellFormating(DataGridViewCellFormattingEventArgs e)
+        {
+            e.CellStyle.BackColor = Color.Black;
+            e.CellStyle.ForeColor = Color.Yellow;
         }
     }
 }

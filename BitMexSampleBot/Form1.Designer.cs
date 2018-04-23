@@ -315,7 +315,7 @@
             this.gbCandles.Margin = new System.Windows.Forms.Padding(4);
             this.gbCandles.Name = "gbCandles";
             this.gbCandles.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCandles.Size = new System.Drawing.Size(1252, 90);
+            this.gbCandles.Size = new System.Drawing.Size(1252, 63);
             this.gbCandles.TabIndex = 10;
             this.gbCandles.TabStop = false;
             this.gbCandles.Text = "Candles";
@@ -1267,7 +1267,7 @@
             // 
             // LoggingTextBox
             // 
-            this.LoggingTextBox.Location = new System.Drawing.Point(17, 470);
+            this.LoggingTextBox.Location = new System.Drawing.Point(17, 434);
             this.LoggingTextBox.Multiline = true;
             this.LoggingTextBox.Name = "LoggingTextBox";
             this.LoggingTextBox.ReadOnly = true;
@@ -1278,9 +1278,9 @@
             // gbOpenOrders
             // 
             this.gbOpenOrders.Controls.Add(this.dgvOpenOrders);
-            this.gbOpenOrders.Location = new System.Drawing.Point(17, 625);
+            this.gbOpenOrders.Location = new System.Drawing.Point(17, 588);
             this.gbOpenOrders.Name = "gbOpenOrders";
-            this.gbOpenOrders.Size = new System.Drawing.Size(615, 280);
+            this.gbOpenOrders.Size = new System.Drawing.Size(615, 216);
             this.gbOpenOrders.TabIndex = 58;
             this.gbOpenOrders.TabStop = false;
             this.gbOpenOrders.Text = "Open Orders";
@@ -1291,16 +1291,18 @@
             this.dgvOpenOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOpenOrders.Location = new System.Drawing.Point(3, 18);
             this.dgvOpenOrders.Name = "dgvOpenOrders";
+            this.dgvOpenOrders.ReadOnly = true;
             this.dgvOpenOrders.RowTemplate.Height = 24;
-            this.dgvOpenOrders.Size = new System.Drawing.Size(609, 259);
+            this.dgvOpenOrders.Size = new System.Drawing.Size(609, 195);
             this.dgvOpenOrders.TabIndex = 58;
+            this.dgvOpenOrders.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOpenOrders_CellFormatting);
             // 
             // gbOpenPositions
             // 
             this.gbOpenPositions.Controls.Add(this.dgvOpenPositions);
-            this.gbOpenPositions.Location = new System.Drawing.Point(640, 625);
+            this.gbOpenPositions.Location = new System.Drawing.Point(640, 588);
             this.gbOpenPositions.Name = "gbOpenPositions";
-            this.gbOpenPositions.Size = new System.Drawing.Size(615, 280);
+            this.gbOpenPositions.Size = new System.Drawing.Size(615, 216);
             this.gbOpenPositions.TabIndex = 59;
             this.gbOpenPositions.TabStop = false;
             this.gbOpenPositions.Text = "Open Positions";
@@ -1311,9 +1313,11 @@
             this.dgvOpenPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOpenPositions.Location = new System.Drawing.Point(3, 18);
             this.dgvOpenPositions.Name = "dgvOpenPositions";
+            this.dgvOpenPositions.ReadOnly = true;
             this.dgvOpenPositions.RowTemplate.Height = 24;
-            this.dgvOpenPositions.Size = new System.Drawing.Size(609, 259);
+            this.dgvOpenPositions.Size = new System.Drawing.Size(609, 195);
             this.dgvOpenPositions.TabIndex = 59;
+            this.dgvOpenPositions.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOpenPositions_CellFormatting);
             // 
             // Form1
             // 
