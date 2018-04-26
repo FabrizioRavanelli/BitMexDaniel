@@ -117,6 +117,11 @@
             this.dgvOpenOrders = new System.Windows.Forms.DataGridView();
             this.gbOpenPositions = new System.Windows.Forms.GroupBox();
             this.dgvOpenPositions = new System.Windows.Forms.DataGridView();
+            this.tmrTradesKingCoinsReader = new System.Windows.Forms.Timer(this.components);
+            this.lbTrend24h = new System.Windows.Forms.Label();
+            this.lbTrend1h = new System.Windows.Forms.Label();
+            this.txtTrend24h = new System.Windows.Forms.TextBox();
+            this.txtTrend1h = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -932,7 +937,7 @@
             // 
             // tmrAutoTradeExecution
             // 
-            this.tmrAutoTradeExecution.Interval = 10000;
+            this.tmrAutoTradeExecution.Interval = 20000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
             // btnAccountBalance
@@ -1320,11 +1325,58 @@
             this.dgvOpenPositions.TabIndex = 59;
             this.dgvOpenPositions.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvOpenPositions_CellFormatting);
             // 
+            // tmrTradesKingCoinsReader
+            // 
+            this.tmrTradesKingCoinsReader.Interval = 20000;
+            this.tmrTradesKingCoinsReader.Tick += new System.EventHandler(this.tmrTradesKingCoinsReader_Tick);
+            // 
+            // lbTrend24h
+            // 
+            this.lbTrend24h.AutoSize = true;
+            this.lbTrend24h.Location = new System.Drawing.Point(964, 257);
+            this.lbTrend24h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbTrend24h.Name = "lbTrend24h";
+            this.lbTrend24h.Size = new System.Drawing.Size(70, 17);
+            this.lbTrend24h.TabIndex = 61;
+            this.lbTrend24h.Text = "Trend24h";
+            // 
+            // lbTrend1h
+            // 
+            this.lbTrend1h.AutoSize = true;
+            this.lbTrend1h.Location = new System.Drawing.Point(964, 234);
+            this.lbTrend1h.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbTrend1h.Name = "lbTrend1h";
+            this.lbTrend1h.Size = new System.Drawing.Size(62, 17);
+            this.lbTrend1h.TabIndex = 60;
+            this.lbTrend1h.Text = "Trend1h";
+            // 
+            // txtTrend24h
+            // 
+            this.txtTrend24h.Location = new System.Drawing.Point(1036, 255);
+            this.txtTrend24h.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTrend24h.Name = "txtTrend24h";
+            this.txtTrend24h.ReadOnly = true;
+            this.txtTrend24h.Size = new System.Drawing.Size(100, 22);
+            this.txtTrend24h.TabIndex = 63;
+            // 
+            // txtTrend1h
+            // 
+            this.txtTrend1h.Location = new System.Drawing.Point(1036, 231);
+            this.txtTrend1h.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtTrend1h.Name = "txtTrend1h";
+            this.txtTrend1h.ReadOnly = true;
+            this.txtTrend1h.Size = new System.Drawing.Size(100, 22);
+            this.txtTrend1h.TabIndex = 62;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1283, 953);
+            this.Controls.Add(this.txtTrend24h);
+            this.Controls.Add(this.txtTrend1h);
+            this.Controls.Add(this.lbTrend24h);
+            this.Controls.Add(this.lbTrend1h);
             this.Controls.Add(this.gbOpenPositions);
             this.Controls.Add(this.gbOpenOrders);
             this.Controls.Add(this.LoggingTextBox);
@@ -1372,7 +1424,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Snipers Bot";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).EndInit();
             this.gbCandles.ResumeLayout(false);
@@ -1500,6 +1551,11 @@
         private System.Windows.Forms.ToolStripStatusLabel stsAPIValid;
         private System.Windows.Forms.ToolStripStatusLabel stsAccountBalance;
         private System.Windows.Forms.ToolStripProgressBar stsOTProgress;
+        private System.Windows.Forms.Timer tmrTradesKingCoinsReader;
+        private System.Windows.Forms.Label lbTrend24h;
+        private System.Windows.Forms.Label lbTrend1h;
+        private System.Windows.Forms.TextBox txtTrend24h;
+        private System.Windows.Forms.TextBox txtTrend1h;
     }
 }
 
