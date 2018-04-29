@@ -809,7 +809,7 @@
             this.nudSellStochk.Size = new System.Drawing.Size(55, 22);
             this.nudSellStochk.TabIndex = 41;
             this.nudSellStochk.Value = new decimal(new int[] {
-            75,
+            80,
             0,
             0,
             0});
@@ -864,7 +864,7 @@
             this.nudAutoMarketTakeProfitPercent.Size = new System.Drawing.Size(80, 22);
             this.nudAutoMarketTakeProfitPercent.TabIndex = 19;
             this.nudAutoMarketTakeProfitPercent.Value = new decimal(new int[] {
-            15,
+            20,
             0,
             0,
             0});
@@ -918,7 +918,7 @@
             this.nudAutoQuantity.Size = new System.Drawing.Size(95, 22);
             this.nudAutoQuantity.TabIndex = 15;
             this.nudAutoQuantity.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -1263,7 +1263,7 @@
             // 
             // tmrUpdateBBMiddle
             // 
-            this.tmrUpdateBBMiddle.Interval = 60000;
+            this.tmrUpdateBBMiddle.Interval = 20000;
             this.tmrUpdateBBMiddle.Tick += new System.EventHandler(this.tmrUpdateBBMiddle_Tick);
             // 
             // tmrUpdateBuySellFirstPriceOrders
