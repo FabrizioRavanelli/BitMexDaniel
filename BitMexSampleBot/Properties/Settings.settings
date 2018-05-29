@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="APIKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">X6_egTD7fQFUZcmT4Dk3H9Gl</Value>
+      <Value Profile="(Default)">E0P-FzC-yZD3DtxCdvrtL_Nh</Value>
     </Setting>
     <Setting Name="APISecret" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v7xCkLn6Ee9noeY7oVhAsa5Jz-DVFFLAAVezI4AKl5AdOW00</Value>
+      <Value Profile="(Default)">aHpdfNAegp1Xepg-rHHbE1Pg3A8ra7QbZsw5e__05nEaae1a</Value>
     </Setting>
     <Setting Name="TestAPIKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">3kJ2pCI1VSe3rpJkU0yjiZbz</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="TestAPISecret" Type="System.String" Scope="User">
-      <Value Profile="(Default)">JmtnXTx04XR5g_HlTeDlnDYImLWsIqZzoShW2gxPhLbdElAJ</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

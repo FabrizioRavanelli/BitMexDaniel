@@ -25,7 +25,7 @@ namespace BitMexSampleBot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("X6_egTD7fQFUZcmT4Dk3H9Gl")]
+        [global::System.Configuration.DefaultSettingValueAttribute("E0P-FzC-yZD3DtxCdvrtL_Nh")]
         public string APIKey {
             get {
                 return ((string)(this["APIKey"]));
@@ -37,7 +37,7 @@ namespace BitMexSampleBot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v7xCkLn6Ee9noeY7oVhAsa5Jz-DVFFLAAVezI4AKl5AdOW00")]
+        [global::System.Configuration.DefaultSettingValueAttribute("aHpdfNAegp1Xepg-rHHbE1Pg3A8ra7QbZsw5e__05nEaae1a")]
         public string APISecret {
             get {
                 return ((string)(this["APISecret"]));
@@ -49,7 +49,7 @@ namespace BitMexSampleBot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3kJ2pCI1VSe3rpJkU0yjiZbz")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string TestAPIKey {
             get {
                 return ((string)(this["TestAPIKey"]));
@@ -61,7 +61,7 @@ namespace BitMexSampleBot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("JmtnXTx04XR5g_HlTeDlnDYImLWsIqZzoShW2gxPhLbdElAJ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string TestAPISecret {
             get {
                 return ((string)(this["TestAPISecret"]));
